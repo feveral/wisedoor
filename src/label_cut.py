@@ -1,6 +1,8 @@
 import cv2
 import os
+import shutil
 import numpy as np
+
 
 def DetectImageFace(imageDirPath,imageName,destinationFilePath =""):
     image_path = imageDirPath +  imageName + ".png"
@@ -18,27 +20,32 @@ def DetectImageFace(imageDirPath,imageName,destinationFilePath =""):
         minSize=(30, 30),
     )
 
-    print 'Found {0} faces!'.format(len(faces)) 
+    print ('Found {0} faces!'.format(len(faces)) )
 
     for (x, y, w, h) in faces:
         cutImg = image[y:y + h,x:x + w]
         resizeImg = cv2.resize(cutImg,(160,160)) 
         cv2.imwrite(destinationFilePath + imageName + "_cut.png" , resizeImg)
 
+    # if len(faces) == 0:
+    #     pass
+        #resizeImg = cv2.resize(image,(160,160))
+        #cv2.imwrite(destinationFilePath + imageName + "_cut.png" , resizeImg)
+
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
+def CreateFolder(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
-lfw_Image_Dir_Name = "./../image/test/"
-lfw_Destination_Dir_Name = "./../image/test_cut/"
-model_dir_list = os.listdir(lfw_Image_Dir_Name)
+rawDirName = "./../image/raw/"
+cutDirName = "./../image/cut/"
+dirList = os.listdir(rawDirName)
 
-
-img_count = 1
-
-for img_Index in model_dir_list:
-    img_Index_Name = img_Index.split('.')[0]
-    print img_Index_Name
-    DetectImageFace((lfw_Image_Dir_Name),img_Index_Name,lfw_Destination_Dir_Name)
-    print img_count 
-    img_count += 1
+for dirName in dirList:
+    imagePathList = os.listdir(rawDirName + dirName)
+    for imagePath in imagePathList:
+        imageName = imagePath.split('.')[0]
+        CreateFolder(cutDirName + dirName)
+        DetectImageFace( rawDirName + dirName + '/', imageName , cutDirName + dirName + '/')
