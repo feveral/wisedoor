@@ -1,4 +1,5 @@
 image/cut/
 image/raw/
 image/train/
+node_modules/
 *.pyc
