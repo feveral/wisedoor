@@ -1,4 +1,5 @@
 const config = require('../config/config')
+delete config.db_config.database
 const db = require('mysql').createConnection(config.db_config)
 
 db.query('DROP DATABASE IF EXISTS Wisedoor;', () => { console.log('Drop Database') })
@@ -28,7 +29,7 @@ db.query(
 )
 
 db.query(`insert into USER VALUES('feveraly@gmail.com','宗翰','5566');`)
-/*
+
 db.query(
   `CREATE TABLE GROUPS
    (
@@ -49,10 +50,10 @@ db.query(
 db.query(
   `CREATE TABLE FACE
    (
-     GroupId VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+     GroupsId VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
      Name VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
      PRIMARY KEY(GroupsId,Name) , 
-     FOREIGN KEY(GroupsId) REFERENCES GROUPS(Id) ,
+     FOREIGN KEY(GroupsId) REFERENCES GROUPS(Id)
    );`,
   (err, result) => {
     if (err) {
@@ -62,14 +63,13 @@ db.query(
     }
   }
 )
-
 db.query(
   `CREATE TABLE MODEL
    (
      Id VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
      GroupsId VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
      PRIMARY KEY(Id) , 
-     FOREIGN KEY(GroupsId) REFERENCES GROUPS(Id) ,
+     FOREIGN KEY(GroupsId) REFERENCES GROUPS(Id)
    );`,
   (err, result) => {
     if (err) {
@@ -79,5 +79,4 @@ db.query(
     }
   }
 )
-*/
 db.end()
