@@ -45,6 +45,7 @@ class Classify:
                     u.encoding = 'latin1'
                     (self.model, self.class_names) = u.load()
                 print('Loaded classifier model from file "%s"' % classifier_filename_exp)
+        self.classifyImage()
 
     def classifyImage(self):
         print('Calculating features for images')
