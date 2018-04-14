@@ -1,0 +1,7 @@
+arguments: ServerMain.py
+--------------------
+tensorflow version: 1.5.0
+--------------------
+git hash: b'7c1e64410d66e748fbfc28ef0977ba95e9b00452'
+--------------------
+b'diff --git a/models/tom_new_classifier.pkl b/models/tom_new_classifier.pkl\nindex f79e556..04c2ce9 100644\nBinary files a/models/tom_new_classifier.pkl and b/models/tom_new_classifier.pkl differ\ndiff --git a/src/__pycache__/utility.cpython-35.pyc b/src/__pycache__/utility.cpython-35.pyc\nindex a5f7ea5..beec9fb 100644\nBinary files a/src/__pycache__/utility.cpython-35.pyc and b/src/__pycache__/utility.cpython-35.pyc differ\ndiff --git a/src/image/tom/cut.png b/src/image/tom/cut.png\ndeleted file mode 100644\nindex 9df6de3..0000000\nBinary files a/src/image/tom/cut.png and /dev/null differ'
