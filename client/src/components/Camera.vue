@@ -1,7 +1,12 @@
 <template>
-  <div id="camera" class="row">
+  <div id="camera" >
+    <div class="row mb-4">
       <video id="video" ref="video" class="col-12" width="640" height="480" autoplay="" ></video>
-      <button id="upload" @click="uploadImage();test();" class="col-3 btn btn-success">上傳圖片</button>
+    </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <button id="upload" @click="uploadImage()" class="col-6 btn btn-success">上傳圖片</button>
+    </div>
   </div>
 </template>
 
@@ -11,6 +16,7 @@ import ImageService from '@/services/ImageService'
 
 export default {
   name: 'Camera',
+
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
@@ -48,9 +54,6 @@ export default {
       const response = await ImageService.upload(this.getVideoImage())
       console.log(response)
     },
-    test () {
-      console.log("test")
-    }
   }
 }
 </script>

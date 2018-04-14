@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">登入</a>
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#login-modal">登入</a>
                 </li>
             </ul>
         </div>

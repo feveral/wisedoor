@@ -1,10 +1,16 @@
 import Api from '@/services/Api'
 
 export default {
-    loginLocal (imageData) {
-        return Api().post('login', { image: imageData })
+    
+    loginLocal (email, password) {
+        return Api().post('login/', { Email: email , Password: password} )
     },
-    facebookLogin () {
+
+    loginFacebook () {
         return Api().get('auth/facebook')
+    },
+    
+    identification () {
+        return Api().get('login/username/')
     }
 }
