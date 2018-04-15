@@ -1,6 +1,7 @@
-image/cut/
-image/raw/
-image/train/
+server/facenetTrain/*.png
+server/facenetTrain/*.jpg
 server/node_modules/
 client/node_modules/
+server/facenetTrain/image/cut/*.txt
 *.pyc
+
