@@ -3,6 +3,7 @@
     <!-- <img src="./assets/logo.png"> -->
     <headers></headers>
     <camera></camera>
+    <model-status></model-status>
     <login-modal></login-modal>
     <button class="btn btn-primary" @click="getName()">Who am I</button>
     <router-view/>
@@ -14,13 +15,15 @@ import Headers from '@/components/Headers'
 import Camera from '@/components/Camera'
 import LoginModal from '@/components/LoginModal'
 import LoginService from '@/services/LoginService'
+import ModelStatus from '@/components/ModelStatus'
 
 export default {
   name: 'Main',
   components: {
     Camera,
     Headers,
-    LoginModal
+    LoginModal,
+    ModelStatus
   },
   methods: {
     async getName () {

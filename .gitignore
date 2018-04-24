@@ -1,6 +1,10 @@
-image/cut/
-image/raw/
-image/train/
+image/
+server/facenetTrain/image/cut/*.png
+server/facenetTrain/image/cut/*.jpg
+server/facenetTrain/image/originimage/tom_not_cut/*.jpg
+server/facenetTrain/image/originimage/tom_not_cut/*.png
 server/node_modules/
 client/node_modules/
+server/facenetTrain/image/cut/*.txt
 *.pyc
+

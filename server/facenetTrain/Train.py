@@ -39,8 +39,7 @@ from sklearn.svm import SVC
 batch_size = 1000
 nrof_images = 1
 image_size = 160
-model_path = "./../models/20170512-110547.pb"
-image_path = "./image/tom/cut.png"
+model_path = "./facenetTrain/models/20170512-110547.pb"
 
 class Train:
     def __init__(self,input_dir,output_dir):
@@ -59,11 +58,11 @@ class Train:
                     
                 paths, labels = facenet.get_image_paths_and_labels(dataset)
 
-                print('Number of classes: %d' % len(dataset))
-                print('Number of images: %d' % len(paths))
+                # print('Number of classes: %d' % len(dataset))
+                # print('Number of images: %d' % len(paths))
                 
                 # Load the model
-                print('Loading feature extraction model')
+                # print('Loading feature extraction model')
                 facenet.load_model(model_path)
                 
                 # Get input and output tensors
@@ -73,7 +72,7 @@ class Train:
                 embedding_size = embeddings.get_shape()[1]
                 
                 # Run forward pass to calculate embeddings
-                print('Calculating features for images')
+                # print('Calculating features for images')
                 nrof_images = len(paths)
                 nrof_batches_per_epoch = int(math.ceil(1.0*nrof_images / batch_size))
                 emb_array = np.zeros((nrof_images, embedding_size))
@@ -88,7 +87,7 @@ class Train:
                 classifier_filename_exp = os.path.expanduser(output_dir)
 
                 # Train classifier
-                print('Training classifier')
+                # print('Training classifier')
                 model = SVC(kernel='linear', probability=True)
                 model.fit(emb_array, labels)
             
@@ -98,7 +97,7 @@ class Train:
                 # Saving classifier model
                 with open(classifier_filename_exp, 'wb') as outfile:
                     pickle.dump((model, class_names), outfile)
-                print('Saved classifier model to file "%s"' % classifier_filename_exp)
+                print('-------------------------------------------Saved classifier model to file "%s"' % classifier_filename_exp)
                 
             
 def split_dataset(dataset, min_nrof_images_per_class, nrof_train_images_per_class):
