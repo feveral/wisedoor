@@ -2,8 +2,9 @@ const User = require('../models/User')
 
 module.exports = {
 
-  login (req, res) {
-    res.send(`Well Come ${req.user}, Have fun !`);
+  async login (req, res, next) {
+    const name = await User.findNameByEmail(req.user)
+    res.send( {success:true,name:name} );
   },  
 
   logout (req, res) {

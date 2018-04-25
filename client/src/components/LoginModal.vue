@@ -18,7 +18,7 @@
             <input type="password" class="form-control" v-model="password" name="password" placeholder="Password">
           </div>
           <div class="row justify-content-end mr-2">
-            <button type="submit" class="btn btn-primary col-3" @click="login()">Submit</button>
+            <button type="submit" class="btn btn-primary col-3" @click="login()">登入</button>
           </div>
           <div class="row">
             <!--<a class="nav-link col-12" id="fb-login-button" href="/auth/facebook">以Facebook登入</a>-->
@@ -52,7 +52,8 @@ export default {
 
     async login (){
       const response = await LoginService.loginLocal(this.email,this.password)
-      console.log(response)
+      $('#login-modal').modal('hide')
+      this.$emit('loginSuccess',response.data.name)
     },
 
     open () {

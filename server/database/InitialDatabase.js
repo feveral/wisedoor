@@ -31,7 +31,7 @@ db.query(
 db.query(`insert into USER VALUES('feveraly@gmail.com','宗翰','5566');`)
 
 db.query(
-  `CREATE TABLE GROUPS
+  `CREATE TABLE EQUIPMENT
    (
      Id VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
      Owner VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
@@ -42,7 +42,7 @@ db.query(
     if (err) {
       console.log(err)
     } else {
-      console.log('Create Table GROUP')
+      console.log('Create Table EQUIPMENT')
     }
   }
 )
@@ -50,10 +50,9 @@ db.query(
 db.query(
   `CREATE TABLE FACE
    (
-     GroupsId VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+     Id VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
      Name VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
-     PRIMARY KEY(GroupsId,Name) , 
-     FOREIGN KEY(GroupsId) REFERENCES GROUPS(Id)
+     PRIMARY KEY(Id)  
    );`,
   (err, result) => {
     if (err) {
@@ -63,13 +62,15 @@ db.query(
     }
   }
 )
+
 db.query(
   `CREATE TABLE MODEL
    (
      Id VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
-     GroupsId VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+     Time VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+     EquipmentId VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
      PRIMARY KEY(Id) , 
-     FOREIGN KEY(GroupsId) REFERENCES GROUPS(Id)
+     FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
    );`,
   (err, result) => {
     if (err) {
@@ -79,4 +80,23 @@ db.query(
     }
   }
 )
+
+db.query(
+  `CREATE TABLE FACE_BELONG_MODEL
+   (
+     FaceId VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
+     ModelId VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+     PRIMARY KEY(FaceId,ModelId) , 
+     FOREIGN KEY(FaceId) REFERENCES FACE(Id),
+     FOREIGN KEY(ModelId) REFERENCES MODEL(Id)
+   );`,
+  (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('Create Table FACE_BELONG_MODEL')
+    }
+  }
+)
+
 db.end()

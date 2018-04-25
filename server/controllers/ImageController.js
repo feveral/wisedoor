@@ -14,5 +14,10 @@ module.exports = {
                 success: 'upload image succeed'
             })
         });
+    },
+
+    uploadFace (req, res) {
+        
     }
+
 }

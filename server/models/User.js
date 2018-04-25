@@ -14,7 +14,7 @@ module.exports = class User{
     return result.length == 1
   }
 
-  static async findNameByEmail(email){
+  static async findNameByEmail (email){
     const result = await db.query(`select Name from USER where Email='${email}'`)
     return result[0].Name
   }

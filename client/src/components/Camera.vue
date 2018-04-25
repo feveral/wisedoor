@@ -3,10 +3,11 @@
     <div class="row mb-4">
       <video id="video" ref="video" class="col-12" width="640" height="480" autoplay="" ></video>
     </div>
-    <div class="row">
+    <!--<div class="row">
       <div class="col-3"></div>
       <button id="upload" @click="uploadImage()" class="col-6 btn btn-success">上傳圖片</button>
     </div>
+    -->
   </div>
 </template>
 
@@ -28,6 +29,10 @@ export default {
   },
 
   methods: {
+    test () {
+      console.log("qweeasdfsrdgf")
+    },
+    
     OpenCamera(){
       var video = this.$refs.video;
       // Get access to the camera!
