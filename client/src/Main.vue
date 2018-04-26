@@ -12,7 +12,6 @@
       </div>
     </div>
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
-    <button class="btn btn-primary" @click="getName()">Who am I</button>
     <router-view/>
   </div>
 </template>
@@ -43,17 +42,13 @@ export default {
   },
 
   methods: {
-    async getName () {
-      const name = await LoginService.identification();
-      console.log(name)
-    },
 
     onLoginSuccess (name) {
       this.$refs.headers.setUserName(name)
     },
 
     async onAddFace () {
-      let response;
+      let response
       let imageData
       do {
         imageData = this.$refs.camera.getVideoImage()

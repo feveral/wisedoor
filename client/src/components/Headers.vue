@@ -8,7 +8,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#login-modal">{{ userName }}</a>
+                    <a class="nav-link loginout-button" href="#" data-toggle="modal" data-target="#login-modal">{{ userName }}</a>
+                    <a class="nav-link loginout-button" href="#" @click="logout()" v-if="isLogin">登出</a>
                 </li>
             </ul>
         </div>
@@ -18,17 +19,27 @@
 
 <script>
 
+import LoginService from '@/services/LoginService'
+
 export default {
   name: 'Header',
   data () {
     return {
-      userName: '登入'
+      userName: '登入',
+      isLogin: false
     }
   },
 
   methods: {
     setUserName (name) {
       this.userName = `Hi ! ${name}`
+      this.isLogin = true
+    },
+
+    logout () {
+      LoginService.logout()
+      this.userName = '登入'
+      this.isLogin = false
     }
   }
 }
@@ -37,5 +48,9 @@ export default {
 <style>
 #header {
    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.loginout-button {
+  display: inline-block;
 }
 </style>
