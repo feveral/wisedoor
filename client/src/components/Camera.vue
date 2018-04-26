@@ -29,9 +29,6 @@ export default {
   },
 
   methods: {
-    test () {
-      console.log("qweeasdfsrdgf")
-    },
     
     OpenCamera(){
       var video = this.$refs.video;
@@ -44,6 +41,7 @@ export default {
           });
       }
     },
+    
     getVideoImage(){
       const video = document.getElementById('video')
       const canvas = document.createElement('canvas');
@@ -55,10 +53,16 @@ export default {
       context.drawImage(video,0,0,width,height,0,0,width,height);
       return canvas.toDataURL("image/png").substr(22);
     },
-    async uploadImage(){
-      const response = await ImageService.upload(this.getVideoImage())
-      console.log(response)
-    },
+
+    async uploadFace () {
+      let response
+      let imageData
+      do {
+        imageData = this.getVideoImage()
+        response = await ImageService.uploadFace(imageData,'PEOPLE1','我的樹莓派')
+        this.$emit('upgradeProgress',response.data.progress * 4)
+      } while (response.data.progress < 25)
+    }
   }
 }
 </script>
