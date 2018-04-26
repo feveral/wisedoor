@@ -28,15 +28,15 @@ db.query(
   }
 )
 
-db.query(`insert into USER VALUES('feveraly@gmail.com','宗翰','5566');`)
-
 db.query(
   `CREATE TABLE EQUIPMENT
    (
      Id VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
-     Owner VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+     OwnerEmail VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+     Name VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+     ModelId VARCHAR(255) CHARACTER SET utf8 , 
      PRIMARY KEY(Id) , 
-     FOREIGN KEY(Owner) REFERENCES USER(Email)
+     FOREIGN KEY(OwnerEmail) REFERENCES USER(Email)
    );`,
   (err, result) => {
     if (err) {
@@ -98,5 +98,26 @@ db.query(
     }
   }
 )
+
+db.query(
+  `CREATE TABLE FACE_BELONG_EQUIPMENT
+   (
+     FaceId VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
+     EquipmentId VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+     PRIMARY KEY(FaceId,EquipmentId) , 
+     FOREIGN KEY(FaceId) REFERENCES FACE(Id),
+     FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
+   );`,
+  (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('Create Table FACE_BELONG_EQUIPMENT')
+    }
+  }
+)
+
+db.query(`insert into USER VALUES('feveraly@gmail.com','宗翰','5566');`)
+db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com','我的樹莓派',NULL);`)
 
 db.end()

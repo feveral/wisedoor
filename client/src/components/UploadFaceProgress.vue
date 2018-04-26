@@ -1,7 +1,7 @@
 <template>
   <div id="upload-face-progress" >
     <div class="progress">
-    <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-success" role="progressbar" :style="{ width: percentage + '%' }" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
   </div>
 </template>
@@ -15,12 +15,14 @@ export default {
 
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      percentage: 0
     }
   },
 
   methods: {
-    
+    setPercentage (percent) {
+      this.percentage = percent
+    }
   }
 }
 </script>
