@@ -10,19 +10,6 @@ const uploadBasePath = `${process.cwd()}/facenetTrain/image/raw`
 module.exports = { 
 
 
-    upload (req,res) {
-        
-        fs.writeFile(`./out${count}.png`, req.body.image, 'base64',  err => {
-            count ++ 
-            if (err) res.status(500),send({
-                error: 'an error has occured trying to upload image'
-            })
-            else res.send({
-                success: 'upload image succeed'
-            })
-        });
-    },
-
     async uploadFace (req, res) {
         let equipmentId = await Equipment.FindIdByOwnerEmailAndName(req.user, req.body.equipmentName);
         let faceId;

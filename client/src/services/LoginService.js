@@ -3,14 +3,18 @@ import Api from '@/services/Api'
 export default {
     
     loginLocal (email, password) {
-        return Api().post('login/', { Email: email , Password: password} )
+        return Api().post('authentication/login/', { Email: email , Password: password} )
+    },
+
+    logout () {
+        return Api().get('authentication/logout/')
     },
 
     loginFacebook () {
-        return Api().get('auth/facebook')
+        return Api().get('auth/facebook/')
     },
     
     identification () {
-        return Api().get('login/username/')
+        return Api().get('authentication/username/')
     }
 }
