@@ -1,10 +1,12 @@
 let modelFinish = false;
 module.exports = {
 	train(req,res){
-		let shell = require('shelljs');
-		let userid = 555;
-    let str = shell.exec('python3 ./facenetTrain/ServerMain.py ' + userid, {async:true});
-    res.end("start train!");
+	let shell = require('shelljs');
+    let str = shell.exec('python3 ./facenetTrain/ServerMain.py ', {async:false,silent:false}, function(code, stdout, stderr) {
+		let arr = stdout.split("*");
+		console.log(arr[1]);
+	});
+	res.end("start train!");
 	},
 
 	checkModelStatus(req,res){

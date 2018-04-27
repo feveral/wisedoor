@@ -112,5 +112,5 @@ class CutPicture:
                         
                                 
         print('Total number of images: %d' % nrof_images_total)
-        print('Number of successfully aligned images: %d' % nrof_successfully_aligned)
+        print('Number of successfully aligned images: *%d*' % nrof_successfully_aligned)
     
