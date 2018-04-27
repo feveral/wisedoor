@@ -54,12 +54,13 @@ export default {
       return canvas.toDataURL("image/png").substr(22);
     },
 
-    async uploadFace () {
+    async uploadFace (faceName,equipmentName) {
       let response
       let imageData
+      this.$emit('upgradeProgress',0)
       do {
         imageData = this.getVideoImage()
-        response = await ImageService.uploadFace(imageData,'PEOPLE1','我的樹莓派')
+        response = await ImageService.uploadFace(imageData,faceName,equipmentName)
         this.$emit('upgradeProgress',response.data.progress * 4)
       } while (response.data.progress < 25)
     }

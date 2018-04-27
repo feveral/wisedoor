@@ -11,10 +11,12 @@ module.exports = {
 
 
     async uploadFace (req, res) {
+        
         let equipmentId = await Equipment.FindIdByOwnerEmailAndName(req.user, req.body.equipmentName);
         let faceId;
+
         if (await Face.IsFaceNameInEquipment(req.body.faceName, equipmentId)) {
-            faceId = await Face.FindFaceIdByFaceNameAndEquipmentId(req.faceName, equipmentId)
+            faceId = await Face.FindFaceIdByFaceNameAndEquipmentId(req.body.faceName, equipmentId)
         } else {
             faceId = await Face.Add(req.body.faceName)
             await FaceBelongEquipment.Add(faceId,equipmentId)

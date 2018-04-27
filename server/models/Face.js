@@ -38,7 +38,8 @@ module.exports = class Face {
   static async FindFaceIdByFaceNameAndEquipmentId(faceName, equipmentId) {
     const result = await db.query(`select Id from FACE,FACE_BELONG_EQUIPMENT 
                                    where EquipmentId='${equipmentId}' AND
-                                   FaceId=FACE.Id`)
+                                   FaceId=FACE.Id AND
+                                   FACE.Name='${faceName}'`)
     return result[0].Id
   }
   static async FindNameById(id) {

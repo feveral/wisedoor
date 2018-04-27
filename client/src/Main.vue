@@ -12,6 +12,7 @@
       </div>
     </div>
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
+    <add-face-modal @addFaceTest="onAddFaceTest($event)"></add-face-modal>
     <router-view/>
   </div>
 </template>
@@ -25,6 +26,7 @@ import ImageService from '@/services/ImageService'
 import TrainMenu from '@/components/TrainMenu'
 import EquipmentList from '@/components/EquipmentList'
 import UploadFaceProgress from '@/components/UploadFaceProgress'
+import AddFaceModal from '@/components/AddFaceModal'
 
 export default {
   name: 'Main',
@@ -34,7 +36,8 @@ export default {
     LoginModal,
     TrainMenu,
     EquipmentList,
-    UploadFaceProgress
+    UploadFaceProgress,
+    AddFaceModal
   },
 
   mounted () {
@@ -49,6 +52,10 @@ export default {
 
     onAddFace () {
       this.$refs.camera.uploadFace()
+    },
+
+    onAddFaceTest (faceArgs) {
+      this.$refs.camera.uploadFace(faceArgs.faceName,faceArgs.equipmentName)
     },
 
     onUpgradeProgress (percentage) {

@@ -1,7 +1,7 @@
 <template>
   <div id="train-menu">
     <div class="row">
-      <button @click="$emit('addFace')" class="col-6 btn btn-primary squareButton">新增臉孔</button>
+      <button class="col-6 btn btn-primary squareButton" data-toggle="modal" data-target="#add-face-modal">新增臉孔</button>
       <button class="col-6 btn btn-success squareButton">登入紀錄</button>
       <button class="col-6 btn btn-danger squareButton">新增臉孔</button>
       <button class="col-6 btn btn-warning squareButton">新增臉孔</button>
