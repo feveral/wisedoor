@@ -4,7 +4,7 @@ from __future__ import print_function
 
 import sys
 import os
-sys.path.insert(0, "./facenetTrain/utility")
+sys.path.insert(0, "./utility")
 from scipy import misc
 import argparse
 import tensorflow as tf
@@ -23,7 +23,7 @@ class CutPicture:
         # Store some git revision info in a text file in the log directory
         src_path,_ = os.path.split(os.path.realpath(__file__))
         facenet.store_revision_info(src_path, outputPath, ' '.join(sys.argv))
-        dataset = facenet.get_dataset(inputPath)
+        dataset = self.get_dataset(inputPath)
         
         print('Creating networks and loading parameters')
         
@@ -108,9 +108,25 @@ class CutPicture:
                     tEnd = time.time()
                     print ("It cost %f sec" % (tEnd - tStart))
                     print (tEnd - tStart)
-
-                        
-                                
         print('Total number of images: %d' % nrof_images_total)
         print('Number of successfully aligned images: *%d*' % nrof_successfully_aligned)
+                    
+    def get_dataset(self, path, has_class_directories=True):
+        dataset = []
+        path_exp = os.path.expanduser(path)
+        print(path_exp)
+        classes = [path for path in os.listdir(path_exp) \
+                        if os.path.isdir(os.path.join(path_exp, path))]
+        classes.sort()
+        nrof_classes = len(classes)
+        for i in range(nrof_classes):
+            class_name = classes[i]
+            facedir = os.path.join(path_exp, class_name)
+            image_paths = get_image_paths(facedir)
+            dataset.append(ImageClass(class_name, image_paths))
+
+        return dataset
+                        
+                                
+
     
