@@ -119,6 +119,11 @@ db.query(
 
 db.query(`insert into USER VALUES('feveraly@gmail.com','宗翰','5566');`)
 db.query(`insert into USER VALUES('john@gmail.com','忠禮','5566');`)
-db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com','我的樹莓派',NULL);`)
+db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com','家裡的門',NULL);`)
 
 db.end()
+
+require('fs').readdir('facenetTrain/image/raw', (err, files) => {
+  for(let i = 0 ; i < files.length ; i++)
+    require('rimraf')(`facenetTrain/image/raw/${files[i]}`, () => { console.log('done'); });
+})
