@@ -107,10 +107,24 @@ class CutPicture:
 
                     tEnd = time.time()
                     print ("It cost %f sec" % (tEnd - tStart))
-                    print (tEnd - tStart)
-
-                        
-                                
         print('Total number of images: %d' % nrof_images_total)
         print('Number of successfully aligned images: *%d*' % nrof_successfully_aligned)
+                    
+    # def get_dataset(path, has_class_directories=True):
+    #     dataset = []
+    #     path_exp = os.path.expanduser(path)
+    #     classes = [path for path in os.listdir(path_exp) \
+    #                     if os.path.isdir(os.path.join(path_exp, path))]
+    #     classes.sort()
+    #     nrof_classes = len(classes)
+    #     for i in range(nrof_classes):
+    #         class_name = classes[i]
+    #         facedir = os.path.join(path_exp, class_name)
+    #         image_paths = get_image_paths(facedir)
+    #         dataset.append(ImageClass(class_name, image_paths))
+
+    #     return dataset
+                        
+                                
+
     
