@@ -1,17 +1,19 @@
 import cv2
 import time
 
-class CameraControl:
+class Camera:
     def __init__(self):
         self.cap = None
         self.frame = []
-    
 
     def CatchImage(self):
-        self.__openCamera()
+        if(not self.cap):
+            self.__openCamera()
         ret, frame = self.cap.read()
-        self.__closeCamera()  
         return frame
+
+    def SaveImage(self,path,imageFrame):
+        cv2.imwrite(path,imageFrame)
     
     def __openCamera(self):
         self.cap = cv2.VideoCapture(0)

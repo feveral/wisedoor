@@ -3,7 +3,10 @@
     <headers ref='headers'></headers>
     <div class="container">
       <div class="row">
-        <equipment-list class="col-2"></equipment-list>
+        <div class="col-2">
+          <h5 class="mb-3 text-center">您的設備列表</h5>
+          <equipment-list></equipment-list>
+        </div>
         <div class="col-8 row">
           <camera @upgradeProgress="onUpgradeProgress($event)" ref="camera" class="col-12"></camera>
           <upload-face-progress ref="progress" class="col-12"></upload-face-progress>
@@ -72,4 +75,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
+.text-center {
+  text-align: center;
+}
+
 </style>

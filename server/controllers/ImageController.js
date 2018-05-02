@@ -9,7 +9,6 @@ const uploadBasePath = `${process.cwd()}/facenetTrain/image/raw`
 
 module.exports = { 
 
-
     async uploadFace (req, res) {
         
         let equipmentId = await Equipment.FindIdByOwnerEmailAndName(req.user, req.body.equipmentName);
