@@ -1,0 +1,1 @@
+train = Train("./image/demo","./models/demo_classifier.pkl")

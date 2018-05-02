@@ -125,5 +125,5 @@ db.end()
 
 require('fs').readdir('facenetTrain/image/raw', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
-    require('rimraf')(`facenetTrain/image/raw/${files[i]}`, () => { console.log('done'); });
+    require('rimraf')(`facenetTrain/image/raw/${files[i]}`, () => { console.log('clear server/facenetTrain/image/raw'); });
 })

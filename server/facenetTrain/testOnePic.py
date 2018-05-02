@@ -19,9 +19,9 @@ from utility import *
 batch_size = 1000
 nrof_images = 1
 image_size = 160
-model_path = '../models/20170512-110547.pb'
-classifier_path = '../models/my_classifier.pkl' 
-image_path = '../image/testPic.png'
+model_path = './models/20170512-110547.pb'
+classifier_path = './models/demo_classifier.pkl' 
+image_path = './image/testPic.png'
 
 def main():
     with tf.Graph().as_default():
