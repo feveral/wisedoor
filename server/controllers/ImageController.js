@@ -12,10 +12,6 @@ const cutBasePath = `${process.cwd()}/facenetTrain/image/cut`
 module.exports = { 
 
     async uploadFace (req, res) {
-        
-        console.log(req.user)
-        console.log(req.body)
-
         let equipmentId = await Equipment.FindIdByOwnerEmailAndName(req.user, req.body.equipmentName);
         let faceId;
 

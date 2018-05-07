@@ -102,8 +102,8 @@ class CutPicture:
                                 print('Unable to align "%s"' % image_path)
                                 text_file.write('%s\n' % (output_filename))
 
-        print('Total number of images: %d' % nrof_images_total)
-        print('Number of successfully aligned images: *%d*' % nrof_successfully_aligned)
+        #print('Total number of images: %d' % nrof_images_total)
+        #print('Number of successfully aligned images: *%d*' % nrof_successfully_aligned)
 
     def get_dataset(self,path,outputDirName, has_class_directories=True):
         dataset = []

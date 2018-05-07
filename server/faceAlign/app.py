@@ -7,6 +7,10 @@ from facenetAlign import *
 
 app = Flask(__name__)
 cutPicture = CutPicture(); 
+
+import logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 #cutPicture.align("./facenetTrain/image/raw/test.jpg","./facenetTrain/image/cut","test");
 
 @app.route('/align', methods=['POST'])

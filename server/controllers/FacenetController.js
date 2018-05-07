@@ -4,7 +4,6 @@ module.exports = {
 	let shell = require('shelljs');
     let str = shell.exec('python3 ./facenetTrain/ServerMain.py ', {async:false,silent:false}, function(code, stdout, stderr) {
 		let arr = stdout.split("*");
-		console.log(arr[1]);
 	});
 	res.end("start train!");
 	},

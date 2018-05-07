@@ -128,3 +128,8 @@ require('fs').readdir('facenetTrain/image/raw', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
     require('rimraf')(`facenetTrain/image/raw/${files[i]}`, () => { console.log('clear server/facenetTrain/image/raw'); });
 })
+
+require('fs').readdir('facenetTrain/image/cut', (err, files) => {
+  for(let i = 0 ; i < files.length ; i++)
+    require('rimraf')(`facenetTrain/image/cut/${files[i]}`, () => { console.log('clear server/facenetTrain/image/cut'); });
+})
