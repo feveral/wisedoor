@@ -24,3 +24,5 @@ class OpencvAlign:
             cutImg = self.image[y:y + h,x:x + w]
             resizeImg = cv2.resize(cutImg,(160,160)) 
             cv2.imwrite("./image/tom/cut.png" , resizeImg)
+
+
