@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <headers ref='headers'></headers>
+    <headers ref='headers' @logout="onLogout()"></headers>
     <div class="container">
       <div class="row">
         <div class="col-2">
@@ -17,6 +17,7 @@
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
     <add-face-modal @addFaceTest="onAddFaceTest($event)"></add-face-modal>
     <router-view/>
+    <router-link :to="{name:'Login'}">123</router-link>
   </div>
 </template>
 
@@ -44,13 +45,18 @@ export default {
   },
 
   mounted () {
-
+    this.GoToLoginIfNotLogin()
+    this.SetUserName()
   },
 
   methods: {
 
     onLoginSuccess (name) {
       this.$refs.headers.setUserName(name)
+    },
+    
+    onLogout () {
+      this.GoToLoginIfNotLogin()
     },
 
     onAddFace () {
@@ -63,6 +69,18 @@ export default {
 
     onUpgradeProgress (percentage) {
       this.$refs.progress.setPercentage(percentage)
+    },
+
+    async SetUserName () {
+      this.$refs.headers.setUserName( (await LoginService.identification()).data.name )
+    },
+
+    async GoToLoginIfNotLogin () {
+      const response = (await LoginService.identification()).data
+      console.log(response)
+      if (response.error) {
+        this.$router.push({name:'Login'})
+      } 
     }
   }
 }

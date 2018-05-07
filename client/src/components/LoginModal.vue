@@ -54,13 +54,7 @@ export default {
       const response = await LoginService.loginLocal(this.email,this.password)
       $('#login-modal').modal('hide')
       this.$emit('loginSuccess',response.data.name)
-    },
-
-    open () {
-      if (!this.is_open) {
-        
-      }
-    } 
+    }
   }
 }
 </script>
