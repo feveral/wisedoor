@@ -39,7 +39,7 @@ from sklearn.svm import SVC
 batch_size = 1000
 nrof_images = 1
 image_size = 160
-model_path = "./facenetTrain/models/20170512-110547.pb"
+model_path = "./models/20170512-110547.pb"
 
 class Train:
     def __init__(self,input_dir,output_dir):
@@ -55,7 +55,6 @@ class Train:
                 for cls in dataset:
                     assert(len(cls.image_paths)>0, 'There must be at least one image for each class in the dataset')            
 
-                    
                 paths, labels = facenet.get_image_paths_and_labels(dataset)
 
                 # print('Number of classes: %d' % len(dataset))

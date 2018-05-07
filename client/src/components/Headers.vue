@@ -36,8 +36,9 @@ export default {
       this.isLogin = true
     },
 
-    logout () {
-      LoginService.logout()
+    async logout () {
+      await LoginService.logout()
+      this.$emit('logout')
       this.userName = '登入'
       this.isLogin = false
     }

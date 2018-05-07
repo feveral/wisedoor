@@ -2,12 +2,13 @@
 from FacenetAlign import *
 from Train import *
 from Camera import Camera
+import shutil
 import time
 import os
 import shutil
 
 
-dirName = raw_input("what is your name:")
+dirName = input("what is your name:")
 rawFolder = './image/raw/demo/'
 cutFolder = './image/cut/demo/'
 nowDirectory = sys.path[0] 
@@ -25,7 +26,7 @@ for i in range(25):
     imageFrame = camera.CatchImage()
     imagePath = rawFolder + dirName + "/" + str(i) + '.jpg'
     camera.SaveImage( imagePath, imageFrame)
-
+# shutil.copytree('./image/unknown/', './image/cut/demo/unknown')
 time.sleep(2)
-CutPicture = CutPicture(rawFolder,cutFolder)
+CutPicture(rawFolder,cutFolder)
 

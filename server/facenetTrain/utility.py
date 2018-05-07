@@ -11,7 +11,6 @@ def findNumberOfFile(path):
     return len(files)
 
 def saveImage(path,frame):
-	#print(path)
 	cv2.imwrite(path , frame)
 
 def createFolder(directory):

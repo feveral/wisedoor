@@ -107,7 +107,6 @@ class CutPicture:
 
                     tEnd = time.time()
                     print ("It cost %f sec" % (tEnd - tStart))
-                    print (tEnd - tStart)
         print('Total number of images: %d' % nrof_images_total)
         print('Number of successfully aligned images: *%d*' % nrof_successfully_aligned)
                     

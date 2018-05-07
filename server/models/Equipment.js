@@ -16,9 +16,9 @@ module.exports = class Equipment {
     return newId
   }
 
-  static async IsIdExist(id) {
-    const result = await db.query(`select Id from EQUIPMENT where Id='${id}'`)
-    return result.length == 1
+  static async FindEquipmentsByUserEmail(ownerEmail) {
+    const result = await db.query(`select * from EQUIPMENT where OwnerEmail='${ownerEmail}'`)
+    return result
   }
 
   static async FindIdByOwnerEmailAndName(ownerEmail, equipmentName) {

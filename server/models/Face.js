@@ -34,6 +34,11 @@ module.exports = class Face {
     const result = await db.query(`select Id from FACE where Id='${id}'`)
     return result.length == 1
   }
+
+  static async FindFaceById(id) {
+    const result = await db.query(`select * from FACE where Id='${id}'`)
+    return result
+  }
   
   static async FindFaceIdByFaceNameAndEquipmentId(faceName, equipmentId) {
     const result = await db.query(`select Id from FACE,FACE_BELONG_EQUIPMENT 
@@ -42,6 +47,7 @@ module.exports = class Face {
                                    FACE.Name='${faceName}'`)
     return result[0].Id
   }
+
   static async FindNameById(id) {
     const result = await db.query(`select Name from FACE where Id='${id}'`)
     return result[0].Name

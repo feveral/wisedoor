@@ -19,9 +19,9 @@ from utility import *
 batch_size = 1000
 nrof_images = 1
 image_size = 160
-model_path = '../models/20170512-110547.pb'
-classifier_path = '../models/my_classifier.pkl' 
-image_path = '../image/testPic.png'
+model_path = './models/20170512-110547.pb'
+classifier_path = './models/demo_classifier.pkl' 
+image_path = './image/testPic.png'
 
 def main():
     with tf.Graph().as_default():
@@ -71,7 +71,7 @@ def main():
                         feed_dict = { images_placeholder:images, phase_train_placeholder:False }
                         start_time = time.time()
                         emb_array[start_index:end_index,:] = sess.run(embeddings, feed_dict=feed_dict)
-                        print(time.time()-start_time)
+                        print('it cost',time.time()-start_time,'s')
 
                     predictions = model.predict_proba(emb_array)
                     best_class_indices = np.argmax(predictions, axis=1)
