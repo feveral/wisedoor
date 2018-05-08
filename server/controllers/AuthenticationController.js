@@ -9,7 +9,7 @@ module.exports = {
 
   logout (req, res) {
     req.logout();
-    res.send({success:`You've successfully logout`})
+    res.send( {success:`You've successfully logout`} )
     //res.redirect('/');
   },
 
