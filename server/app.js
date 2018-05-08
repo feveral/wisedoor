@@ -12,6 +12,10 @@ app.use(cors({
   credentials: true
 }))
 
+let shell = require('shelljs');
+let str = shell.exec('python3 ./faceAlign/app.py', {async:true,silent:false}, function(code, stdout, stderr) {
+});
+
 let passport = require('./passport')(app)
 let routes = require('./routes')(app, passport)
 
