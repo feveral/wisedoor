@@ -7,5 +7,6 @@
 /client/dist/
 /client/dist/.well-known/
 /server/ssl/
+package-lock.json
 *.pyc
 

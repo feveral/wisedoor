@@ -1,5 +1,7 @@
 module.exports = {
-    port:80,
+    httpPort:80,
+    httpsPort: 443,
+    devPort: 8080,
     db_name: 'Wisedoor',
     db_config: {
         connectionLimit: 10,

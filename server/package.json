@@ -6,12 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "init": "sudo node database/InitialDatabase.js",
-    "start": "./node_modules/nodemon/bin/nodemon.js app.js --exec 'sudo node' "
+    "start": "NODE_ENV=production sudo node app.js",
+    "dev": "./node_modules/nodemon/bin/nodemon.js app.js --exec 'sudo node' "
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "connect-history-api-fallback": "^1.5.0",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
