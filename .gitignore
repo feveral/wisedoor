@@ -5,5 +5,7 @@
 /server/node_modules/
 /client/node_modules/
 /client/dist/
+/client/dist/.well-known/
+/server/ssl/
 *.pyc
 

@@ -23,4 +23,4 @@ def alignPicture():
     return jsonify({'success': data})
 
 if __name__ == '__main__':
-    app.run(host='localhost', debug=True, port = 3000)
+    app.run(host='localhost', debug=True, port=3000)
