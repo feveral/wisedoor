@@ -12,8 +12,8 @@ app.use(cors({
   credentials: true
 }))
 
-let shell = require('shelljs');
-let str = shell.exec('python3 ./faceAlign/app.py', {async:true,silent:false}, function(code, stdout, stderr) {
+const shell = require('shelljs');
+const str = shell.exec('python3 ./faceAlign/app.py', {async:true,silent:false}, (code, stdout, stderr) => {
 });
 
 let passport = require('./passport')(app)

@@ -1,7 +1,8 @@
 <template>
   <div id="camera" >
     <div class="row mb-4">
-      <video id="video" ref="video" class="col-12" width="640" height="480" autoplay="" ></video>
+      <video @click="OpenCamera()" id="video" ref="video" class="col-12" width="640" height="480" autoplay="" >
+      </video>
     </div>
     <!--<div class="row">
       <div class="col-3"></div>
@@ -20,7 +21,8 @@ export default {
 
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      cameraIndex: 0
     }
   },
 
@@ -30,16 +32,24 @@ export default {
 
   methods: {
     
-    OpenCamera(){
-      var video = this.$refs.video;
-      // Get access to the camera!
-      if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        // Not adding `{ audio: true }` since we only want video now
-          navigator.mediaDevices.getUserMedia({ video: true }).then( (stream) => {
-              video.src = window.URL.createObjectURL(stream);
-              video.play();
+    async OpenCamera(){
+      let video = this.$refs.video;
+      navigator.mediaDevices.enumerateDevices().then( (devices) => {
+          devices = devices.filter( (devices) => { return devices.kind === 'videoinput'; });
+          if (devices.length == 1) { // 只有一個鏡頭
+            this.cameraIndex = 0
+          }
+          else if (this.cameraIndex == 0) { //有兩鏡頭且現在再第1鏡頭 
+            this.cameraIndex = 1
+          }
+          else if (this.cameraIndex == 1) { //有兩鏡頭且現在再第2鏡頭
+            this.cameraIndex = 0
+          }
+          navigator.mediaDevices.getUserMedia({ video: { deviceId: {'exact':devices[this.cameraIndex].deviceId}, facingMode: 'environment' }}).then( (stream) => {
+            video.src = window.URL.createObjectURL(stream);
+            video.play();
           });
-      }
+      })
     },
     
     getVideoImage(){
@@ -63,6 +73,8 @@ export default {
         response = await ImageService.uploadFace(imageData,faceName,equipmentName)
         this.$emit('upgradeProgress',response.data.progress * 4)
       } while (response.data.progress < 25)
+      alert('上傳完成')
+      this.$emit('upgradeProgress',0)
     }
   }
 }
@@ -71,9 +83,11 @@ export default {
 <style>
 #camera {
   text-align: center;
+  padding: 0;
 }
 
 #upload {
   text-align: center;
 }
+
 </style>

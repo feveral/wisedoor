@@ -46,7 +46,7 @@ def main():
                 (model, class_names) = pickle.load(infile)
             print('Loaded classifier model from file "%s"' % classifier_filename_exp)
 
-            cap = cv2.VideoCapture(0)
+            cap = cv2.VideoCapture(1)
             while(True):
             
                 ret, frame = cap.read()

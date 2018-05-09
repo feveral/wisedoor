@@ -6,18 +6,19 @@ import sys
 import os
 sys.path.insert(0, "./faceAlign/utility")
 from scipy import misc
-import argparse
+from time import sleep
 import tensorflow as tf
 import numpy as np
+import argparse
 import facenet
 import align.detect_face
 import random
 import time
-from time import sleep
 
 IMAGE_SIZE = 160
 class CutPicture:
     def __init__(self):
+        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
         sleep(random.random())
         with tf.Graph().as_default():
             gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=1.0)

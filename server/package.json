@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "init": "sudo node database/InitialDatabase.js",
-    "start": "sudo node app.js"
+    "start": "./node_modules/nodemon/bin/nodemon.js app.js --exec 'sudo node' "
   },
   "author": "",
   "license": "ISC",
