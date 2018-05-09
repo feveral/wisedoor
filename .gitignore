@@ -1,11 +1,9 @@
-image/
-server/facenetTrain/image/cut/
-server/facenetTrain/image/cut/
-server/facenetTrain/image/originimage/
-server/facenetTrain/image/originimage/
-server/node_modules/
-client/node_modules/
-client/dist/
-server/facenetTrain/image/cut/*.txt
+/image
+/server/facenetTrain/image/cut
+/server/facenetTrain/image/raw
+/server/facenetTrain/image/originimage/
+/server/node_modules/
+/client/node_modules/
+/client/dist/
 *.pyc
 

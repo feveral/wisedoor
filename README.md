@@ -1,34 +1,5 @@
 # WiseDoor
 
-### 合理的image資料夾路徑
-
-```
-image
-  |——cut
-  |   |
-  |   |__people1
-  |   |    |__xxx.png
-  |   |    |__yyy.png
-  |   |
-  |   |__people2 
-  |        |__xxx.png
-  |        |__xxx.png
-  |__train
-  |   |
-  |   |__people1
-  |   |    |__xxx.png
-  |   |    |__yyy.png
-  |   |
-  |   |__people2 
-  |        |__xxx.png
-  |        |__xxx.png
-  |__raw
-  |   |
-  |   |__people1
-  |   |    |__xxx.png
-  |   |    |__yyy.png
-  |   |
-  |   |__people2 
-  |        |__xxx.png
-  |        |__xxx.png
-```
+### WARN
+- 目前存image的路徑為 `server/facenetTrain/image/`
+- 將來若要將資料夾`server/facenetTrain`重構，必須更改 `server/database/InitialDatabase.js`

@@ -124,6 +124,16 @@ db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','fever
 
 db.end()
 
+if (!require('fs').existsSync('facenetTrain/image/raw')) {
+  mkdirSync('facenetTrain/image/raw')
+  console.log('recreate facenetTrain/image/raw')
+}
+
+if (!require('fs').existsSync('facenetTrain/image/cut')) {
+  mkdirSync('facenetTrain/image/cut')
+  console.log('recreate facenetTrain/image/cut')
+}
+
 require('fs').readdir('facenetTrain/image/raw', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
     require('rimraf')(`facenetTrain/image/raw/${files[i]}`, () => { console.log('clear server/facenetTrain/image/raw'); });
