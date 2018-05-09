@@ -39,7 +39,7 @@ module.exports = {
                     "cutBasePath": cutBasePath
                 } 
                 request.post({url:'http://localhost:3000/align',formData: formData}
-                    ,function (error, response, body) {
+                    , (error, response, body) => {
                         if (!error && response.statusCode == 200) {
                             fs.readdir(`${cutBasePath}/${faceId}`, (err, files) => {
                                 res.send({ success: true, progress: files.length})

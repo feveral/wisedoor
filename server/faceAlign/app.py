@@ -3,7 +3,7 @@ from flask import Flask, jsonify
 from flask import abort
 from flask import request
 import sys
-from facenetAlign import *
+from utility.facenetAlign import *
 import logging
 
 app = Flask(__name__)
