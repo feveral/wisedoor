@@ -8,45 +8,31 @@ const history = require('connect-history-api-fallback')
 const config = require('./config/config')
 const httpApp = express()
 const app = express()
-
 const privateKey = fs.readFileSync(__dirname + '/ssl/private.key');
 const certificate = fs.readFileSync(__dirname + '/ssl/certificate.crt');
 const credentials = { key: privateKey, cert: certificate };
 
-httpApp.set('port', process.env.PORT || config.httpPort)
-httpApp.get("*", (req, res, next) => {
-  res.redirect("https://" + req.headers.host + req.path);
-});
 
 app.set('port', process.env.PORT || config.httpsPort)
 app.use(history())
 app.use(express.static('../client/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
+app.use(cors({
+  origin: [`http://localhost:8080`, `http://localhost`],
+  credentials: true
+}))
 
-if (process.env.NODE_ENV == 'production') {
-  app.use(cors({
-    origin: "http://localhost:${config.httpPort}",
-    credentials: true
-  }))
-}
-else {
-  app.use(cors({
-    origin: "http://localhost:${config.devPort}",
-    credentials: true
-  }))
-}
+httpApp.set('port', process.env.PORT || config.httpPort)
+httpApp.get("*", (req, res, next) => {
+  res.redirect("https://" + req.headers.host + req.path);
+});
 
 let passport = require('./passport')(app)
 let routes = require('./routes')(app, passport)
 
-http.createServer(httpApp).listen(httpApp.get('port'), () => {
-  console.log('Express HTTP server listening on port ' + httpApp.get('port'));
-})
-
-https.createServer(credentials, app).listen(app.get('port'), () => {
-  console.log('Express HTTPS server listening on port ' + app.get('port'));
-})
+http.createServer(httpApp).listen(config.httpPort, () => {})
+https.createServer(credentials, app).listen(config.httpsPort, () => {})
 
 const shell = require('shelljs')
 const str = shell.exec('python3 ./faceAlign/app.py', { async: true, silent: false }, (code, stdout, stderr) => {
