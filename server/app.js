@@ -1,22 +1,39 @@
-const express = require('express');
-const http = require('http');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const app = express();
+const express = require('express')
+const http = require('http')
+const https = require('https')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const fs = require('fs')
+const history = require('connect-history-api-fallback')
+const config = require('./config/config')
+const httpApp = express()
+const app = express()
+const privateKey = fs.readFileSync(__dirname + '/ssl/private.key');
+const certificate = fs.readFileSync(__dirname + '/ssl/certificate.crt');
+const credentials = { key: privateKey, cert: certificate };
 
+
+app.set('port', process.env.PORT || config.httpsPort)
+app.use(history())
 app.use(express.static('../client/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(cors({
-  origin: "http://localhost:8080",
+  origin: [`http://localhost:8080`, `http://localhost`,`http://funnypicture.ml`],
   credentials: true
 }))
 
-const shell = require('shelljs');
-const str = shell.exec('python3 ./faceAlign/app.py', {async:true,silent:false}, (code, stdout, stderr) => {
-  console.log(stdout)
+httpApp.set('port', process.env.PORT || config.httpPort)
+httpApp.get("*", (req, res, next) => {
+  res.redirect("https://" + req.headers.host + req.path);
 });
 
 let passport = require('./passport')(app)
 let routes = require('./routes')(app, passport)
-app.listen(80);
+
+http.createServer(httpApp).listen(config.httpPort, () => {})
+https.createServer(credentials, app).listen(config.httpsPort, () => {})
+
+const shell = require('shelljs')
+const str = shell.exec('python3 ./faceAlign/app.py', { async: true, silent: false }, (code, stdout, stderr) => {
+})
