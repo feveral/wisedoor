@@ -38,6 +38,7 @@ module.exports = {
                     "imageName": imageName,
                     "cutBasePath": cutBasePath
                 } 
+                console.log(cutBasePath);
                 request.post({url:'http://localhost:3000/align',formData: formData}
                     , (error, response, body) => {
                         if (!error && response.statusCode == 200) {

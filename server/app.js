@@ -14,9 +14,9 @@ app.use(cors({
 
 const shell = require('shelljs');
 const str = shell.exec('python3 ./faceAlign/app.py', {async:true,silent:false}, (code, stdout, stderr) => {
+  console.log(stdout)
 });
 
 let passport = require('./passport')(app)
 let routes = require('./routes')(app, passport)
-
 app.listen(80);
