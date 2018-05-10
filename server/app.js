@@ -19,7 +19,7 @@ app.use(express.static('../client/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(cors({
-  origin: [`http://localhost:8080`, `http://localhost`],
+  origin: [`http://localhost:8080`, `http://localhost`,`http://funnypicture.ml`],
   credentials: true
 }))
 
