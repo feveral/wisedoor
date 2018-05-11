@@ -2,22 +2,21 @@
   <div id="main">
     <headers ref='headers' @logout="onLogout()"></headers>
     <div class="container">
-      <div class="row">
-        <div class="col-2">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-2">
           <h5 class="mb-3 text-center">您的設備列表</h5>
           <equipment-list></equipment-list>
         </div>
-        <div class="col-8 row">
+        <div class="col-12 col-lg-8 row">
           <camera @upgradeProgress="onUpgradeProgress($event)" ref="camera" class="col-12"></camera>
-          <upload-face-progress ref="progress" class="col-12"></upload-face-progress>
         </div>
-        <train-menu @addFace="onAddFace()" class="col-2"></train-menu>
+        <train-menu @addFace="onAddFace()" class="col-12 col-lg-2"></train-menu>
+        <upload-face-progress ref="progress" class="col-12 col-lg-8"></upload-face-progress>
       </div>
     </div>
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
     <add-face-modal @addFaceTest="onAddFaceTest($event)"></add-face-modal>
     <router-view/>
-    <router-link :to="{name:'Login'}">123</router-link>
   </div>
 </template>
 

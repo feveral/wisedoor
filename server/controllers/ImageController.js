@@ -48,7 +48,7 @@ module.exports = {
                         else
                             console.log("error" + error);
                     }
-                );
+                )
             }
         });
     }

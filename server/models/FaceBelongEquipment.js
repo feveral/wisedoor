@@ -1,7 +1,7 @@
 const db = require('../database/database')
-const randomHex = require('randomhex');
+const randomHex = require('randomhex')
 
-module.exports = class Face {
+module.exports = class FaceBelongEquipment {
 
   constructor(faceId, equipmentId) {
     this.faceId = faceId

@@ -1,14 +1,9 @@
 <template>
   <div id="camera" >
-    <div class="row mb-4">
-      <video @click="OpenCamera()" id="video" ref="video" class="col-12" width="640" height="480" autoplay="" >
+    <div class="row mb-4 justify-content-center">
+      <video @click="OpenCamera()" id="video" ref="video" class="col-12" autoplay="" >
       </video>
     </div>
-    <!--<div class="row">
-      <div class="col-3"></div>
-      <button id="upload" @click="uploadImage()" class="col-6 btn btn-success">上傳圖片</button>
-    </div>
-    -->
   </div>
 </template>
 
@@ -22,7 +17,8 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      cameraIndex: 0
+      cameraIndex: 0,
+      debug: ''
     }
   },
 
@@ -33,7 +29,8 @@ export default {
   methods: {
     
     async OpenCamera(){
-      let video = this.$refs.video;
+      // IPhone 無法使用 , HTC10 前鏡頭無法打開 , LG G6 可正常使用
+      let video = this.$refs.video
       navigator.mediaDevices.enumerateDevices().then( (devices) => {
           devices = devices.filter( (devices) => { return devices.kind === 'videoinput'; });
           if (devices.length == 1) { // 只有一個鏡頭
@@ -45,10 +42,10 @@ export default {
           else if (this.cameraIndex == 1) { //有兩鏡頭且現在再第2鏡頭
             this.cameraIndex = 0
           }
-          navigator.mediaDevices.getUserMedia({ video: { deviceId: {'exact':devices[this.cameraIndex].deviceId}, facingMode: 'environment' }}).then( (stream) => {
+          navigator.mediaDevices.getUserMedia({ video: { deviceId: {'exact':devices[this.cameraIndex].deviceId}, facingMode: "user"  }}).then( (stream) => {
             video.src = window.URL.createObjectURL(stream);
             video.play();
-          });
+          })
       })
     },
     
@@ -84,6 +81,7 @@ export default {
 #camera {
   text-align: center;
   padding: 0;
+  max-width: 100%;
 }
 
 #upload {

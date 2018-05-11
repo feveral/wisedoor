@@ -1,12 +1,8 @@
 <template>
   <div id="train-menu">
     <div class="row">
-      <button class="col-6 btn btn-primary squareButton" data-toggle="modal" data-target="#add-face-modal">新增臉孔</button>
-      <button class="col-6 btn btn-success squareButton">登入紀錄</button>
-      <button class="col-6 btn btn-danger squareButton">新增臉孔</button>
-      <button class="col-6 btn btn-warning squareButton">新增臉孔</button>
-      <button class="col-6 btn btn-info squareButton">新增臉孔</button>
-      <button @click="TrainModel()" class="col-6 btn btn-secondary">訓練模型</button>
+      <button class="col-6 col-lg-12 btn btn-primary squareButton" data-toggle="modal" data-target="#add-face-modal">新增臉孔</button>
+      <button class="col-6 col-lg-12 btn btn-success squareButton">登入紀錄</button>
     </div>
   </div>
 </template>
@@ -36,7 +32,7 @@ export default {
 <style>
 
 .squareButton {
-  height: 100px;
+  height: 120px;
 }
 
 </style>

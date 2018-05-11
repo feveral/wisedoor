@@ -10,7 +10,7 @@ const httpApp = express()
 const app = express()
 const privateKey = fs.readFileSync(__dirname + '/ssl/private.key');
 const certificate = fs.readFileSync(__dirname + '/ssl/certificate.crt');
-const credentials = { key: privateKey, cert: certificate };
+const credentials = { key: privateKey, cert: certificate }
 
 
 app.set('port', process.env.PORT || config.httpsPort)
@@ -19,7 +19,7 @@ app.use(express.static('../client/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(cors({
-  origin: [`http://localhost:8080`, `http://localhost`,`http://funnypicture.ml`],
+  origin: [`http://localhost:8080`, `http://localhost`, `http://funnypicture.ml`, `http://192.168.1.8`],
   credentials: true
 }))
 

@@ -2,7 +2,7 @@
   <div id="login" class="container">
     <h3 class="text-center mt-4">會員登入</h3>
     <div class="row justify-content-center">
-      <div class="col-4 mt-2">
+      <div class="col-10 col-sm-4 mt-2">
         <div class="form-group">
           <label for="exampleInputEmail1">電子信箱</label>
           <input v-model="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
