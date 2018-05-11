@@ -2,16 +2,15 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+from utility import facenet
 import sys
 import os
-sys.path.insert(0, "./faceAlign/utility")
 from scipy import misc
 from time import sleep
 import tensorflow as tf
 import numpy as np
 import argparse
-import facenet
-import align.detect_face
+import utility.align.detect_face as detect_face
 import random
 import time
 
@@ -24,7 +23,7 @@ class CutPicture:
             gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=1.0)
             sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
             with sess.as_default():
-                self.pnet, self.rnet, self.onet = align.detect_face.create_mtcnn(sess, None)
+                self.pnet, self.rnet, self.onet = detect_face.create_mtcnn(sess, None)
         self.minsize = 20 # minimum size of face
         self.threshold = [ 0.6, 0.7, 0.7 ]  # three steps's threshold
         self.factor = 0.709 # scale factor
@@ -69,7 +68,7 @@ class CutPicture:
                                 img = facenet.to_rgb(img)
                             img = img[:,:,0:3]
         
-                            bounding_boxes, _ = align.detect_face.detect_face(img, self.minsize, self.pnet, self.rnet, self.onet, self.threshold, self.factor)
+                            bounding_boxes, _ = detect_face.detect_face(img, self.minsize, self.pnet, self.rnet, self.onet, self.threshold, self.factor)
                             nrof_faces = bounding_boxes.shape[0]
                             if nrof_faces>0:
                                 det = bounding_boxes[:,0:4]
