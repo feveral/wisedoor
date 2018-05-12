@@ -17,7 +17,7 @@ module.exports = {
         if (await Face.IsFaceNameInEquipment(req.body.faceName, equipmentId)) {
             faceId = await Face.FindFaceIdByFaceNameAndEquipmentId(req.body.faceName, equipmentId)
         } else {
-            faceId = await Face.Add(req.body.faceName, false)
+            faceId = await Face.Add(req.body.faceName,false)
             await FaceBelongEquipment.Add(faceId,equipmentId)
         }
         

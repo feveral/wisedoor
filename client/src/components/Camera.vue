@@ -1,7 +1,7 @@
 <template>
   <div id="camera" >
     <div class="row mb-4 justify-content-center">
-      <video @click="OpenCamera()" id="video" ref="video" class="col-12" autoplay="" >
+      <video @click="OpenCamera()" id="video" ref="video" width="640" height="480" class="col-12" autoplay="" >
       </video>
     </div>
   </div>
@@ -51,13 +51,13 @@ export default {
     
     getVideoImage(){
       const video = document.getElementById('video')
-      const canvas = document.createElement('canvas');
+      const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d');
-      const width = video.width;
-      const height = video.height;
+      const width = video.width
+      const height = video.height
       canvas.width = width
       canvas.height = height
-      context.drawImage(video,0,0,width,height,0,0,width,height);
+      context.drawImage(video,0,0,width,height,0,0,width,height)
       return canvas.toDataURL("image/png").substr(22);
     },
 
