@@ -8,6 +8,12 @@ module.exports = class Equipment {
     this.owner = owner
   }
 
+  static async Add (id, owner) {
+    const equipmentId = await this.ProduceUniqueId()
+    // await db.query(`insert into EQUIPMENT VALUES ('${equipmentId}','${name}')`)
+    return faceId
+  }
+
   static async ProduceUniqueId() {
     const newId = await randomHex(16).substring(2)
     if (await this.IsIdExist(newId)){

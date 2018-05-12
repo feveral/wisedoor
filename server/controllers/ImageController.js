@@ -17,7 +17,7 @@ module.exports = {
         if (await Face.IsFaceNameInEquipment(req.body.faceName, equipmentId)) {
             faceId = await Face.FindFaceIdByFaceNameAndEquipmentId(req.body.faceName, equipmentId)
         } else {
-            faceId = await Face.Add(req.body.faceName)
+            faceId = await Face.Add(req.body.faceName, false)
             await FaceBelongEquipment.Add(faceId,equipmentId)
         }
         
@@ -38,7 +38,6 @@ module.exports = {
                     "imageName": imageName,
                     "cutBasePath": cutBasePath
                 } 
-                console.log(cutBasePath);
                 request.post({url:'http://localhost:3000/align',formData: formData}
                     , (error, response, body) => {
                         if (!error && response.statusCode == 200) {

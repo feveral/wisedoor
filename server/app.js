@@ -12,14 +12,13 @@ const privateKey = fs.readFileSync(__dirname + '/ssl/private.key');
 const certificate = fs.readFileSync(__dirname + '/ssl/certificate.crt');
 const credentials = { key: privateKey, cert: certificate }
 
-
 app.set('port', process.env.PORT || config.httpsPort)
 app.use(history())
 app.use(express.static('../client/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(cors({
-  origin: [`http://localhost:8080`, `http://localhost`, `http://funnypicture.ml`, `http://192.168.1.8`],
+  origin: config.corsOrigin,
   credentials: true
 }))
 
@@ -31,9 +30,10 @@ httpApp.get("*", (req, res, next) => {
 let passport = require('./passport')(app)
 let routes = require('./routes')(app, passport)
 
-http.createServer(httpApp).listen(config.httpPort, () => {})
-https.createServer(credentials, app).listen(config.httpsPort, () => {})
+http.createServer(httpApp).listen(httpApp.get('port'), () => {})
+https.createServer(credentials, app).listen(app.get('port'), () => {})
 
-const shell = require('shelljs')
+/* const shell = require('shelljs')
 const str = shell.exec('python3 ./faceAlign/app.py', { async: true, silent: false }, (code, stdout, stderr) => {
 })
+ */

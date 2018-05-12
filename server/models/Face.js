@@ -8,9 +8,9 @@ module.exports = class Face {
     this.name = name
   }
 
-  static async Add (name) {
+  static async Add (name, isUpload) {
     const faceId = await this.ProduceUniqueId()
-    await db.query(`insert into FACE VALUES ('${faceId}','${name}')`)
+    await db.query(`insert into FACE VALUES ('${faceId}','${name}',${isUpload})`)
     return faceId
   }
 

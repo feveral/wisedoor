@@ -35,6 +35,7 @@ db.query(
      OwnerEmail VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
      Name VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
      ModelId VARCHAR(255) CHARACTER SET utf8 , 
+     IsTrain BOOLEAN NOT NULL , 
      PRIMARY KEY(Id) , 
      FOREIGN KEY(OwnerEmail) REFERENCES USER(Email)
    );`,
@@ -52,6 +53,7 @@ db.query(
    (
      Id VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
      Name VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+     IsUpload BOOLEAN NOT NULL , 
      PRIMARY KEY(Id)  
    );`,
   (err, result) => {
@@ -67,10 +69,7 @@ db.query(
   `CREATE TABLE MODEL
    (
      Id VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
-     Time VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
-     EquipmentId VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
-     PRIMARY KEY(Id) , 
-     FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
+     PRIMARY KEY(Id) 
    );`,
   (err, result) => {
     if (err) {
@@ -120,7 +119,7 @@ db.query(
 db.query(`insert into USER VALUES('feveraly@gmail.com','宗翰','5566');`)
 db.query(`insert into USER VALUES('john@gmail.com','忠禮','5566');`)
 
-db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com','家裡的門',NULL);`)
+db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com','家裡的門',NULL,false);`)
 
 db.end()
 

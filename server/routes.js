@@ -4,7 +4,6 @@ module.exports = (app, passport) => {
     const ImageController = require('./controllers/ImageController')
     const AuthenticationController = require('./controllers/AuthenticationController')
     const EquipmentController = require('./controllers/EquipmentController')
-    const FacenetController = require('./controllers/FacenetController')
     const FaceController = require('./controllers/FaceController')
     const AuthenticationRouter = express.Router()
     const imageRouter = express.Router()
@@ -16,9 +15,6 @@ module.exports = (app, passport) => {
     AuthenticationRouter.get('/logout', AuthenticationController.logout)
     AuthenticationRouter.get('/username', AuthenticationController.username)
     imageRouter.post('/upload/face', ImageController.uploadFace)
-    facenetRouter.get('/train', FacenetController.train)
-    facenetRouter.get('/checkModelStatus', FacenetController.checkModelStatus)
-    facenetRouter.get('/modelFinish', FacenetController.modelFinish)
     equipmentRouter.get('/', EquipmentController.GetEquipments)
     faceRouter.get('/:equipmentId', FaceController.GetFaces)
 
