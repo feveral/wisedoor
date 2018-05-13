@@ -13,7 +13,7 @@ const certificate = fs.readFileSync(__dirname + '/ssl/certificate.crt');
 const credentials = { key: privateKey, cert: certificate }
 
 app.set('port', process.env.PORT || config.httpsPort)
-app.use(history())
+//app.use(history())
 app.use(express.static('../client/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
@@ -32,8 +32,8 @@ let routes = require('./routes')(app, passport)
 
 http.createServer(httpApp).listen(httpApp.get('port'), () => {})
 https.createServer(credentials, app).listen(app.get('port'), () => {})
-
-/* const shell = require('shelljs')
+/*
+const shell = require('shelljs')
 const str = shell.exec('python3 ./faceAlign/app.py', { async: true, silent: false }, (code, stdout, stderr) => {
 })
- */
+*/

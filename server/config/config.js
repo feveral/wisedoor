@@ -10,5 +10,5 @@ module.exports = {
         password: '5566',
         database: 'Wisedoor'
     },
-    corsOrigin: [`http://localhost:8080`, `http://localhost`, `http://funnypicture.ml`, `http://192.168.1.8`]
+    corsOrigin: [`http://localhost:8080`, `http://localhost`, `http://funnypicture.ml` ,'*']
 }

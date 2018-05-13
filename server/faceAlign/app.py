@@ -36,7 +36,7 @@ def alignPicture():
     cutBasePath = data['cutBasePath']
     if not os.path.exists(cutBasePath + "/" + faceId):
         os.makedirs(cutBasePath+ "/" + faceId)
-    if(is_blurr(uploadBasePath+ "/" + faceId + "/" + imageName)):
+    if not (is_blurr(uploadBasePath+ "/" + faceId + "/" + imageName)):
         cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
         return jsonify({'success': True})
     else:
@@ -46,9 +46,9 @@ def alignPicture():
 def trainPicture():
     data = request.form
     specificDirList = data['specificDirList']
-    inputDir = data['inputDir']
+    inputDirPath = data['inputDir']
     outputModelPath = data['outputModelPath']
-    train.AddTrainData(specificDirList,inputDir,outputModelPath)
+    train.AddTrainData(specificDirList,inputDirPath,outputModelPath)
     return jsonify({'waiting': "train"})
 
 if __name__ == '__main__':

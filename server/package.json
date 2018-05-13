@@ -6,7 +6,7 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
     "init": "sudo node database/InitialDatabase.js",
-    "facenet": "python ./faceAlign/app.py",
+    "facenet": "python3 ./faceAlign/app.py",
     "start": "sudo NODE_ENV=production node app.js",
     "dev": "./node_modules/nodemon/bin/nodemon.js app.js --exec 'sudo node' "
   },
@@ -23,6 +23,7 @@
     "nodemon": "^1.17.3",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "pickle": "^0.2.0",
     "randomhex": "^0.1.5",
     "request": "^2.85.0",
     "rimraf": "^2.6.2",
