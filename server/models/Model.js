@@ -8,9 +8,9 @@ module.exports = class Model {
     this.equipmentId = equipmentId
   }
 
-  static async Add(id, time, equipmentId) {
+  static async Add() {
     const modelId = await this.ProduceUniqueId()
-    await db.query(`insert into MODEL VALUES ('${id}','${equipmentId}')`)
+    await db.query(`insert into MODEL VALUES ('${modelId}', 'false')`)
     return modelId
   }
 
@@ -26,4 +26,5 @@ module.exports = class Model {
     const result = await db.query(`select Id from MODEL where Id='${id}'`)
     return result.length == 1
   }
+
 }

@@ -4,9 +4,11 @@ const Equipment = require('../models/Equipment')
 const Face = require('../models/Face')
 const FaceBelongEquipment = require('../models/FaceBelongEquipment')
 const request = require('request');
+const Model = require('../models/Model')
 
 const uploadBasePath = `${process.cwd()}/facenetTrain/image/raw`
 const cutBasePath = `${process.cwd()}/facenetTrain/image/cut`
+const modelBasePath = `${process.cwd()}/facenetTrain/models`
 
 module.exports = { 
 
@@ -67,12 +69,34 @@ module.exports = {
     async checkAlignProgressAndResponse (req, res) {
         fs.readdir(`${cutBasePath}/${req.faceId}`, (err, files) => {
             if (files.length >= 25) {
-                await SetIsUpload(req.faceId,true)
-                
-                // TODO
+                req.modelId = await Model.Add()
+                req.faceIdList = await 
 
+                next()
             }
-            res.send({ success: true, progress: files.length })
+            else
+                res.send({ success: true, progress: files.length })
         })
+    },
+
+    trainFace (req, res, next) {
+        const formData =
+            {
+                "cutBasePath": cutBasePath,
+                "faceIdList": req.faceIdList,
+                "outputModelPath": modelBasePath + "/" + req.modelId + ".pkl",
+            }
+        request.post({ url: 'http://localhost:3000/train', formData: formData }
+            , (error, response, body) => {
+                if (!error && response.statusCode == 200) {
+                    next()
+                }
+                else {
+                    console.log("error" + error)
+                    res.send({ error: "An error occured while training model" })
+                }
+            }
+        )
     }
+
 }

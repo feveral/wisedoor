@@ -48,7 +48,7 @@ def trainPicture():
     faceIdList = data['faceId']
     cutBasePath = data['cutBasePath']
     outputModelPath = data['outputModelPath']
-    train.AddTrainData(faceId,cutBasePath,outputModelPath)
+    train.AddTrainData(faceIdList,cutBasePath,outputModelPath)
     return jsonify({'success': 'start training'})
 
 if __name__ == '__main__':
