@@ -10,8 +10,12 @@ module.exports = class Equipment {
 
   static async Add (ownerEmail,name) {
     const equipmentId = await this.ProduceUniqueId()
-    await db.query(`insert into EQUIPMENT VALUES ('${equipmentId}','${ownerEmail}','${name}',null,false)`)
-    return equipmentId
+    try {
+      await db.query(`insert into EQUIPMENT VALUES ('${equipmentId}','${ownerEmail}','${name}',null,false)`)
+      return equipmentId
+    } catch (error) {
+      throw new Error('Error occured while executing Equipment.Add')
+    }
   }
 
   static async ProduceUniqueId() {
