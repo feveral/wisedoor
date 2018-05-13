@@ -11,17 +11,19 @@ const should = chai.should()  // Using Should style
 chai.use(require('chai-as-promised'))
 
 describe('FaceBelongEquipment.Add', () => {
+  let equipmentId
+  let faceId
   before( async () => {
     await User.Add('ppap@gmail.com', '宗翰', '5566')
-    const equipmentId = await Equipment.Add('ppap@gmail.com','我的家')
-    const faceId = await Face.Add('宗翰的臉',false)
+    equipmentId = await Equipment.Add('ppap@gmail.com','我的家')
+    faceId = await Face.Add('宗翰的臉',false)
   })
 
   it(`OK`, async () => {
-
+    await FaceBelongEquipment.Add(faceId,equipmentId)
   })
   
-  it('error', async () => {
+  it('Error', async () => {
     await expect(FaceBelongEquipment.Add('123', '456')).to.be.rejectedWith(Error)
   })
 
