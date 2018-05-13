@@ -8,10 +8,10 @@ module.exports = class Equipment {
     this.owner = owner
   }
 
-  static async Add (id, owner) {
+  static async Add (ownerEmail,name) {
     const equipmentId = await this.ProduceUniqueId()
-    // await db.query(`insert into EQUIPMENT VALUES ('${equipmentId}','${name}')`)
-    return faceId
+    await db.query(`insert into EQUIPMENT VALUES ('${equipmentId}','${ownerEmail}','${name}',null,false)`)
+    return equipmentId
   }
 
   static async ProduceUniqueId() {
@@ -20,6 +20,11 @@ module.exports = class Equipment {
       return this.ProduceUniqueId()
     }
     return newId
+  }
+
+  static async IsIdExist(id) {
+    const result = await db.query(`select Id from EQUIPMENT where Id='${id}'`)
+    return result.length == 1
   }
 
   static async FindEquipmentsByUserEmail(ownerEmail) {

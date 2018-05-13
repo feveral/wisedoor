@@ -14,6 +14,11 @@ module.exports = class Face {
     return faceId
   }
 
+  static async SetIsUpload (faceId, isUpload) {
+    await db.query(`upload FACE set IsUpload=${isUpload} where`)
+    return
+  }
+
   static async ProduceUniqueId () {
     const newId = await randomHex(16).substring(2)
     if (await this.IsIdExist(newId)) {

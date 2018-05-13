@@ -25,7 +25,7 @@ module.exports = {
         next()
     },
 
-    makeUploadDirectIfnotExist (req, res, next) {
+    makeRawDirectIfnotExist (req, res, next) {
         if (!fs.existsSync(uploadBasePath + `/${req.faceId}`)) {
             fs.mkdirSync(uploadBasePath + `/${req.faceId}`)
         }
@@ -42,27 +42,37 @@ module.exports = {
                 next()
         })
     },
-
-    async uploadFace (req, res) {
-        const formData =  
-        { 
-            "uploadBasePath": uploadBasePath,
-            "faceId": req.faceId,
-            "imageName": req.imageName,
-            "cutBasePath": cutBasePath
-        } 
-        request.post({url:'http://localhost:3000/align',formData: formData}
+    
+    alignFace (req, res, next) {
+        const formData =
+            {
+                "uploadBasePath": uploadBasePath,
+                "faceId": req.faceId,
+                "imageName": req.imageName,
+                "cutBasePath": cutBasePath
+            }
+        request.post({ url: 'http://localhost:3000/align', formData: formData }
             , (error, response, body) => {
                 if (!error && response.statusCode == 200) {
-                    fs.readdir(`${cutBasePath}/${req.faceId}`, (err, files) => {
-                        res.send({ success: true, progress: files.length})
-                    });
+                    next()
                 }
-                else{
-                    console.log("error" + error);
+                else {
+                    console.log("error" + error)
                     res.send({ error: "An error occured while uploading image" })
                 }
             }
         )
+    },
+
+    async checkAlignProgressAndResponse (req, res) {
+        fs.readdir(`${cutBasePath}/${req.faceId}`, (err, files) => {
+            if (files.length >= 25) {
+                await SetIsUpload(req.faceId,true)
+                
+                // TODO
+
+            }
+            res.send({ success: true, progress: files.length })
+        })
     }
 }

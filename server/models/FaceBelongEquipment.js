@@ -9,8 +9,12 @@ module.exports = class FaceBelongEquipment {
   }
 
   static async Add (faceId, equipmentId) {
-    await db.query(`insert into FACE_BELONG_EQUIPMENT VALUES ('${faceId}','${equipmentId}')`)
-    return
+    try {
+      await db.query(`insert into FACE_BELONG_EQUIPMENT VALUES ('${faceId}','${equipmentId}')`)
+    } 
+    catch (error) {
+      throw new Error('Error occured while executing FaceBelongEquipment.Add')
+    }
   }
 
   static async FindFaceIdByEquipmentId (equipmentId) {

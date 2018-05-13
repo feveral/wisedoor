@@ -10,7 +10,7 @@ module.exports = class Model {
 
   static async Add(id, time, equipmentId) {
     const modelId = await this.ProduceUniqueId()
-    await db.query(`insert into MODEL VALUES ('${id}','${time}','${equipmentId}')`)
+    await db.query(`insert into MODEL VALUES ('${id}','${equipmentId}')`)
     return modelId
   }
 

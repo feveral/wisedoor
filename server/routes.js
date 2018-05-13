@@ -14,11 +14,20 @@ module.exports = (app, passport) => {
     AuthenticationRouter.post('/login', passport.authenticate('local', { session: true }), AuthenticationController.login)
     AuthenticationRouter.get('/logout', AuthenticationController.logout)
     AuthenticationRouter.get('/username', AuthenticationController.username)
-    imageRouter.post('/upload/face', ImageController.retrieveEquipmentId,
-                                     ImageController.retrieveFaceId,
-                                     ImageController.makeUploadDirectIfnotExist,
-                                     ImageController.saveRawImage,
-                                     ImageController.uploadFace)
+
+    /*
+        post body :
+        {
+            EquipmentName: '...'
+            FaceName: '...'
+        }
+    */
+    imageRouter.post('/upload/face',ImageController.retrieveEquipmentId,
+                                    ImageController.retrieveFaceId,
+                                    ImageController.makeRawDirectIfnotExist,
+                                    ImageController.saveRawImage,
+                                    ImageController.alignFace,
+                                    ImageController.checkAlignProgressAndResponse)
     equipmentRouter.get('/', EquipmentController.GetEquipments)
     faceRouter.get('/:equipmentId', FaceController.GetFaces)
 
