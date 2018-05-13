@@ -10,46 +10,59 @@ const cutBasePath = `${process.cwd()}/facenetTrain/image/cut`
 
 module.exports = { 
 
-    async uploadFace (req, res) {
-        let equipmentId = await Equipment.FindIdByOwnerEmailAndName(req.user, req.body.equipmentName);
-        let faceId;
+    async retrieveEquipmentId (req, res, next) {
+        req.equipmentId = await Equipment.FindIdByOwnerEmailAndName(req.user, req.body.equipmentName)
+        next()
+    },
 
-        if (await Face.IsFaceNameInEquipment(req.body.faceName, equipmentId)) {
-            faceId = await Face.FindFaceIdByFaceNameAndEquipmentId(req.body.faceName, equipmentId)
+    async retrieveFaceId (req, res, next) {
+        if (await Face.IsFaceNameInEquipment(req.body.faceName, req.equipmentId)) {
+            req.faceId = await Face.FindFaceIdByFaceNameAndEquipmentId(req.body.faceName, req.equipmentId)
         } else {
-            faceId = await Face.Add(req.body.faceName,false)
-            await FaceBelongEquipment.Add(faceId,equipmentId)
+            req.faceId = await Face.Add(req.body.faceName, false)
+            await FaceBelongEquipment.Add(req.faceId, req.equipmentId)
         }
-        
-        if (!fs.existsSync(uploadBasePath + `/${faceId}` ) ) {
-            fs.mkdirSync(uploadBasePath + `/${faceId}`) 
+        next()
+    },
+
+    makeUploadDirectIfnotExist (req, res, next) {
+        if (!fs.existsSync(uploadBasePath + `/${req.faceId}`)) {
+            fs.mkdirSync(uploadBasePath + `/${req.faceId}`)
         }
-        const imageName = (await randomHex(16).substring(2)) + '.png'
-        
-        fs.writeFile(`${uploadBasePath}/${faceId}/${imageName}`, req.body.image, 'base64', err => {
+        next()
+    },
+
+    async saveRawImage (req, res, next) {
+        req.imageName = (await randomHex(16).substring(2)) + '.png'
+        fs.writeFile(`${uploadBasePath}/${req.faceId}/${req.imageName}`, req.body.image, 'base64', err => {
             if (err) res.status(500), send({
                 error: 'an error has occured trying to upload image'
             }) 
-            else {
-                var formData =  
-                { 
-                    "uploadBasePath": uploadBasePath,
-                    "faceId": faceId,
-                    "imageName": imageName,
-                    "cutBasePath": cutBasePath
-                } 
-                request.post({url:'http://localhost:3000/align',formData: formData}
-                    , (error, response, body) => {
-                        if (!error && response.statusCode == 200) {
-                            fs.readdir(`${cutBasePath}/${faceId}`, (err, files) => {
-                                res.send({ success: true, progress: files.length})
-                            });
-                        }
-                        else
-                            console.log("error" + error);
-                    }
-                )
+            else
+                next()
+        })
+    },
+
+    async uploadFace (req, res) {
+        const formData =  
+        { 
+            "uploadBasePath": uploadBasePath,
+            "faceId": req.faceId,
+            "imageName": req.imageName,
+            "cutBasePath": cutBasePath
+        } 
+        request.post({url:'http://localhost:3000/align',formData: formData}
+            , (error, response, body) => {
+                if (!error && response.statusCode == 200) {
+                    fs.readdir(`${cutBasePath}/${req.faceId}`, (err, files) => {
+                        res.send({ success: true, progress: files.length})
+                    });
+                }
+                else{
+                    console.log("error" + error);
+                    res.send({ error: "An error occured while uploading image" })
+                }
             }
-        });
+        )
     }
 }

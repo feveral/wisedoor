@@ -16,7 +16,11 @@ module.exports = (app, passport) => {
     AuthenticationRouter.post('/login', passport.authenticate('local', { session: true }), AuthenticationController.login)
     AuthenticationRouter.get('/logout', AuthenticationController.logout)
     AuthenticationRouter.get('/username', AuthenticationController.username)
-    imageRouter.post('/upload/face', ImageController.uploadFace)
+    imageRouter.post('/upload/face', ImageController.retrieveEquipmentId,
+                                     ImageController.retrieveFaceId,
+                                     ImageController.makeUploadDirectIfnotExist,
+                                     ImageController.saveRawImage,
+                                     ImageController.uploadFace)
     equipmentRouter.get('/', EquipmentController.GetEquipments)
     faceRouter.get('/:equipmentId', FaceController.GetFaces)
     modelRouter.get('/',ModelController.GetNewModel)
