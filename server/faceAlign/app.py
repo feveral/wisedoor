@@ -36,7 +36,7 @@ def alignPicture():
     cutBasePath = data['cutBasePath']
     if not os.path.exists(cutBasePath + "/" + faceId):
         os.makedirs(cutBasePath+ "/" + faceId)
-    if(not is_blurr(uploadBasePath+ "/" + faceId + "/" + imageName)):
+    if not (is_blurr(uploadBasePath+ "/" + faceId + "/" + imageName)):
         cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
         return jsonify({'success': True})
     else:

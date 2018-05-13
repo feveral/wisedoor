@@ -19,6 +19,7 @@ module.exports = class User{
   }
 
   static async IsSignInCorrect (email, password, callback) {
+    console.log(`Password='${password}'`)
     const result = await db.query(`select * from USER where Email='${email}' AND Password='${password}'`)
     return result.length == 1
   }

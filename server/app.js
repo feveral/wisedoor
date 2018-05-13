@@ -32,10 +32,8 @@ let routes = require('./routes')(app, passport)
 
 http.createServer(httpApp).listen(httpApp.get('port'), () => {})
 https.createServer(credentials, app).listen(app.get('port'), () => {})
-
 /*
 const shell = require('shelljs')
 const str = shell.exec('python3 ./faceAlign/app.py', { async: true, silent: false }, (code, stdout, stderr) => {
 })
 */
-

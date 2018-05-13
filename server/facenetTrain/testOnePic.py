@@ -20,7 +20,7 @@ batch_size = 1000
 nrof_images = 1
 image_size = 160
 model_path = './models/20170512-110547.pb'
-classifier_path = './models/demo_classifier.pkl' 
+classifier_path = './models/tom_strength_classifier.pkl' 
 image_path = './image/testPic.png'
 
 def main():
