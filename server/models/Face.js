@@ -8,15 +8,37 @@ module.exports = class Face {
     this.name = name
   }
 
-  static async Add (name, isUpload) {
+  static async Add (name) {
     const faceId = await this.ProduceUniqueId()
-    await db.query(`insert into FACE VALUES ('${faceId}','${name}',${isUpload})`)
-    return faceId
+    try {
+      await db.query(`insert into FACE VALUES ('${faceId}','${name}',false)`)
+      return faceId
+    } catch (error) {
+      throw new Error('Error occured while executing Face.Add')
+    }
   }
 
-  static async SetIsUpload (faceId, isUpload) {
-    await db.query(`upload FACE set IsUpload=${isUpload} where`)
-    return
+  static async FindIsUploadByFaceId (faceId) {
+    try {
+      const response = await db.query(`select IsUpload from FACE where Id='${faceId}'`)
+      if (response.length == 0) {
+        throw new Error('Error occured while executing Face.FindIsUploadByFaceId : faceId not exists')
+      }
+      return response[0].IsUpload != 0
+    } catch (error) {
+      throw new Error('Error occured while executing Face.FindIsUploadByFaceId')      
+    }
+  }
+
+  static async setIsUpload (faceId, isUpload) {
+    try {
+      const response = await db.query(`update FACE set IsUpload=${isUpload} where Id='${faceId}'`)
+      if (response.affectedRows == 0) {
+        throw new Error('Error occured while executing Face.setIsUpload : faceId not exists')
+      } 
+    } catch (error) {
+      throw new Error('Error occured while executing Face.setIsUpload')
+    }
   }
 
   static async ProduceUniqueId () {

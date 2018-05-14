@@ -26,6 +26,7 @@ module.exports = (app, passport) => {
     */
     imageRouter.post('/upload/face',ImageController.retrieveEquipmentId,
                                     ImageController.retrieveFaceId,
+                                    ImageController.checkIsUpload,
                                     ImageController.makeRawDirectIfnotExist,
                                     ImageController.saveRawImage,
                                     ImageController.alignFace,
@@ -33,13 +34,6 @@ module.exports = (app, passport) => {
     equipmentRouter.get('/', EquipmentController.GetEquipments)
     faceRouter.get('/:equipmentId', FaceController.GetFaces)
     modelRouter.get('/',ModelController.GetNewModel)
-
-
-
-    app.get('/test', (req,res) =>{
-        console.log(123)
-        res.send({success:'OK'})
-    })
 
     app.use('/api/authentication', AuthenticationRouter)
     // app.use('*', AuthenticationController.Islogin)
