@@ -40,4 +40,9 @@ module.exports = class Equipment {
     const result = await db.query(`select Id from EQUIPMENT where OwnerEmail='${ownerEmail}' AND Name='${equipmentName}'`)
     return result[0].Id
   }
+
+  static async UpdateModelIdByEquipmentId(equipmentId,newModelId){
+    const result = await db.query(`update EQUIPMENT set ModelId='${newModelId}' where Id='{equipmentId}'`)
+    return result
+  }
 }

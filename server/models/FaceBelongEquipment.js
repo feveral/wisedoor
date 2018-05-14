@@ -18,8 +18,13 @@ module.exports = class FaceBelongEquipment {
   }
 
   static async FindFaceIdByEquipmentId (equipmentId) {
-    const result = await db.query(`select FaceId from FACE_BELONG_EQUIPMENT where EquipmentId='${equipmentId}'`)
-    return result
+    try{
+      const result = await db.query(`select FaceId from FACE_BELONG_EQUIPMENT where EquipmentId='${equipmentId}'`)
+      return result
+    }
+    catch (error){
+      throw new Error('Error occured while executing FaceBelongEquipment.FindFaceIdByEquipmentId')
+    }
   }
 
   static async FindEquipmentIdByFaceId (faceId) {

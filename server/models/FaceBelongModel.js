@@ -10,6 +10,6 @@ module.exports = class FaceBelongModel {
 
   static async Add(faceId, modelId) {
     await db.query(`insert into FACE_BELONG_MODEL VALUES ('${faceId}','${modelId}')`)
-    return
+    return faceId
   }
 }

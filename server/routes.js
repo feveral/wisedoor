@@ -29,10 +29,12 @@ module.exports = (app, passport) => {
                                     ImageController.makeRawDirectIfnotExist,
                                     ImageController.saveRawImage,
                                     ImageController.alignFace,
-                                    ImageController.checkAlignProgressAndResponse)
+                                    ImageController.checkAlignProgressAndResponse,
+                                    ImageController.trainFace)
     equipmentRouter.get('/', EquipmentController.GetEquipments)
     faceRouter.get('/:equipmentId', FaceController.GetFaces)
     modelRouter.get('/',ModelController.GetNewModel)
+    modelRouter.post('/notify',ModelController.NotifyTrainFinish)
 
 
 

@@ -5,5 +5,5 @@ before( async () => {
 
 after(async () => {
   //await require('../database/InitialDatabase')()
-  //await require('../database/database').end()
+  require('../database/database').end()
 })

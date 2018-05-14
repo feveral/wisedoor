@@ -34,13 +34,22 @@ describe('FaceBelongEquipment.Add', () => {
 
 
 describe('FaceBelongEquipment.FindFaceIdByEquipmentId', () => {
-  before( () => {
+  let equipmentId
+  let faceId
+  let faceId2
+  before( async() => {
+    equipmentId = await Equipment.Add('ppap@gmail.com','我的家2')
+    faceId = await Face.Add('屁孩的臉',false)
+    await FaceBelongEquipment.Add(faceId,equipmentId)
   })
 
   it(`OK`, async () => {
+    const faceIds = await FaceBelongEquipment.FindFaceIdByEquipmentId(equipmentId)
+    expect(faceIds[0]["FaceId"]).to.equal(faceId);
   })
 
-  it('error', () => {
+  it('Error', async () => {
+
   })
 
   after(() => {

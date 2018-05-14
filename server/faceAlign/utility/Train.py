@@ -99,7 +99,6 @@ class Train:
                 # Saving classifier model
                 with open(classifier_filename_exp, 'wb') as outfile:
                     pickle.dump((model, class_names), outfile)
-                self.trainDataList.pop(0)
                 print('-------------------------------------------Saved classifier model to file "%s"' % classifier_filename_exp)
                 
     def get_dataset(self, path, specificDirList,has_class_directories=True):
@@ -109,23 +108,23 @@ class Train:
                         if os.path.isdir(os.path.join(path_exp, path))]
         classes.sort()
         nrof_classes = len(classes)
+        print(specificDirList)
         for i in range(nrof_classes):
             class_name = classes[i]
             facedir = os.path.join(path_exp, class_name)
-            image_paths = self.get_image_paths(facedir,specificDirList)
+            image_paths = self.get_image_paths(facedir,class_name,specificDirList)
             dataset.append(facenet.ImageClass(class_name, image_paths))
         return dataset
 
-    def get_image_paths(self,facedir,specificDirList):
+    def get_image_paths(self,facedirPath,facedirName,specificDirList):
         image_paths = []
-        if os.path.isdir(facedir) and facedir in specificDirList:
-            images = os.listdir(facedir)
-            print(facedir)
-            image_paths = [os.path.join(facedir,img) for img in images]
+        if os.path.isdir(facedirPath) and (facedirName in specificDirList):
+            images = os.listdir(facedirPath)
+            image_paths = [os.path.join(facedirPath,img) for img in images]
         return image_paths
 
-    def AddTrainData(self,specificDirList,inputDir,outputModelPath):
-        newTrainData = TrainData(specificDirList,inputDir,outputModelPath)
+    def AddTrainData(self,faceIdList,cutBasePath,outputBasePath,modelId):
+        newTrainData = TrainData(faceIdList,cutBasePath,outputBasePath,modelId)
         self.trainDataList.append(newTrainData)
 
     def GetOldestData(self):
@@ -133,6 +132,10 @@ class Train:
         
     def GetTrainDataListSize(self):
         return len(self.trainDataList)
+
+    def PopOldestData(self):
+        self.trainDataList.pop(0)
+        return "ok"
 
 
 

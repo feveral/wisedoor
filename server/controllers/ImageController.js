@@ -3,6 +3,7 @@ const randomHex = require('randomhex');
 const Equipment = require('../models/Equipment')
 const Face = require('../models/Face')
 const FaceBelongEquipment = require('../models/FaceBelongEquipment')
+const FaceBelongModel = require('../models/FaceBelongModel')
 const request = require('request');
 const Model = require('../models/Model')
 
@@ -66,12 +67,15 @@ module.exports = {
         )
     },
 
-    async checkAlignProgressAndResponse (req, res) {
-        fs.readdir(`${cutBasePath}/${req.faceId}`, (err, files) => {
+    checkAlignProgressAndResponse (req, res, next) {
+        fs.readdir(`${cutBasePath}/${req.faceId}`, async (err, files) => {
             if (files.length >= 25) {
                 req.modelId = await Model.Add()
-                req.faceIdList = await 
-
+                const faceIdArray = await FaceBelongEquipment.FindFaceIdByEquipmentId(req.equipmentId)
+                req.faceIdList = []
+                faceIdArray.forEach((element)=>{
+                    req.faceIdList.push(element["FaceId"])
+                })
                 next()
             }
             else
@@ -84,12 +88,13 @@ module.exports = {
             {
                 "cutBasePath": cutBasePath,
                 "faceIdList": req.faceIdList,
-                "outputModelPath": modelBasePath + "/" + req.modelId + ".pkl",
+                "outputBasePath": modelBasePath,
+                "modelId": req.modelId,
             }
         request.post({ url: 'http://localhost:3000/train', formData: formData }
-            , (error, response, body) => {
+            , async (error, response, body) => {
                 if (!error && response.statusCode == 200) {
-                    next()
+                    console.log("train finish")
                 }
                 else {
                     console.log("error" + error)

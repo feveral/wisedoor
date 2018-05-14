@@ -39,3 +39,19 @@ describe('Equipment.FindEquipmentsByUserEmail',  () =>  {
   })
 })
 
+describe('Equipment.UpdateModelIdByEquipmentId',  () =>  {
+
+  before(async () => {
+    equipmentId = await Equipment.Add('locker@gmail.com','我的家2')
+  })
+
+  it(`OK`, async () => {
+    await Equipment.UpdateModelIdByEquipmentId(equipmentId,333)
+  })
+
+  after( () => {
+    //db.end()
+  })
+})
+
+

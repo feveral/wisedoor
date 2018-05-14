@@ -1,5 +1,7 @@
 class TrainData():
-    def __init__(self,specificDirList,inputDir,outputModelPath):
-        self.specificDirList = specificDirList
-        self.inputDir = inputDir
-        self.outputModelPath = outputModelPath
+    def __init__(self,faceIdList,cutBasePath,outputBasePath,modelId):
+        self.faceIdList = faceIdList
+        self.cutBasePath = cutBasePath
+        self.outputBasePath = outputBasePath
+        self.modelId = modelId
+        self.ouputModelPath = str(outputBasePath) + "/" + str(modelId) + ".pkl"
