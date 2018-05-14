@@ -1,4 +1,5 @@
 const db = require('../database/database')
+const randomHex = require('randomhex')
 
 module.exports = class Model {
 
@@ -8,10 +9,21 @@ module.exports = class Model {
     this.equipmentId = equipmentId
   }
 
-  static async Add(id, time, equipmentId) {
+  static async Add() {
     const modelId = await this.ProduceUniqueId()
-    await db.query(`insert into MODEL VALUES ('${id}','${equipmentId}')`)
+    await db.query(`insert into MODEL VALUES ('${modelId}', false)`)
     return modelId
+  }
+
+  static async UpdateIsTrainValue(modelId,isTrainValue) {
+    try{
+      const response = await db.query(`update MODEL SET IsTrain = ${isTrainValue} WHERE Id='${modelId}'`)
+      if(response.affectedRows == 0)
+        throw new Error('Error occured while executing Model.UpdateIsrainValue : cannot find modelId')
+    }
+    catch(error){
+      throw new Error('Error occured while executing Model.UpdateIsrainValue')
+    }
   }
 
   static async ProduceUniqueId() {
@@ -26,4 +38,5 @@ module.exports = class Model {
     const result = await db.query(`select Id from MODEL where Id='${id}'`)
     return result.length == 1
   }
+
 }

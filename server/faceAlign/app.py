@@ -8,6 +8,7 @@ from utility.facenetAlign import *
 from utility.Train import Train
 from utility.blurr import *
 import logging
+import requests
 
 app = Flask(__name__)
 cutPicture = CutPicture(); 
@@ -21,8 +22,15 @@ def TrainModel():
         if(train.GetTrainDataListSize() == 0):
             time.sleep(0.5)
         else:
-            train.trainModel(train.GetOldestData().specificDirList,train.GetOldestData().inputDir,train.GetOldestData().outputModelPath)
-        
+            train.trainModel(train.GetOldestData().faceIdList,
+                            train.GetOldestData().cutBasePath,
+                            train.GetOldestData().ouputModelPath)
+            postAnswer = requests.post('https://localhost/api/model/notify', data =  {'faceIdList':train.GetOldestData().faceIdList,
+                                                                                    'modelId':train.GetOldestData().modelId},
+                                                                                    verify = False)
+            print(postAnswer)
+            train.PopOldestData()
+
 t = threading.Thread(target=TrainModel)
 t.setDaemon(True)
 t.start()
@@ -44,11 +52,11 @@ def alignPicture():
 
 @app.route('/train', methods=['POST'])
 def trainPicture():
-    data = request.form
-    faceIdList = data['faceId']
-    cutBasePath = data['cutBasePath']
-    outputModelPath = data['outputModelPath']
-    train.AddTrainData(faceId,cutBasePath,outputModelPath)
+    faceIdList = request.form.getlist('faceIdList')
+    cutBasePath = request.form.get('cutBasePath')
+    outputBasePath = request.form.get('outputBasePath')
+    modelId = request.form.get('modelId')
+    train.AddTrainData(faceIdList,cutBasePath,outputBasePath,modelId)
     return jsonify({'success': 'start training'})
 
 if __name__ == '__main__':

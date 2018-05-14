@@ -3,10 +3,13 @@ const randomHex = require('randomhex');
 const Equipment = require('../models/Equipment')
 const Face = require('../models/Face')
 const FaceBelongEquipment = require('../models/FaceBelongEquipment')
+const FaceBelongModel = require('../models/FaceBelongModel')
 const request = require('request');
+const Model = require('../models/Model')
 
 const uploadBasePath = `${process.cwd()}/facenetTrain/image/raw`
 const cutBasePath = `${process.cwd()}/facenetTrain/image/cut`
+const modelBasePath = `${process.cwd()}/facenetTrain/models`
 
 module.exports = { 
 
@@ -74,12 +77,42 @@ module.exports = {
         )
     },
 
-    async checkAlignProgressAndResponse (req, res) {
+    checkAlignProgressAndResponse (req, res, next) {
         fs.readdir(`${cutBasePath}/${req.faceId}`, async (err, files) => {
-            if (files.length == 25) {
-                await Face.setIsUpload(req.faceId,true)
+            if (files.length >= 25) {
+                await Face.setIsUpload(req.faceId, true)
+                req.modelId = await Model.Add()
+                const faceIdArray = await FaceBelongEquipment.FindFaceIdByEquipmentId(req.equipmentId)
+                req.faceIdList = []
+                faceIdArray.forEach((element)=>{
+                    req.faceIdList.push(element["FaceId"])
+                })
+                next()
             }
-            res.send({ success: true, progress: files.length })
+            else
+                res.send({ success: true, progress: files.length })
         })
+    },
+
+    trainFace (req, res, next) {
+        const formData =
+            {
+                "cutBasePath": cutBasePath,
+                "faceIdList": req.faceIdList,
+                "outputBasePath": modelBasePath,
+                "modelId": req.modelId,
+            }
+        request.post({ url: 'http://localhost:3000/train', formData: formData }
+            , async (error, response, body) => {
+                if (!error && response.statusCode == 200) {
+                    console.log("train finish")
+                }
+                else {
+                    console.log("error" + error)
+                    res.send({ error: "An error occured while training model" })
+                }
+            }
+        )
     }
+
 }

@@ -48,6 +48,7 @@ db.query(
     `CREATE TABLE MODEL
      (
        Id VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
+       IsTrain BOOLEAN NOT NULL , 
        PRIMARY KEY(Id) 
      );`
   )
