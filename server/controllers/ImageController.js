@@ -28,6 +28,16 @@ module.exports = {
         next()
     },
 
+    async checkIsUpload(req, res, next) {
+        const isUpload = await Face.FindIsUploadByFaceId(req.faceId)
+        if (isUpload == true) {
+            req.send({ success: true, progress: files.length })
+        } 
+        else{
+            next()
+        }
+    },
+
     makeRawDirectIfnotExist (req, res, next) {
         if (!fs.existsSync(uploadBasePath + `/${req.faceId}`)) {
             fs.mkdirSync(uploadBasePath + `/${req.faceId}`)
@@ -70,6 +80,7 @@ module.exports = {
     checkAlignProgressAndResponse (req, res, next) {
         fs.readdir(`${cutBasePath}/${req.faceId}`, async (err, files) => {
             if (files.length >= 25) {
+                await Face.setIsUpload(req.faceId, true)
                 req.modelId = await Model.Add()
                 const faceIdArray = await FaceBelongEquipment.FindFaceIdByEquipmentId(req.equipmentId)
                 req.faceIdList = []

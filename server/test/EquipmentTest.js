@@ -21,10 +21,6 @@ describe('Equipment.Add', () => {
   it(`Error: doesn't have this email`, async () => {
     await expect(Equipment.Add('locker123@gmail.com', '我的家')).to.be.rejectedWith(Error)
   })
-
-  after(() => {
-    //db.end()
-  })
 })
 
 
