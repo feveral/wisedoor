@@ -28,7 +28,6 @@ def TrainModel():
             postAnswer = requests.post('https://localhost/api/model/notify', data =  {'faceIdList':train.GetOldestData().faceIdList,
                                                                                     'modelId':train.GetOldestData().modelId},
                                                                                     verify = False)
-            print(postAnswer)
             train.PopOldestData()
 
 t = threading.Thread(target=TrainModel)

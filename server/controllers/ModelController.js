@@ -12,10 +12,17 @@ module.exports = {
 
   async NotifyTrainFinish(req, res){
     await Equipment.UpdateModelIdByEquipmentId(req.body.equipmentId,req.body.modelId)
-    req.body.faceIdList.forEach(async (faceIdIndex)=>{
+    if(typeof(req.body.faceIdList) === 'string'){
+      faceId = req.body.faceIdList
+      faceId = await FaceBelongModel.Add(faceId,req.body.modelId)
+    }
+    else{
+      req.body.faceIdList.forEach(async (faceIdIndex)=>{
         faceId = await FaceBelongModel.Add(faceIdIndex,req.body.modelId)
-    })
+      })
+    }
     await Model.UpdateIsTrainValue(req.body.modelId,true)
+    
     res.send("data is receive")
   }
 }

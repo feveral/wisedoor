@@ -97,4 +97,9 @@ require('fs').readdir('facenetTrain/image/cut', (err, files) => {
     require('rimraf')(`facenetTrain/image/cut/${files[i]}`,()=>{})
 })
 
+require('fs').readdir('facenetTrain/models', (err, files) => {
+  for(let i = 0 ; i < files.length ; i++)
+    require('rimraf')(`facenetTrain/models/${files[i]}`,()=>{})
+})
+
 console.log('Finished Initial database and image folder')
