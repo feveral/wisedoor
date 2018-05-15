@@ -34,7 +34,7 @@ module.exports = (app, passport) => {
                                     ImageController.trainFace)
     equipmentRouter.get('/', EquipmentController.GetEquipments)
     faceRouter.get('/:equipmentId', FaceController.GetFaces)
-    modelRouter.get('/',ModelController.GetNewModel)
+    modelRouter.get('/', ModelController.GetModel)
     modelRouter.post('/notify',ModelController.NotifyTrainFinish)
 
     app.use('/api/authentication', AuthenticationRouter)

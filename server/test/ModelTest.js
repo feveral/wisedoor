@@ -32,7 +32,7 @@ describe('FaceBelongModel.Add', () => {
     after(() => {
         
     })
-    })
+})
 
 describe('FaceBelongModel.UpdateIsTrainValue', () => {
     let equipmentId
@@ -52,4 +52,4 @@ describe('FaceBelongModel.UpdateIsTrainValue', () => {
     after(() => {
         
     })
-    })
+})

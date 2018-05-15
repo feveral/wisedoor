@@ -37,12 +37,13 @@ describe('Equipment.FindEquipmentsByUserEmail',  () =>  {
 
 describe('Equipment.UpdateModelIdByEquipmentId',  () =>  {
 
+  let equipmentId
   before(async () => {
     equipmentId = await Equipment.Add('locker@gmail.com','我的家2')
   })
 
   it(`OK`, async () => {
-    await Equipment.UpdateModelIdByEquipmentId(equipmentId,333)
+    await Equipment.UpdateModelIdByEquipmentId(equipmentId,'asdzdcxv41564')
   })
 
   after( () => {
@@ -50,4 +51,25 @@ describe('Equipment.UpdateModelIdByEquipmentId',  () =>  {
   })
 })
 
+describe('Equipment.FindModelIdByEquipmentId', () => {
 
+  let equipmentId
+  before(async () => {
+    await User.Add('locker213@gmail.com', '宗翰', '5566')
+    equipmentId = await Equipment.Add('locker213@gmail.com', '我的家2')
+    await Equipment.UpdateModelIdByEquipmentId(equipmentId,'123456789')
+  })
+
+  it(`OK`, async () => {
+    const modelId = await Equipment.FindModelIdByEquipmentId(equipmentId)
+    expect(modelId).to.be.equal('123456789')
+  })
+
+  it(`Error : EquipmentId not exists`, async () => {
+    await expect(Equipment.FindModelIdByEquipmentId('123')).to.be.rejectedWith(Error)
+  })
+
+  after(() => {
+    //db.end()
+  })
+})
