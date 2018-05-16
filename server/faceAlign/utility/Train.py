@@ -40,20 +40,21 @@ from sklearn.svm import SVC
 batch_size = 1000
 nrof_images = 1
 image_size = 160
-model_path = "./facenetTrain/models/20170512-110547.pb"
+model_path = "./facenetTrain/20170512-110547.pb"
+unknown_path = "./facenetTrain/image/unknown"
 
 class Train:
     def __init__(self):
         self.trainDataList = []
         
-    def trainModel(self, DirList, input_dir, output_dir):
+    def trainModel(self, DirList, input_dir, output_dir, faceIdNamePairs):
         self.specificDirList = DirList
         with tf.Graph().as_default():
         
             with tf.Session() as sess:
                 
                 np.random.seed(seed=666)
-                dataset = self.get_dataset(input_dir,self.specificDirList)
+                dataset = self.get_dataset(input_dir,self.specificDirList,faceIdNamePairs)
 
                 # Check that there are at least one training image per class
                 for cls in dataset:
@@ -99,32 +100,36 @@ class Train:
                 # Saving classifier model
                 with open(classifier_filename_exp, 'wb') as outfile:
                     pickle.dump((model, class_names), outfile)
-                print('-------------------------------------------Saved classifier model to file "%s"' % classifier_filename_exp)
+                print('-----------------Saved classifier model to file "%s"' % classifier_filename_exp)
                 
-    def get_dataset(self, path, specificDirList,has_class_directories=True):
+    def get_dataset(self, path, specificDirList, faceIdNamePairs, has_class_directories=True):
         dataset = []
         path_exp = os.path.expanduser(path)
         classes = [path for path in os.listdir(path_exp) \
                         if os.path.isdir(os.path.join(path_exp, path))]
         classes.sort()
         nrof_classes = len(classes)
-        print(specificDirList)
         for i in range(nrof_classes):
             class_name = classes[i]
             facedir = os.path.join(path_exp, class_name)
             image_paths = self.get_image_paths(facedir,class_name,specificDirList)
-            dataset.append(facenet.ImageClass(class_name, image_paths))
+            if(len(image_paths)!=0):
+                faceName = faceIdNamePairs[class_name]
+                dataset.append(facenet.ImageClass(faceName, image_paths))
+
+        unknown_image_path = self.get_image_paths(unknown_path,"unknown",specificDirList)
+        dataset.append(facenet.ImageClass("unknown",unknown_image_path))
         return dataset
 
     def get_image_paths(self,facedirPath,facedirName,specificDirList):
         image_paths = []
-        if os.path.isdir(facedirPath) and (facedirName in specificDirList):
+        if os.path.isdir(facedirPath) and ((facedirName == "unknown") or (facedirName in specificDirList)):
             images = os.listdir(facedirPath)
             image_paths = [os.path.join(facedirPath,img) for img in images]
         return image_paths
 
-    def AddTrainData(self,faceIdList,cutBasePath,outputBasePath,modelId):
-        newTrainData = TrainData(faceIdList,cutBasePath,outputBasePath,modelId)
+    def AddTrainData(self,cutBasePath,outputBasePath,modelId,faceIdNameDictionary):
+        newTrainData = TrainData(cutBasePath,outputBasePath,modelId,faceIdNameDictionary)
         self.trainDataList.append(newTrainData)
 
     def GetOldestData(self):

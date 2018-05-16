@@ -31,7 +31,7 @@ module.exports = {
     async checkIsUpload(req, res, next) {
         const isUpload = await Face.FindIsUploadByFaceId(req.faceId)
         if (isUpload == true) {
-            req.send({ success: true, progress: files.length })
+            res.send({ success: true, progress: 25 })
         } 
         else{
             next()
@@ -94,7 +94,7 @@ module.exports = {
         const formData =
             {
                 "cutBasePath": cutBasePath,
-                "faceIdNamePairs": req.faceIdNamePairs,
+                "faceIdNamePairs": JSON.stringify(req.faceIdNamePairs),
                 "outputBasePath": modelBasePath,
                 "modelId": req.modelId,
             }
