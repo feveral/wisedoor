@@ -82,11 +82,7 @@ module.exports = {
             if (files.length >= 25) {
                 await Face.setIsUpload(req.faceId, true)
                 req.modelId = await Model.Add()
-                const faceIdArray = await FaceBelongEquipment.FindFaceIdByEquipmentId(req.equipmentId)
-                req.faceIdList = []
-                faceIdArray.forEach((element)=>{
-                    req.faceIdList.push(element["FaceId"])
-                })
+                req.faceIdNamePairs = await FaceBelongEquipment.FindFaceIdNamePairByEquipmentId(req.equipmentId)
                 next()
             }
             else
@@ -98,7 +94,7 @@ module.exports = {
         const formData =
             {
                 "cutBasePath": cutBasePath,
-                "faceIdList": req.faceIdList,
+                "faceIdNamePairs": req.faceIdNamePairs,
                 "outputBasePath": modelBasePath,
                 "modelId": req.modelId,
             }
