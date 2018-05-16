@@ -6,7 +6,7 @@ const Model = require('../models/Model')
 
 module.exports = {
 
-  GetModel(req, res) {
+  async GetModel(req, res) {
     const equipmentName = req.body.equipmentName
     const userEmail = req.body.email
     const userPassword = req.body.password
