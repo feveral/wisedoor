@@ -47,14 +47,14 @@ class Train:
     def __init__(self):
         self.trainDataList = []
         
-    def trainModel(self, DirList, input_dir, output_dir, faceIdNameDictionary):
+    def trainModel(self, DirList, input_dir, output_dir, faceIdNamePairs):
         self.specificDirList = DirList
         with tf.Graph().as_default():
         
             with tf.Session() as sess:
                 
                 np.random.seed(seed=666)
-                dataset = self.get_dataset(input_dir,self.specificDirList,faceIdNameDictionary)
+                dataset = self.get_dataset(input_dir,self.specificDirList,faceIdNamePairs)
 
                 # Check that there are at least one training image per class
                 for cls in dataset:
@@ -102,7 +102,7 @@ class Train:
                     pickle.dump((model, class_names), outfile)
                 print('-----------------Saved classifier model to file "%s"' % classifier_filename_exp)
                 
-    def get_dataset(self, path, specificDirList, faceIdNameDictionary, has_class_directories=True):
+    def get_dataset(self, path, specificDirList, faceIdNamePairs, has_class_directories=True):
         dataset = []
         path_exp = os.path.expanduser(path)
         classes = [path for path in os.listdir(path_exp) \
@@ -112,11 +112,9 @@ class Train:
         for i in range(nrof_classes):
             class_name = classes[i]
             facedir = os.path.join(path_exp, class_name)
-            print(class_name)
             image_paths = self.get_image_paths(facedir,class_name,specificDirList)
             if(len(image_paths)!=0):
-                faceName = faceIdNameDictionary[class_name]
-                print(faceName)
+                faceName = faceIdNamePairs[class_name]
                 dataset.append(facenet.ImageClass(faceName, image_paths))
 
         unknown_image_path = self.get_image_paths(unknown_path,"unknown",specificDirList)
@@ -130,8 +128,8 @@ class Train:
             image_paths = [os.path.join(facedirPath,img) for img in images]
         return image_paths
 
-    def AddTrainData(self,faceIdList,cutBasePath,outputBasePath,modelId,faceIdNameDictionary):
-        newTrainData = TrainData(faceIdList,cutBasePath,outputBasePath,modelId,faceIdNameDictionary)
+    def AddTrainData(self,cutBasePath,outputBasePath,modelId,faceIdNameDictionary):
+        newTrainData = TrainData(cutBasePath,outputBasePath,modelId,faceIdNameDictionary)
         self.trainDataList.append(newTrainData)
 
     def GetOldestData(self):

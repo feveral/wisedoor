@@ -9,6 +9,7 @@ from utility.Train import Train
 from utility.blurr import *
 import logging
 import requests
+import json
 
 app = Flask(__name__)
 cutPicture = CutPicture(); 
@@ -25,7 +26,7 @@ def TrainModel():
             train.trainModel(train.GetOldestData().faceIdList,
                             train.GetOldestData().cutBasePath,
                             train.GetOldestData().ouputModelPath,
-                            train.GetOldestData().faceIdNameDictionary)
+                            train.GetOldestData().faceIdNamePairs)
             postAnswer = requests.post('https://localhost/api/model/notify', data =  {'faceIdList':train.GetOldestData().faceIdList,
                                                                                     'modelId':train.GetOldestData().modelId},
                                                                                     verify = False)
@@ -52,12 +53,11 @@ def alignPicture():
 
 @app.route('/train', methods=['POST'])
 def trainPicture():
-    faceIdList = request.form.getlist('faceIdList')
     cutBasePath = request.form.get('cutBasePath')
     outputBasePath = request.form.get('outputBasePath')
     modelId = request.form.get('modelId')
-    faceIdNameDictionary = request.form.getlist('faceIdNameDictionary')
-    train.AddTrainData(faceIdList,cutBasePath,outputBasePath,modelId,faceIdNameDictionary)
+    faceIdNamePairs = python_dict = json.loads(request.form.get('faceIdNamePairs'))
+    train.AddTrainData(cutBasePath,outputBasePath,modelId,faceIdNamePairs)
     return jsonify({'success': 'start training'})
 
 if __name__ == '__main__':

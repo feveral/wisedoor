@@ -27,6 +27,22 @@ module.exports = class FaceBelongEquipment {
     }
   }
 
+  static async FindFaceIdNamePairByEquipmentId (equipmentId) {
+    try {
+      const result = await db.query(`select FACE.Id,FACE.Name from FACE_BELONG_EQUIPMENT,FACE 
+                                        where EquipmentId='${equipmentId}' AND
+                                        FACE.Id = FaceId`)
+      let pairs = {}
+      result.forEach(element => {
+        pairs[element.Id] = element.Name
+      })
+      return pairs
+    }
+    catch (error) {
+      throw new Error('Error occured while executing FaceBelongEquipment.FindFacesByEquipmentId')
+    }
+  }
+
   static async FindEquipmentIdByFaceId (faceId) {
     const result = await db.query(`select EquipmentId from FACE_BELONG_EQUIPMENT where FaceId='${faceId}'`)
     return result

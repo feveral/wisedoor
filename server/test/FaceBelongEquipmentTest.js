@@ -36,7 +36,6 @@ describe('FaceBelongEquipment.Add', () => {
 describe('FaceBelongEquipment.FindFaceIdByEquipmentId', () => {
   let equipmentId
   let faceId
-  let faceId2
   before( async() => {
     equipmentId = await Equipment.Add('ppap@gmail.com','我的家2')
     faceId = await Face.Add('屁孩的臉',false)
@@ -46,6 +45,34 @@ describe('FaceBelongEquipment.FindFaceIdByEquipmentId', () => {
   it(`OK`, async () => {
     const faceIds = await FaceBelongEquipment.FindFaceIdByEquipmentId(equipmentId)
     expect(faceIds[0]["FaceId"]).to.equal(faceId);
+  })
+
+  it('Error', async () => {
+
+  })
+
+  after(() => {
+  })
+})
+
+describe('FaceBelongEquipment.FindFaceIdNamePairByEquipmentId', () => {
+  let equipmentId
+  let faceId1
+  let faceId2
+  before(async () => {
+    equipmentId = await Equipment.Add('ppap@gmail.com', '我的家2222')
+    faceId1 = await Face.Add('屁孩的臉123', false)
+    faceId2 = await Face.Add('屁孩的臉1234', false)
+    await FaceBelongEquipment.Add(faceId1, equipmentId)
+    await FaceBelongEquipment.Add(faceId2, equipmentId)
+  })
+
+  it(`OK`, async () => {
+    const facePairs = await FaceBelongEquipment.FindFaceIdNamePairByEquipmentId(equipmentId)
+    let correctPairs = {}
+    correctPairs[faceId1] = '屁孩的臉123'
+    correctPairs[faceId2] = '屁孩的臉1234'
+    expect(facePairs).to.deep.equal(correctPairs)
   })
 
   it('Error', async () => {
