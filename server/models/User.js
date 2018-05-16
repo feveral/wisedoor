@@ -18,9 +18,13 @@ module.exports = class User{
     }
   }
 
-  static async IsSignInCorrect (email, password, callback) {
-    const result = await db.query(`select * from USER where Email='${email}' AND Password='${password}'`)
-    return result.length == 1
+  static async IsSignInCorrect (email, password) {
+    try {
+      const result = await db.query(`select * from USER where Email='${email}' AND Password='${password}'`)
+      return result.length == 1
+    } catch (error) {
+      throw new Error('Error occured while executing User.IsSignInCorrect')
+    }
   }
 
   static async findNameByEmail (email){

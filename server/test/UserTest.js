@@ -18,3 +18,26 @@ describe('User.Add', () => {
   })
 })
 
+describe('User.IsSignInCorrect', () => {
+
+  const email = 'abcasdewgfr@gmail.com'
+  const password = '5566'
+  const name = '宗翰'
+
+  before(async () => {
+    await User.Add(email, name, password)
+  })
+
+  it(`OK`, async () => {
+    let response = await User.IsSignInCorrect(email,'5566')
+    expect(response).to.equal(true)
+    response = await User.IsSignInCorrect(email, '4156413')
+    expect(response).to.equal(false)
+    response = await User.IsSignInCorrect(email, `1' OR '1'='1`)
+    expect(response).to.equal(false)
+  })
+
+  it(`Error: duplicated E-mail`, async () => {
+    await expect(User.Add('abc@gmail.com', '宗翰', '5566')).to.be.rejectedWith(Error)
+  })
+})

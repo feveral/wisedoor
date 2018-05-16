@@ -41,8 +41,17 @@ module.exports = class Equipment {
     return result[0].Id
   }
 
+  static async FindModelIdByEquipmentId (equipmentId) {
+    try {
+      const result = await db.query(`select ModelId from EQUIPMENT where Id='${equipmentId}'`)
+      return result[0].ModelId
+    } catch (error) {
+      throw new Error('Error occured while executing Equipment.FindModelIdByEquipmentId') 
+    }
+  }
+
   static async UpdateModelIdByEquipmentId(equipmentId,newModelId){
-    const result = await db.query(`update EQUIPMENT set ModelId='${newModelId}' where Id='{equipmentId}'`)
+    const result = await db.query(`update EQUIPMENT set ModelId='${newModelId}' where Id='${equipmentId}'`)
     return result
   }
 }

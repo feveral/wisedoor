@@ -24,7 +24,8 @@ def TrainModel():
         else:
             train.trainModel(train.GetOldestData().faceIdList,
                             train.GetOldestData().cutBasePath,
-                            train.GetOldestData().ouputModelPath)
+                            train.GetOldestData().ouputModelPath,
+                            train.GetOldestData().faceIdNameDictionary)
             postAnswer = requests.post('https://localhost/api/model/notify', data =  {'faceIdList':train.GetOldestData().faceIdList,
                                                                                     'modelId':train.GetOldestData().modelId},
                                                                                     verify = False)
@@ -55,7 +56,8 @@ def trainPicture():
     cutBasePath = request.form.get('cutBasePath')
     outputBasePath = request.form.get('outputBasePath')
     modelId = request.form.get('modelId')
-    train.AddTrainData(faceIdList,cutBasePath,outputBasePath,modelId)
+    faceIdNameDictionary = request.form.getlist('faceIdNameDictionary')
+    train.AddTrainData(faceIdList,cutBasePath,outputBasePath,modelId,faceIdNameDictionary)
     return jsonify({'success': 'start training'})
 
 if __name__ == '__main__':
