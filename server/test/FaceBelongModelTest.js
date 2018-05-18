@@ -6,7 +6,6 @@ const User = require('../models/User')
 const Model = require('../models/Model')
 const db = require('../database/database')
 
-
 const chai = require('chai')
 const assert = chai.assert    // Using Assert style
 const expect = chai.expect    // Using Expect style

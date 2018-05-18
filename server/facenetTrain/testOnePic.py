@@ -20,7 +20,7 @@ batch_size = 1000
 nrof_images = 1
 image_size = 160
 model_path = './20170512-110547.pb'
-classifier_path = './models/334454c5b94d4f2fec017804e3a79659.pkl' 
+classifier_path = './models/8b6f209b6b724074f2ee5da66d186c57.pkl' 
 image_path = './image/testPic.png'
 
 def main():
@@ -46,7 +46,7 @@ def main():
                 (model, class_names) = pickle.load(infile)
             print('Loaded classifier model from file "%s"' % classifier_filename_exp)
 
-            cap = cv2.VideoCapture(0)
+            cap = cv2.VideoCapture(1)
             while(True):
             
                 ret, frame = cap.read()

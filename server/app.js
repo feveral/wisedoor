@@ -24,7 +24,7 @@ app.use(cors({
 
 httpApp.set('port', process.env.PORT || config.httpPort)
 httpApp.get("*", (req, res, next) => {
-  res.redirect("https://" + req.headers.host + req.path);
+  res.redirect("https://" + req.headers.host + req.path)
 })
 
 let passport = require('./passport')(app)
@@ -32,8 +32,3 @@ let routes = require('./routes')(app, passport)
 
 http.createServer(httpApp).listen(httpApp.get('port'), () => {})
 https.createServer(credentials, app).listen(app.get('port'), () => {})
-/*
-const shell = require('shelljs')
-const str = shell.exec('python3 ./faceAlign/app.py', { async: true, silent: false }, (code, stdout, stderr) => {
-})
-*/

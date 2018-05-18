@@ -68,12 +68,12 @@ export default {
       do {
         imageData = this.getVideoImage()
         response = await ImageService.uploadFace(imageData,faceName,equipmentName)
-        if (response.error) {
+        if (response.data.error) {
           alert('上傳失敗')
           break
         }
-        this.$emit('upgradeProgress',response.data.progress * 4)
-      } while (response.data.progress < 25)
+        this.$emit('upgradeProgress',response.data.progress)
+      } while (response.data.progress < 100)
       alert('上傳完成')
       this.$emit('upgradeProgress',0)
     }

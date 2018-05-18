@@ -31,7 +31,7 @@ module.exports = {
     async checkIsUpload(req, res, next) {
         const isUpload = await Face.FindIsUploadByFaceId(req.faceId)
         if (isUpload == true) {
-            res.send({ success: true, progress: 25 })
+            res.send({ success: true, progress: 100 })
         } 
         else{
             next()
@@ -83,10 +83,11 @@ module.exports = {
                 await Face.setIsUpload(req.faceId, true)
                 req.modelId = await Model.Add()
                 req.faceIdNamePairs = await FaceBelongEquipment.FindFaceIdNamePairByEquipmentId(req.equipmentId)
+                await Equipment.UpdateModelIdByEquipmentId(req.equipmentId,req.modelId)
                 next()
             }
             else
-                res.send({ success: true, progress: files.length })
+                res.send({ success: true, progress: files.length * 4 })
         })
     },
 
@@ -101,7 +102,7 @@ module.exports = {
         request.post({ url: 'http://localhost:3000/train', formData: formData }
             , async (error, response, body) => {
                 if (!error && response.statusCode == 200) {
-                    console.log("train finish")
+                    console.log("start training")
                 }
                 else {
                     console.log("error" + error)
@@ -109,5 +110,6 @@ module.exports = {
                 }
             }
         )
+        res.send({ success: true, progress: 100 })
     }
 }
