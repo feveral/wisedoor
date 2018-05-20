@@ -13,8 +13,7 @@ const certificate = fs.readFileSync(__dirname + '/ssl/certificate.crt');
 const credentials = { key: privateKey, cert: certificate }
 
 app.set('port', process.env.PORT || config.httpsPort)
-// app.use(history())
-app.use(express.static('../client/dist'))
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(cors({
@@ -29,6 +28,9 @@ httpApp.get("*", (req, res, next) => {
 
 let passport = require('./passport')(app)
 let routes = require('./routes')(app, passport)
+
+app.use(history()) // This line must be added below routes , not above
+app.use(express.static('../client/dist'))
 
 http.createServer(httpApp).listen(httpApp.get('port'), () => {})
 https.createServer(credentials, app).listen(app.get('port'), () => {})
