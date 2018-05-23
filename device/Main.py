@@ -5,10 +5,14 @@ import time
 from Classify import * 
 from Camera import Camera
 from OpencvAlign import OpencvAlign
+from requests.auth import HTTPBasicAuth
 
-new_model = requests.get("https://localhost/api/model", verify = False)
+payload = {'equipmentName': '家裡的門', 'email': "feveraly@gmail.com",'password':5566}
+new_model = requests.post("https://localhost/api/model", json=payload, verify = False)
+print(new_model.content)
 with open("test.pkl", 'wb') as outfile: 
     outfile.write(new_model.content)
+    ReloadModel()
 print("download ok")
 
 test_classifier_path = "./test.pkl"

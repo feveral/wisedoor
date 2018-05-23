@@ -65,7 +65,7 @@ module.exports = {
                 "cutBasePath": cutBasePath
             }
         request.post({ url: 'http://localhost:3000/align', formData: formData }
-            , (error, response, body) => {
+            , (error, response, body) => {   
                 if (!error && response.statusCode == 200) {
                     next()
                 }
