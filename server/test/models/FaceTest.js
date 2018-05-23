@@ -1,13 +1,14 @@
-const Equipment = require('../models/Equipment')
-const User = require('../models/User')
-const Face = require('../models/Face')
-const db = require('../database/database')
+const Equipment = require('../../models/Equipment')
+const User = require('../../models/User')
+const Face = require('../../models/Face')
+const db = require('../../database/database')
 
 const chai = require('chai')
 const assert = chai.assert    // Using Assert style
 const expect = chai.expect    // Using Expect style
 const should = chai.should()  // Using Should style
 chai.use(require('chai-as-promised'))
+
 
 describe('Face.Add', () => {
   it(`OK`, async () => {
@@ -29,14 +30,16 @@ describe('Face.FindIsUploadByFaceId', () => {
   })
 })
 
-describe('Face.SetIsUpload', () => {
+describe('Face.updateIsUpload', () => {
 
   it(`OK`, async () => {
     const faceId = await Face.Add('宗翰的臉3')
-    await Face.setIsUpload(faceId,true)
+    await Face.updateIsUpload(faceId,true)
+    const isUpload = await Face.FindIsUploadByFaceId(faceId)
+    expect(isUpload).to.equal(true)
   })
 
   it(`Error: faceId not exists`, async () => {
-    await expect(Face.setIsUpload('qweqwrf', true)).to.be.rejectedWith(Error)
+    await expect(Face.updateIsUpload('qweqwrf', true)).to.be.rejectedWith(Error)
   })
 })

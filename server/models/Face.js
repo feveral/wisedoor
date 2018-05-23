@@ -1,3 +1,13 @@
+/*
+  Need To Be Test : 
+    IsFaceNameInEquipment
+    FindFaceIdByFaceNameAndEquipmentId
+    FindFaceById
+    FindNameById
+    ProduceUniqueId
+    IsIdExist
+*/
+
 const db = require('../database/database')
 const randomHex = require('randomhex')
 
@@ -30,7 +40,7 @@ module.exports = class Face {
     }
   }
 
-  static async setIsUpload (faceId, isUpload) {
+  static async updateIsUpload (faceId, isUpload) {
     try {
       const response = await db.query(`update FACE set IsUpload=${isUpload} where Id='${faceId}'`)
       if (response.affectedRows == 0) {
@@ -41,6 +51,7 @@ module.exports = class Face {
     }
   }
 
+  // Need to be tested
   static async ProduceUniqueId () {
     const newId = await randomHex(16).substring(2)
     if (await this.IsIdExist(newId)) {
@@ -48,31 +59,38 @@ module.exports = class Face {
     }
     return newId
   }
-
-  static async IsFaceNameInEquipment (faceName, equipmentId) {
-    const result = await db.query(`select * from FACE,FACE_BELONG_EQUIPMENT 
-                                   where EquipmentId='${equipmentId}' AND
-                                   FaceId=Id AND
-                                   Name='${faceName}'`)
-    return result.length == 1
-  }
   
+  // Need to be tested
   static async IsIdExist(id) {
     const result = await db.query(`select Id from FACE where Id='${id}'`)
     return result.length == 1
   }
 
+  // Need to be tested
+  static async IsFaceNameInEquipment (faceName, equipmentId) {
+    try {
+      const result = await db.query(`select * from FACE,FACE_BELONG_EQUIPMENT 
+                                      where EquipmentId='${equipmentId}' AND
+                                      FaceId=Id AND
+                                      Name='${faceName}'`)
+      return result.length == 1
+    } catch (error) {
+      throw new Error('Error occured while executing Face.IsFaceNameInEquipment')
+    }
+  }
+  
+  // Need to be tested
+  static async FindFaceIdByFaceNameAndEquipmentId(faceName, equipmentId) {
+    const result = await db.query(`select Id from FACE,FACE_BELONG_EQUIPMENT 
+                                    where EquipmentId='${equipmentId}' AND
+                                    FaceId=FACE.Id AND
+                                    FACE.Name='${faceName}'`)
+    return result[0].Id
+  }
+
   static async FindFaceById(id) {
     const result = await db.query(`select * from FACE where Id='${id}'`)
     return result
-  }
-  
-  static async FindFaceIdByFaceNameAndEquipmentId(faceName, equipmentId) {
-    const result = await db.query(`select Id from FACE,FACE_BELONG_EQUIPMENT 
-                                   where EquipmentId='${equipmentId}' AND
-                                   FaceId=FACE.Id AND
-                                   FACE.Name='${faceName}'`)
-    return result[0].Id
   }
 
   static async FindNameById(id) {

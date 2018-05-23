@@ -17,14 +17,8 @@ module.exports = (app, passport) => {
     AuthenticationRouter.get('/logout', AuthenticationController.logout)
     AuthenticationRouter.get('/username', AuthenticationController.username)
 
-    /*
-        post body :
-        {
-            EquipmentName: '...'
-            FaceName: '...'
-        }
-    */
-    imageRouter.post('/upload/face',ImageController.retrieveEquipmentId,
+    imageRouter.post('/upload/face',AuthenticationController.Islogin,
+                                    ImageController.retrieveEquipmentId,
                                     ImageController.retrieveFaceId,
                                     ImageController.checkIsUpload,
                                     ImageController.makeRawDirectIfnotExist,
@@ -32,13 +26,13 @@ module.exports = (app, passport) => {
                                     ImageController.alignFace,
                                     ImageController.checkAlignProgressAndResponse,
                                     ImageController.trainFace)
+                                    
     equipmentRouter.get('/', EquipmentController.GetEquipments)
     faceRouter.get('/:equipmentId', FaceController.GetFaces)
     modelRouter.post('/', ModelController.GetModel)
     modelRouter.post('/notify',ModelController.NotifyTrainFinish)
 
     app.use('/api/authentication', AuthenticationRouter)
-    // app.use('*', AuthenticationController.Islogin)
     app.use('/api/equipment', equipmentRouter)
     app.use('/api/face', faceRouter)
     app.use('/api/image', imageRouter)
