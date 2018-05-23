@@ -87,6 +87,10 @@ if (!require('fs').existsSync('facenetTrain/image/cut')) {
   require('fs').mkdirSync('facenetTrain/image/cut')
 }
 
+if (!require('fs').existsSync('facenetTrain/models')) {
+  require('fs').mkdirSync('facenetTrain/models')
+}
+
 require('fs').readdir('facenetTrain/image/raw', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
     require('rimraf')(`facenetTrain/image/raw/${files[i]}`,()=>{})

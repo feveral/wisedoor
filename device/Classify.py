@@ -59,6 +59,14 @@ with tensorflow_graph.as_default():
     print('Loaded classifier model from file "%s"' % classifier_filename_exp)
     
 with tf.Session(graph=tensorflow_graph) as sess:
+    def ReloadModel():
+        print('Testing classifier')
+        classifier_filename_exp = os.path.expanduser(test_classifier_path)
+
+        with open(classifier_filename_exp, 'rb') as infile:
+            (model, class_names) = pickle.load(infile)
+        print('Loaded classifier model from file "%s"' % classifier_filename_exp)
+        
     def classify_image(input_file_path):
         np.random.seed(seed=666)
         paths = [input_file_path]

@@ -17,7 +17,7 @@ class Camera:
         cv2.imwrite(path,imageFrame)
     
     def __openCamera(self):
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(1)
 
     def __closeCamera(self):
         self.cap.release()
