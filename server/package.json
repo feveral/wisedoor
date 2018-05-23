@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
+    "test": "./node_modules/mocha/bin/mocha $(find test -name '*.js')",
     "init": "sudo node database/InitialDatabase.js",
     "facenet": "python3 ./faceAlign/app.py",
     "start": "sudo NODE_ENV=production node app.js",

@@ -4,12 +4,12 @@ module.exports = {
 
   async login (req, res) {
     const name = await User.findNameByEmail(req.user)
-    res.send( {success:true,name:name} )
+    res.send( { success:true,name:name } )
   },  
 
   logout (req, res) {
     req.logout();
-    res.send( {success:`You've successfully logout`} )
+    res.send( { success:`You've successfully logout`} )
     //res.redirect('/');
   },
 

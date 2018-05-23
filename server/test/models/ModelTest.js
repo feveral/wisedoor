@@ -1,10 +1,10 @@
-const FaceBelongEquipment = require('../models/FaceBelongEquipment')
-const FaceBelongModel = require('../models/FaceBelongModel')
-const Equipment = require('../models/Equipment')
-const Face = require('../models/Face')
-const User = require('../models/User')
-const Model = require('../models/Model')
-const db = require('../database/database')
+const FaceBelongEquipment = require('../../models/FaceBelongEquipment')
+const FaceBelongModel = require('../../models/FaceBelongModel')
+const Equipment = require('../../models/Equipment')
+const Face = require('../../models/Face')
+const User = require('../../models/User')
+const Model = require('../../models/Model')
+const db = require('../../database/database')
 
 
 const chai = require('chai')

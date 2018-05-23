@@ -18,6 +18,7 @@ module.exports = class Equipment {
     }
   }
 
+  // Need to be tested
   static async ProduceUniqueId() {
     const newId = await randomHex(16).substring(2)
     if (await this.IsIdExist(newId)){
@@ -26,19 +27,31 @@ module.exports = class Equipment {
     return newId
   }
 
+  // Need to be tested
   static async IsIdExist(id) {
     const result = await db.query(`select Id from EQUIPMENT where Id='${id}'`)
     return result.length == 1
   }
 
   static async FindEquipmentsByUserEmail(ownerEmail) {
-    const result = await db.query(`select * from EQUIPMENT where OwnerEmail='${ownerEmail}'`)
-    return result
+    try {
+      const result = await db.query(`select * from EQUIPMENT where OwnerEmail='${ownerEmail}'`)
+      if (result.length == 0) {
+        throw new Error('Error occured while executing Equipment.FindEquipmentsByUserEmail : OwnerEmail Cannot be found') 
+      }
+      return result
+    } catch (error) {
+      throw new Error('Error occured while executing Equipment.FindEquipmentsByUserEmail') 
+    }
   }
 
   static async FindIdByOwnerEmailAndName(ownerEmail, equipmentName) {
-    const result = await db.query(`select Id from EQUIPMENT where OwnerEmail='${ownerEmail}' AND Name='${equipmentName}'`)
-    return result[0].Id
+    try {
+      const result = await db.query(`select Id from EQUIPMENT where OwnerEmail='${ownerEmail}' AND Name='${equipmentName}'`)
+      return result[0].Id
+    } catch (error) {
+      throw new Error('Error occured while executing Equipment.FindIdByOwnerEmailAndName') 
+    } 
   }
 
   static async FindModelIdByEquipmentId (equipmentId) {
@@ -51,7 +64,13 @@ module.exports = class Equipment {
   }
 
   static async UpdateModelIdByEquipmentId(equipmentId,newModelId){
-    const result = await db.query(`update EQUIPMENT set ModelId='${newModelId}' where Id='${equipmentId}'`)
-    return result
+    try {
+      const result = await db.query(`update EQUIPMENT set ModelId='${newModelId}' where Id='${equipmentId}'`)
+      if (result.affectedRows == 0) {
+        throw new Error('Error occured while executing Equipment.FindModelIdByEquipmentId : cannot find this equipmentId') 
+      }
+    } catch (error) {
+      throw new Error('Error occured while executing Equipment.FindModelIdByEquipmentId') 
+    }
   }
 }
