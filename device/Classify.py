@@ -59,7 +59,7 @@ with tensorflow_graph.as_default():
     print('Loaded classifier model from file "%s"' % classifier_filename_exp)
     
 with tf.Session(graph=tensorflow_graph) as sess:
-    def ReloadModel():
+    def reload_model():
         print('Testing classifier')
         classifier_filename_exp = os.path.expanduser(test_classifier_path)
 

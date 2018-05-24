@@ -26,11 +26,13 @@ module.exports = (app, passport) => {
                                     ImageController.alignFace,
                                     ImageController.checkAlignProgressAndResponse,
                                     ImageController.trainFace)
-                                    
+
     equipmentRouter.get('/', EquipmentController.GetEquipments)
+    equipmentRouter.post('/',EquipmentController.register)
     faceRouter.get('/:equipmentId', FaceController.GetFaces)
     modelRouter.post('/', ModelController.GetModel)
     modelRouter.post('/notify',ModelController.NotifyTrainFinish)
+
 
     app.use('/api/authentication', AuthenticationRouter)
     app.use('/api/equipment', equipmentRouter)

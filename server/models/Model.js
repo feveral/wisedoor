@@ -38,5 +38,4 @@ module.exports = class Model {
     const result = await db.query(`select Id from MODEL where Id='${id}'`)
     return result.length == 1
   }
-
 }
