@@ -10,3 +10,5 @@
 
 ### TODO
 - 模糊檢測改為前端運行
+- device Main.py的下載model部份的code 分離到 Model.py
+- 
