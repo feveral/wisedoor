@@ -8,7 +8,7 @@
           <equipment-list></equipment-list>
         </div>
         <div class="col-12 col-lg-8 row">
-          <camera @upgradeProgress="onUpgradeProgress($event)" ref="camera" class="col-12"></camera>
+          <camera @upgradeProgress="onUpgradeProgress($event)" @notifyTrainStart="CheckModelIsTrain" ref="camera" class="col-12"></camera>
         </div>
         <train-menu @addFace="onAddFace()" class="col-12 col-lg-2"></train-menu>
         <upload-face-progress ref="progress" class="col-12 col-lg-8"></upload-face-progress>
@@ -26,6 +26,7 @@ import Camera from '@/components/Camera'
 import LoginModal from '@/components/LoginModal'
 import LoginService from '@/services/LoginService'
 import ImageService from '@/services/ImageService'
+import TrainService from '@/services/TrainService'
 import TrainMenu from '@/components/TrainMenu'
 import EquipmentList from '@/components/EquipmentList'
 import UploadFaceProgress from '@/components/UploadFaceProgress'
@@ -79,8 +80,21 @@ export default {
       console.log(response)
       if (response.error) {
         this.$router.push({name:'Login'})
-      } 
-    }
+      }
+    },
+
+    async CheckModelIsTrain(equipmentName){
+      const timerId = setInterval(checkIsTrain,500)
+
+      async function checkIsTrain() {
+        const isTrained = (await TrainService.checkModelIsOk(equipmentName)).data
+        if(isTrained){
+          alert("臉孔處理已完成")
+          clearInterval(timerId);
+        }
+      }
+    },
+
   }
 }
 </script>

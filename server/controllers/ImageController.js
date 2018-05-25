@@ -80,7 +80,7 @@ module.exports = {
     checkAlignProgressAndResponse (req, res, next) {
         fs.readdir(`${cutBasePath}/${req.faceId}`, async (err, files) => {
             if (files.length >= 25) {
-                await Face.setIsUpload(req.faceId, true)
+                await Face.updateIsUpload(req.faceId, true)
                 req.modelId = await Model.Add()
                 req.faceIdNamePairs = await FaceBelongEquipment.FindFaceIdNamePairByEquipmentId(req.equipmentId)
                 await Equipment.UpdateModelIdByEquipmentId(req.equipmentId,req.modelId)
