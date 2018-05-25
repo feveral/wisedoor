@@ -5,7 +5,7 @@
       <div class="row justify-content-center">
         <div class="col-12 col-lg-2">
           <h5 class="mb-3 text-center">您的設備列表</h5>
-          <equipment-list></equipment-list>
+          <equipment-list ref="equipmentList"></equipment-list>
         </div>
         <div class="col-12 col-lg-8 row">
           <camera @upgradeProgress="onUpgradeProgress($event)" @notifyTrainStart="CheckModelIsTrain" ref="camera" class="col-12"></camera>
@@ -15,7 +15,8 @@
       </div>
     </div>
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
-    <add-face-modal @addFaceTest="onAddFaceTest($event)"></add-face-modal>
+    <register-equipment-modal @registerEquipmentSuccess="onRegisterEquipmentSuccess()"></register-equipment-modal>
+    <add-face-modal @addFace="onAddFace($event)"></add-face-modal>
     <router-view/>
   </div>
 </template>
@@ -31,6 +32,7 @@ import TrainMenu from '@/components/TrainMenu'
 import EquipmentList from '@/components/EquipmentList'
 import UploadFaceProgress from '@/components/UploadFaceProgress'
 import AddFaceModal from '@/components/AddFaceModal'
+import RegisterEquipmentModal from '@/components/RegisterEquipmentModal'
 
 export default {
   name: 'Main',
@@ -41,7 +43,8 @@ export default {
     TrainMenu,
     EquipmentList,
     UploadFaceProgress,
-    AddFaceModal
+    AddFaceModal,
+    RegisterEquipmentModal
   },
 
   mounted () {
@@ -59,12 +62,12 @@ export default {
       this.GoToLoginIfNotLogin()
     },
 
-    onAddFace () {
-      this.$refs.camera.uploadFace()
+    onAddFace (faceArgs) {
+      this.$refs.camera.uploadFace(faceArgs.faceName,faceArgs.equipmentName)
     },
 
-    onAddFaceTest (faceArgs) {
-      this.$refs.camera.uploadFace(faceArgs.faceName,faceArgs.equipmentName)
+    onRegisterEquipmentSuccess () {
+      this.$refs.equipmentList.UpdateEquipmentList()
     },
 
     onUpgradeProgress (percentage) {
@@ -77,9 +80,12 @@ export default {
 
     async GoToLoginIfNotLogin () {
       const response = (await LoginService.identification()).data
-      console.log(response)
       if (response.error) {
         this.$router.push({name:'Login'})
+<<<<<<< HEAD
+      } 
+    }
+=======
       }
     },
 
@@ -94,6 +100,7 @@ export default {
         }
       }
     },
+>>>>>>> 90ce5f93833fcaa376b1bcbfb67ebd76206c38ab
 
   }
 }

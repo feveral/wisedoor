@@ -2,18 +2,18 @@ import requests
 import pickle
 import cv2
 import time 
-from Classify import * 
 from Camera import Camera
 from OpencvAlign import OpencvAlign
 from requests.auth import HTTPBasicAuth
 
 payload = {'equipmentName': '家裡的門', 'email': "feveraly@gmail.com",'password':5566}
 new_model = requests.post("https://localhost/api/model", json=payload, verify = False)
-print(new_model.content)
+
 with open("test.pkl", 'wb') as outfile: 
     outfile.write(new_model.content)
-    reload_model()
+    #reload_model()
 print("download ok")
+from Classify import * 
 
 test_classifier_path = "./test.pkl"
 
@@ -21,7 +21,7 @@ count = 0
 camera = Camera()
 while(True):
     frame = camera.CatchImage()
-    if cv2.waitKey(1) & 0xFF == ord('c'):
+    if cv2.waitKey(1) :#& 0xFF == ord('c'):
         start = time.time()
         cut = OpencvAlign(frame)
         if(cut.Cut()):
@@ -29,6 +29,6 @@ while(True):
             if(classify_image("./image/cut.png")) == True:
                 count += 1
         end = time.time()
-        print ("It cost %f sec" % (end - start))
+        #print ("It cost %f sec" % (end - start))
     if(count == 5):
         break
