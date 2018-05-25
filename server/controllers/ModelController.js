@@ -35,7 +35,16 @@ module.exports = {
       })
     }
     await Model.UpdateIsTrainValue(req.body.modelId,true)
-    
+    console.log("train finish!")
     res.send("data is receive")
+  },
+
+  async CheckModelIsTrain(req, res){
+    const equipmentName = req.body.equipmentName
+    const userEmail = req.user
+    const equipmentId = await Equipment.FindIdByOwnerEmailAndName(userEmail,equipmentName)
+    const modelId = await Equipment.FindModelIdByEquipmentId(equipmentId)
+    const IsTrain = await Model.IsModelTrain(modelId)
+    res.send(IsTrain)
   }
 }

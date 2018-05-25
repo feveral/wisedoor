@@ -74,8 +74,9 @@ export default {
         }
         this.$emit('upgradeProgress',response.data.progress)
       } while (response.data.progress < 100)
-      alert('上傳完成')
+      alert('上傳完成 臉孔處理中')
       this.$emit('upgradeProgress',0)
+      this.$emit('notifyTrainStart',equipmentName)
     }
   }
 }

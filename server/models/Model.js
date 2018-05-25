@@ -20,8 +20,7 @@ module.exports = class Model {
       const response = await db.query(`update MODEL SET IsTrain = ${isTrainValue} WHERE Id='${modelId}'`)
       if(response.affectedRows == 0)
         throw new Error('Error occured while executing Model.UpdateIsrainValue : cannot find modelId')
-    }
-    catch(error){
+    } catch (error) {
       throw new Error('Error occured while executing Model.UpdateIsrainValue')
     }
   }
@@ -38,4 +37,14 @@ module.exports = class Model {
     const result = await db.query(`select Id from MODEL where Id='${id}'`)
     return result.length == 1
   }
+
+  static async IsModelTrain(id){
+    try{
+      const result = await db.query(`select IsTrain from MODEL where Id='${id}'`)
+      return result[0].IsTrain == 1
+    } catch (error) {
+      throw new Error('Error occured while executing Model.IsModelTrain')
+    }
+  }
+
 }

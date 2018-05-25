@@ -14,7 +14,7 @@ const should = chai.should()  // Using Should style
 chai.use(require('chai-as-promised'))
 
 
-describe('FaceBelongModel.Add', () => {
+describe('Model.Add', () => {
     let equipmentId
     let modelId
     before( async () => {
@@ -34,7 +34,7 @@ describe('FaceBelongModel.Add', () => {
     })
 })
 
-describe('FaceBelongModel.UpdateIsTrainValue', () => {
+describe('Model.UpdateIsTrainValue', () => {
     let equipmentId
     let modelId
     before( async () => {
@@ -53,3 +53,25 @@ describe('FaceBelongModel.UpdateIsTrainValue', () => {
         
     })
 })
+
+describe('Model.IsModelTrain', () => {
+    let equipmentId
+    let modelId
+    before( async () => {
+        modelId = await Model.Add()
+    })
+
+    it(`OK`, async () => {
+        const response = await Model.IsModelTrain(modelId)
+        expect(response).to.be.false
+    })
+
+    it('Error : modelId cannot find', async () => {
+        await expect(Model.IsModelTrain(555)).to.be.rejectedWith(Error)
+    })
+
+    after(() => {
+        
+    })
+})
+
