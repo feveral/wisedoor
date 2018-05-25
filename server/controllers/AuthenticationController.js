@@ -16,7 +16,7 @@ module.exports = {
   async username (req, res) {
     if (req.user) {
       const name = await User.findNameByEmail(req.user)
-      res.send( { name:name } )
+      res.send( { name:name,email:req.user } )
     }
     else {
       res.send( { error:`You haven't login yet !` })
