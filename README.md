@@ -10,3 +10,5 @@
 
 ### TODO
 - 模糊檢測改為前端運行
+- device Main.py的下載model部份的code 分離到 Model.py，並讓其可參數化(不是寫死email,password等等)
+- server/controllers 的每個function都要測試，範例已經寫在server/test/controllers/EquipmentController.js

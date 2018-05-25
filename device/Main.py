@@ -12,7 +12,7 @@ new_model = requests.post("https://localhost/api/model", json=payload, verify = 
 print(new_model.content)
 with open("test.pkl", 'wb') as outfile: 
     outfile.write(new_model.content)
-    ReloadModel()
+    reload_model()
 print("download ok")
 
 test_classifier_path = "./test.pkl"
