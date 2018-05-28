@@ -92,7 +92,7 @@ export default {
         const isTrained = (await TrainService.checkModelIsOk(equipmentName)).data
         if(isTrained){
           alert("臉孔處理已完成")
-          clearInterval(timerId);
+          clearInterval(timerId)
         }
       }
     },
