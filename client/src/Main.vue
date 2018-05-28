@@ -82,10 +82,6 @@ export default {
       const response = (await LoginService.identification()).data
       if (response.error) {
         this.$router.push({name:'Login'})
-<<<<<<< HEAD
-      } 
-    }
-=======
       }
     },
 
@@ -100,7 +96,6 @@ export default {
         }
       }
     },
->>>>>>> 90ce5f93833fcaa376b1bcbfb67ebd76206c38ab
 
   }
 }
