@@ -89,9 +89,9 @@ with tf.Session(graph=tensorflow_graph) as sess:
                     
         for i in range(len(best_class_indices)):
             print('%4d  %s: %.3f' % (i, class_names[best_class_indices[i]], best_class_probabilities[i]))
-            
-        if(class_names[best_class_indices[i]] == "tom" and best_class_probabilities[i] > 0.8):
-            return True
-        else:
-            return False
+
+        classifyDictionary = dict()
+        classifyDictionary["classifyPeopleName"] = class_names[best_class_indices[i]]
+        classifyDictionary["classifyRate"] = best_class_probabilities[i]
+        return classifyDictionary
             

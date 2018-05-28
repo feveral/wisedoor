@@ -11,7 +11,6 @@ class Camera:
         if(not self.cap):
             self.__openCamera()
         ret, frame = self.cap.read()
-        cv2.imshow("Display window", frame)  
         return frame
 
     def set_camera_index(self,index):
