@@ -1,9 +1,9 @@
 <template>
   <div id="train-menu">
     <div class="row justify-content-around">
-      <button class="mb-4 col-5 col-lg-12 btn btn-outline-info" data-toggle="modal" data-target="#add-face-modal">新增臉孔</button>
-      <button class="mb-4 col-5 col-lg-12 btn btn-outline-info" data-toggle="modal" data-target="#register-equipment-modal">新增設備</button>
-      <button class="mb-4 col-5 col-lg-12 btn btn-outline-info">登入紀錄</button>
+      <button class="mb-4 col-5 col-lg-12 btn btn-outline-dark train-menu-button" data-toggle="modal" data-target="#add-face-modal">新增臉孔</button>
+      <button class="mb-4 col-5 col-lg-12 btn btn-outline-dark train-menu-button" data-toggle="modal" data-target="#register-equipment-modal">新增設備</button>
+      <button class="mb-4 col-5 col-lg-12 btn btn-outline-dark train-menu-button">登入紀錄</button>
     </div>
   </div>
 </template>
@@ -31,5 +31,10 @@ export default {
 </script>
 
 <style>
+
+.train-menu-button {
+  font-size: 25px;
+  font-weight: bold;
+}
 
 </style>

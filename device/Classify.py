@@ -42,7 +42,7 @@ test_classifier_path = "./test.pkl"
 tensorflow_graph = tf.Graph()
 sess = tf.Session()
 with tensorflow_graph.as_default():
-    print('Loading feature extraction model')
+    #print('Loading feature extraction model')
     facenet.load_model(model_path)
     
     # Get input and output tensors
@@ -51,21 +51,21 @@ with tensorflow_graph.as_default():
     phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
     embedding_size =  embeddings.get_shape()[1]
 
-    print('Testing classifier')
+    #print('Testing classifier')
     classifier_filename_exp = os.path.expanduser(test_classifier_path)
 
     with open(classifier_filename_exp, 'rb') as infile:
         (model, class_names) = pickle.load(infile)
-    print('Loaded classifier model from file "%s"' % classifier_filename_exp)
+    #print('Loaded classifier model from file "%s"' % classifier_filename_exp)
     
 with tf.Session(graph=tensorflow_graph) as sess:
     def reload_model():
-        print('Testing classifier')
+        #print('Testing classifier')
         classifier_filename_exp = os.path.expanduser(test_classifier_path)
 
         with open(classifier_filename_exp, 'rb') as infile:
             (model, class_names) = pickle.load(infile)
-        print('Loaded classifier model from file "%s"' % classifier_filename_exp)
+        #print('Loaded classifier model from file "%s"' % classifier_filename_exp)
         
     def classify_image(input_file_path):
         np.random.seed(seed=666)
@@ -88,7 +88,8 @@ with tf.Session(graph=tensorflow_graph) as sess:
         best_class_probabilities = predictions[np.arange(len(best_class_indices)), best_class_indices]
                     
         for i in range(len(best_class_indices)):
-            print('%4d  %s: %.3f' % (i, class_names[best_class_indices[i]], best_class_probabilities[i]))
+            pass
+            #print('%4d  %s: %.3f' % (i, class_names[best_class_indices[i]], best_class_probabilities[i]))
 
         classifyDictionary = dict()
         classifyDictionary["classifyPeopleName"] = class_names[best_class_indices[i]]
