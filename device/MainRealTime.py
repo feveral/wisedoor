@@ -22,14 +22,13 @@ camera = Camera(1)
 classifyList = {"classifyPeopleName":'unknown',"classifyRate":0.0}
 while(True):
     frame = camera.CatchImage()
-    if cv2.waitKey(1) & 0xFF == ord('c'):
-        start = time.time()
-        cut = OpencvAlign(frame)
-        if(cut.Cut()):
-            cut.Resize()
-            classifyList = classify_image("./image/cut.png")
-        end = time.time()
-        time.sleep(0.1)
+    start = time.time()
+    cut = OpencvAlign(frame)
+    if(cut.Cut()):
+        cut.Resize()
+        classifyList = classify_image("./image/cut.png")
+    end = time.time()
+    time.sleep(0.1)
     classifyPersonName =  classifyList["classifyPeopleName"]
     classifyRate =  classifyList["classifyRate"] 
     cv2.putText(frame,classifyPersonName,(10,40),cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 0, 0), 1, cv2.LINE_AA)
@@ -38,5 +37,3 @@ while(True):
         break
 
     cv2.imshow("Display window", frame)  
-    
-
