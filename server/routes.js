@@ -34,7 +34,6 @@ module.exports = (app, passport) => {
     modelRouter.post('/notify',ModelController.NotifyTrainFinish)
     modelRouter.post('/check',ModelController.CheckModelIsTrain)
 
-
     app.use('/api/authentication', AuthenticationRouter)
     app.use('/api/equipment', equipmentRouter)
     app.use('/api/face', faceRouter)

@@ -10,6 +10,8 @@ from utility.blurr import *
 import logging
 import requests
 import json
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 app = Flask(__name__)
 cutPicture = CutPicture(); 
