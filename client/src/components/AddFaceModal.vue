@@ -1,23 +1,23 @@
 <template>
 
 <div id="add-face-modal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">新增臉孔</h5>
+        <h5 class="modal-title add-face-title-size">新增臉孔</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>請選擇一個您的設備</p>
+        <p class="prompt-text-size">請選擇一個您的設備</p>
         <div class="equipment-choose-button mb-4" v-for="(equipment,index) in equipments">
-          <button type="button" class="btn btn-success" @click="chooseEquipment(index)">{{ equipment.Name }}</button>
+          <button type="button" class="btn btn-outline-dark equipment-button-size" @click="chooseEquipment(index)">{{ equipment.Name }}</button>
           <img src="../assets/sign-check-icon.png" v-if="choosed[index]" width="30px" alt="">
         </div>
-        <p>請輸入臉孔名稱</p>
+        <p class="prompt-text-size">請輸入臉孔名稱</p>
         <div class="form-group">
-          <input type="text" class="form-control" v-model="faceName" placeholder="臉孔名稱">
+          <input type="text" class="form-control input-face-name-size" v-model="faceName" placeholder="臉孔名稱">
         </div>
       </div>
       <div class="modal-footer">
@@ -82,7 +82,25 @@ export default {
 </script>
 
 <style>
+
+.add-face-title-size {
+  font-size: 26px;
+}
+
 .equipment-choose-button {
   display: block;
 }
+
+.prompt-text-size {
+  font-size: 22px;
+}
+
+.input-face-name-size {
+  font-size: 22px;
+}
+
+.equipment-button-size {
+  font-size: 22px;
+}
+
 </style>

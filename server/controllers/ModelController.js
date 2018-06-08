@@ -19,7 +19,7 @@ module.exports = {
     }
     const equipmentId = await Equipment.FindIdByOwnerEmailAndName(userEmail,equipmentName)
     const modelId = await Equipment.FindModelIdByEquipmentId(equipmentId)
-    fs.readFile(`./facenetTrain/models/${modelId}.pkl`, (err, data) => {
+    fs.readFile(`./faceAlign/models/${modelId}.pkl`, (err, data) => {
       res.send(data)
     })
   },

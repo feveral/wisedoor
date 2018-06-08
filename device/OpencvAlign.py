@@ -17,7 +17,7 @@ class OpencvAlign:
             minNeighbors=2,
             minSize=(30, 30),
         )
-        print ('Found {0} faces!'.format(len(self.faces)) )
+        #print ('Found {0} faces!'.format(len(self.faces)) )
 
         if(len(self.faces) > 0):
             return True

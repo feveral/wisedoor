@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-lg-2">
-          <h5 class="mb-3 text-center">您的設備列表</h5>
+          <h5 class="mb-3 text-center big-font-size">您的設備列表</h5>
           <equipment-list ref="equipmentList"></equipment-list>
         </div>
         <div class="col-12 col-lg-8 row">
@@ -87,12 +87,15 @@ export default {
 
     async CheckModelIsTrain(equipmentName){
       const timerId = setInterval(checkIsTrain,500)
-
+      const equipmentList = this.$refs.equipmentList 
+      let isAlert = false
       async function checkIsTrain() {
         const isTrained = (await TrainService.checkModelIsOk(equipmentName)).data
-        if(isTrained){
+        if(isTrained && !isAlert){
+          isAlert = true
+          equipmentList.UpdateEquipmentList()
           alert("臉孔處理已完成")
-          clearInterval(timerId);
+          clearInterval(timerId)
         }
       }
     },
@@ -111,6 +114,10 @@ export default {
 
 .text-center {
   text-align: center;
+}
+
+.big-font-size {
+  font-size: 25px;
 }
 
 </style>

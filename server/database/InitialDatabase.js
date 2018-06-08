@@ -93,17 +93,17 @@ if (!require('fs').existsSync('facenetTrain/models')) {
 
 require('fs').readdir('facenetTrain/image/raw', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
-    require('rimraf')(`facenetTrain/image/raw/${files[i]}`,()=>{})
+    require('rimraf')(`faceAlign/image/raw/${files[i]}`,()=>{})
 })
 
 require('fs').readdir('facenetTrain/image/cut', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
-    require('rimraf')(`facenetTrain/image/cut/${files[i]}`,()=>{})
+    require('rimraf')(`faceAlign/image/cut/${files[i]}`,()=>{})
 })
 
 require('fs').readdir('facenetTrain/models', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
-    require('rimraf')(`facenetTrain/models/${files[i]}`,()=>{})
+    require('rimraf')(`faceAlign/models/${files[i]}`,()=>{})
 })
 
 console.log('Finished Initial database and image folder')

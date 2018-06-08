@@ -10,6 +10,8 @@ from utility.blurr import *
 import logging
 import requests
 import json
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 app = Flask(__name__)
 cutPicture = CutPicture(); 
@@ -32,9 +34,9 @@ def TrainModel():
                                                                                     verify = False)
             train.PopOldestData()
 
-t = threading.Thread(target=TrainModel)
-t.setDaemon(True)
-t.start()
+thread = threading.Thread(target=TrainModel)
+thread.setDaemon(True)
+thread.start()
 
 @app.route('/align', methods=['POST'])
 def alignPicture():
