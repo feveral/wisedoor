@@ -9,7 +9,7 @@ from Model import Model
 
 from Classify import * 
 
-camera = Camera(0)
+camera = Camera(1)
 classify_result = ('unknown', 0.0)
 model = Model("feveraly@gmail.com", 5566, '家裡的門')
 classify = Classify()

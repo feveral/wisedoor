@@ -124,7 +124,7 @@ class CutPicture:
     #         dataset.append(ImageClass(class_name, image_paths))
 
     #     return dataset
-                        
+
                                 
 
     

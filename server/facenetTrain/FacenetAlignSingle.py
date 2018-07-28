@@ -4,7 +4,7 @@ from __future__ import print_function
 
 import sys
 import os
-sys.path.insert(0, "./facenetTrain/utility")
+sys.path.insert(0, "./utility")
 from scipy import misc
 import argparse
 import tensorflow as tf
@@ -121,4 +121,3 @@ class CutPicture:
                         
                                 
 
-    
