@@ -34,9 +34,9 @@ def TrainModel():
                                                                                     verify = False)
             train.PopOldestData()
 
-t = threading.Thread(target=TrainModel)
-t.setDaemon(True)
-t.start()
+thread = threading.Thread(target=TrainModel)
+thread.setDaemon(True)
+thread.start()
 
 @app.route('/align', methods=['POST'])
 def alignPicture():

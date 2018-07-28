@@ -15,6 +15,7 @@ class Model():
     def update(self):  
         payload = {'email':self.user_email,'password':self.password,'equipmentName':self.equipment_name}
         new_model = requests.post("https://localhost/api/model", json=payload, verify = False)
+        print(new_model)
         with open(self.model_path, 'wb') as outfile: 
             outfile.write(new_model.content)
             self.reload_model()

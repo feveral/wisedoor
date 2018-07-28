@@ -9,9 +9,10 @@ from Model import Model
 
 from Classify import * 
 
-camera = Camera(1)
+camera = Camera(0)
 classify_result = ('unknown', 0.0)
 model = Model("feveraly@gmail.com", 5566, '家裡的門')
+classify = Classify()
 
 while(True):
     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -22,10 +23,13 @@ while(True):
         print('reloading over')
     if cv2.waitKey(1) & 0xFF == ord('c'):
         print('c')
+        start = time.time()
         align = OpencvAlign(frame)
         if(align.Cut()):
             align.Resize()
-            classify_result = classify_image("./image/cut.png",model)
+            classify_result = classify.classify_image("./image/cut.png",model)
+            end = time.time()
+            print("cost time", end - start)
     frame = camera.CatchImage()
     cv2.putText(frame,classify_result[0],(10,40),cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 0, 0), 1, cv2.LINE_AA)
     cv2.putText(frame,str(classify_result[1]),(10,80),cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 0, 0), 1, cv2.LINE_AA)
