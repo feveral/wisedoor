@@ -38,7 +38,7 @@ def classify_image(input_file_path,model_object):
     images = facenet.load_data(paths_batch, False, False, 160)
     feed_dict = { images_placeholder:images, phase_train_placeholder:False }
     emb_array[0:1,:] = sess.run(embeddings, feed_dict=feed_dict)
-        
+
     predictions = model.predict_proba(emb_array)
     best_class_indices = np.argmax(predictions, axis=1)
     best_class_probabilities = predictions[np.arange(len(best_class_indices)), best_class_indices]

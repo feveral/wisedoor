@@ -31,7 +31,7 @@ class CutPicture:
         # Add a random key to the filename to allow alignment using multiple processes
         self.random_key = np.random.randint(0, high=99999)
     
-    def align(self,inputPath, outputPath,outputDirName = "align"):
+    def align(self,inputPath, outputPath, outputDirName = "align"):
         if not os.path.exists(outputPath):
             os.makedirs(outputPath)
         # Store some git revision info in a text file in the log directory
