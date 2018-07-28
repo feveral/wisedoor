@@ -7,9 +7,9 @@ const FaceBelongModel = require('../models/FaceBelongModel')
 const request = require('request');
 const Model = require('../models/Model')
 
-const uploadBasePath = `${process.cwd()}/faceAlign/image/raw`
-const cutBasePath = `${process.cwd()}/faceAlign/image/cut`
-const modelBasePath = `${process.cwd()}/faceAlign/models`
+const uploadBasePath = `${process.cwd()}/facenetService/image/raw`
+const cutBasePath = `${process.cwd()}/facenetService/image/cut`
+const modelBasePath = `${process.cwd()}/facenetService/models`
 
 module.exports = { 
 

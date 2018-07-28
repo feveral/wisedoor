@@ -1,0 +1,7 @@
+arguments: ./faceAlign/app.py
+--------------------
+tensorflow version: 1.2.1
+--------------------
+git hash: git rev-parse HEAD: No such file or directory: '/media/feveral/Data2/Coding_python/AI/wisedoor/server/faceAlign/utility'
+--------------------
+git diff HEAD: No such file or directory: '/media/feveral/Data2/Coding_python/AI/wisedoor/server/faceAlign/utility'

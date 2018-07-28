@@ -79,31 +79,31 @@ db.query(`insert into USER VALUES('john@gmail.com','忠禮','5566');`)
 db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com','家裡的門',NULL,false);`)
 db.end()
 
-if (!require('fs').existsSync('facenetTrain/image/raw')) {
-  require('fs').mkdirSync('facenetTrain/image/raw')
+if (!require('fs').existsSync('facenetService/image/raw')) {
+  require('fs').mkdirSync('facenetService/image/raw')
 }
 
-if (!require('fs').existsSync('facenetTrain/image/cut')) {
-  require('fs').mkdirSync('facenetTrain/image/cut')
+if (!require('fs').existsSync('facenetService/image/cut')) {
+  require('fs').mkdirSync('facenetService/image/cut')
 }
 
-if (!require('fs').existsSync('facenetTrain/models')) {
-  require('fs').mkdirSync('facenetTrain/models')
+if (!require('fs').existsSync('facenetService/models')) {
+  require('fs').mkdirSync('facenetService/models')
 }
 
-require('fs').readdir('facenetTrain/image/raw', (err, files) => {
+require('fs').readdir('facenetService/image/raw', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
-    require('rimraf')(`faceAlign/image/raw/${files[i]}`,()=>{})
+    require('rimraf')(`facenetService/image/raw/${files[i]}`,()=>{})
 })
 
-require('fs').readdir('facenetTrain/image/cut', (err, files) => {
+require('fs').readdir('facenetService/image/cut', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
-    require('rimraf')(`faceAlign/image/cut/${files[i]}`,()=>{})
+    require('rimraf')(`facenetService/image/cut/${files[i]}`,()=>{})
 })
 
-require('fs').readdir('facenetTrain/models', (err, files) => {
+require('fs').readdir('facenetService/models', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
-    require('rimraf')(`faceAlign/models/${files[i]}`,()=>{})
+    require('rimraf')(`facenetService/models/${files[i]}`,()=>{})
 })
 
 console.log('Finished Initial database and image folder')

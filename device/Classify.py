@@ -35,20 +35,6 @@ class Classify():
         nrof_images = 1
         emb_array = np.zeros((nrof_images,  self.embedding_size))
 
-<<<<<<< HEAD
-    paths_batch = [input_file_path]
-    images = facenet.load_data(paths_batch, False, False, 160)
-    feed_dict = { images_placeholder:images, phase_train_placeholder:False }
-    emb_array[0:1,:] = sess.run(embeddings, feed_dict=feed_dict)
-
-    predictions = model.predict_proba(emb_array)
-    best_class_indices = np.argmax(predictions, axis=1)
-    best_class_probabilities = predictions[np.arange(len(best_class_indices)), best_class_indices]
-                
-    classify_people_name = class_names[best_class_indices[0]]
-    classify_rate = best_class_probabilities[0]
-    return (classify_people_name, classify_rate)
-=======
         paths_batch = [input_file_path]
         images = facenet.load_data(paths_batch, False, False, 160)
         feed_dict = { self.images_placeholder:images, self.phase_train_placeholder:False }
@@ -61,4 +47,3 @@ class Classify():
         classify_people_name = class_names[best_class_indices[0]]
         classify_rate = best_class_probabilities[0]
         return (classify_people_name, classify_rate)
->>>>>>> c57202a794038a2c2f44ee88ada6172f9e67cdc9
