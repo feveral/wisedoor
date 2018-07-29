@@ -50,6 +50,7 @@ module.exports = class Equipment {
       const result = await db.query(`select Id from EQUIPMENT where OwnerEmail='${ownerEmail}' AND Name='${equipmentName}'`)
       return result[0].Id
     } catch (error) {
+      console.log(error)
       throw new Error('Error occured while executing Equipment.FindIdByOwnerEmailAndName') 
     } 
   }
