@@ -1,0 +1,1 @@
+./utility/align/unknownAlign/align/twpai.png 22 27 73 91

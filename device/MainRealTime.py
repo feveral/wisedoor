@@ -14,7 +14,6 @@ classify_result = ('unknown', 0.0)
 model = Model("feveraly@gmail.com", 5566, '家裡的門')
 classify = Classify()
 
-
 while(True):
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
