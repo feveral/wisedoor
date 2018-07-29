@@ -36,7 +36,7 @@ class CutPicture:
             os.makedirs(outputPath)
         # Store some git revision info in a text file in the log directory
         src_path,_ = os.path.split(os.path.realpath(__file__))
-        #facenet.store_revision_info(src_path, outputPath, ' '.join(sys.argv))
+        # facenet.store_revision_info(src_path, outputPath, ' '.join(sys.argv))
         dataset = self.get_dataset(inputPath,outputDirName)
         
         bounding_boxes_filename = os.path.join(outputPath, 'bounding_boxes_%05d.txt' % self.random_key)

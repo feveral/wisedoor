@@ -1,1 +1,3 @@
 *.pkl
+facenetService/image/cut/*
+facenetService/image/raw/*

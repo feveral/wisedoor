@@ -40,7 +40,6 @@ class CutPicture:
         # Add a random key to the filename to allow alignment using multiple processes
         random_key = np.random.randint(0, high=99999)
         bounding_boxes_filename = os.path.join(outputPath, 'bounding_boxes_%05d.txt' % random_key)
-        
         with open(bounding_boxes_filename, "w") as text_file:
             nrof_images_total = 0
             nrof_successfully_aligned = 0
@@ -107,6 +106,7 @@ class CutPicture:
 
                     tEnd = time.time()
                     print ("It cost %f sec" % (tEnd - tStart))
+        
         print('Total number of images: %d' % nrof_images_total)
         print('Number of successfully aligned images: *%d*' % nrof_successfully_aligned)
                     

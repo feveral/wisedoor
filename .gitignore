@@ -8,4 +8,3 @@
 /client/dist/.well-known/
 /server/ssl/
 *.pyc
-
