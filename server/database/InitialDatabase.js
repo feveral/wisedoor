@@ -102,8 +102,11 @@ require('fs').readdir('facenetService/image/cut', (err, files) => {
 })
 
 require('fs').readdir('facenetService/models', (err, files) => {
-  for(let i = 0 ; i < files.length ; i++)
-    require('rimraf')(`facenetService/models/${files[i]}`,()=>{})
+  for(let i = 0 ; i < files.length ; i++) {
+    if (files[i] != `20170512-110547.pb`) {
+      require('rimraf')(`facenetService/models/${files[i]}`,()=>{})
+    }
+  }
 })
 
 console.log('Finished Initial database and image folder')

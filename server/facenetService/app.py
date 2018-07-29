@@ -47,11 +47,13 @@ def alignPicture():
     cutBasePath = data['cutBasePath']
     if not os.path.exists(cutBasePath + "/" + faceId):
         os.makedirs(cutBasePath+ "/" + faceId)
-    if not (is_blurr(uploadBasePath+ "/" + faceId + "/" + imageName)):
-        cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
-        return jsonify({'success': True})
-    else:
-        return jsonify({'success': False})
+    #if not (is_blurr(uploadBasePath+ "/" + faceId + "/" + imageName)):
+    #    cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
+    #    return jsonify({'success': True})
+    cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
+    return jsonify({'success': True})
+    #else:
+    #    return jsonify({'success': False})
 
 @app.route('/train', methods=['POST'])
 def trainPicture():

@@ -12,12 +12,13 @@ import sys
 import math
 import pickle
 from sklearn.svm import SVC
+import time
 
 batch_size = 1000
 nrof_images = 1
 image_size = 160
-model_path = "./faceAlign/models/20170512-110547.pb"
-unknown_path = "./faceAlign/image/unknown"
+model_path = "./facenetService/models/20170512-110547.pb"
+unknown_path = "./facenetService/image/unknown"
 
 class Train:
     def __init__(self):
@@ -56,7 +57,7 @@ class Train:
 
                 model = SVC(kernel='linear', probability=True)
                 model.fit(emb_array, labels)
-            
+                
                 class_names = [ cls.name.replace('_', ' ') for cls in dataset]
 
                 with open(classifier_filename_exp, 'wb') as outfile:
