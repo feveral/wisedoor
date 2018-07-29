@@ -18,7 +18,6 @@ IMAGE_SIZE = 160
 class CutPicture:
     def __init__(self):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-        sleep(random.random())
         with tf.Graph().as_default():
             gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=1.0)
             sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
@@ -32,15 +31,16 @@ class CutPicture:
         self.random_key = np.random.randint(0, high=99999)
     
     def align(self,inputPath, outputPath, outputDirName = "align"):
+        start = time.time()
         if not os.path.exists(outputPath):
             os.makedirs(outputPath)
         # Store some git revision info in a text file in the log directory
         src_path,_ = os.path.split(os.path.realpath(__file__))
-        facenet.store_revision_info(src_path, outputPath, ' '.join(sys.argv))
+        #facenet.store_revision_info(src_path, outputPath, ' '.join(sys.argv))
         dataset = self.get_dataset(inputPath,outputDirName)
         
         bounding_boxes_filename = os.path.join(outputPath, 'bounding_boxes_%05d.txt' % self.random_key)
-        
+
         with open(bounding_boxes_filename, "w") as text_file:
             nrof_images_total = 0
             nrof_successfully_aligned = 0
@@ -106,9 +106,11 @@ class CutPicture:
         #print('Number of successfully aligned images: *%d*' % nrof_successfully_aligned)
 
     def get_dataset(self,path,outputDirName, has_class_directories=True):
+        timer1 = time.time()
         dataset = []
         imageList = []
         imageList.append(path)
         class_name = outputDirName
+        print("imageClass waste:",time.time() - timer1)
         dataset.append(facenet.ImageClass(class_name,imageList))
         return dataset

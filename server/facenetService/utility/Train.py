@@ -55,18 +55,18 @@ class Train:
                 
                 classifier_filename_exp = os.path.expanduser(output_dir)
 
-
+                print(emb_array.shape)
                 print(emb_array)
                 print(labels)
                 
-                model = SVC(kernel='linear', probability=True)
-                model.fit(emb_array, labels)
+                # model = SVC(kernel='linear', probability=True)
+                # model.fit(emb_array, labels)
                 
-                class_names = [ cls.name.replace('_', ' ') for cls in dataset]
+                # class_names = [ cls.name.replace('_', ' ') for cls in dataset]
 
-                with open(classifier_filename_exp, 'wb') as outfile:
-                    pickle.dump((model, class_names), outfile)
-                print('-----------------Saved classifier model to file "%s"' % classifier_filename_exp)
+                # with open(classifier_filename_exp, 'wb') as outfile:
+                #     pickle.dump((model, class_names), outfile)
+                # print('-----------------Saved classifier model to file "%s"' % classifier_filename_exp)
                 
     def get_dataset(self, path, specificDirList, faceIdNamePairs, has_class_directories=True):
         dataset = []
@@ -83,8 +83,8 @@ class Train:
                 faceName = faceIdNamePairs[class_name]
                 dataset.append(facenet.ImageClass(faceName, image_paths))
 
-        unknown_image_path = self.get_image_paths(unknown_path,"unknown",specificDirList)
-        dataset.append(facenet.ImageClass("unknown",unknown_image_path))
+        #unknown_image_path = self.get_image_paths(unknown_path,"unknown",specificDirList)
+        #dataset.append(facenet.ImageClass("unknown",unknown_image_path))
         return dataset
 
     def get_image_paths(self,facedirPath,facedirName,specificDirList):
