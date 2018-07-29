@@ -54,6 +54,10 @@ class Train:
                 
                 classifier_filename_exp = os.path.expanduser(output_dir)
 
+
+                print(emb_array)
+                print(labels)
+                
                 model = SVC(kernel='linear', probability=True)
                 model.fit(emb_array, labels)
             
