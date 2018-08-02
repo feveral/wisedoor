@@ -1,10 +1,10 @@
 class TrainData():
-    def __init__(self,cutBasePath,outputBasePath,modelId,faceIdNamePairs):
+    def __init__(self,cutBasePath,outputBasePath,newFaceId,newFaceName,faceIdNamePairs):
         self.cutBasePath = cutBasePath
         self.outputBasePath = outputBasePath
-        self.modelId = modelId
-        self.faceIdNamePairs = faceIdNamePairs
+        self.newFaceId = newFaceId
+        self.newFaceName = newFaceName
         self.faceIdList = []
         for key, value in faceIdNamePairs.items() :
             self.faceIdList.append(key)
-        self.ouputModelPath = str(outputBasePath) + "/" + str(modelId) + ".pkl"
+        self.outputFaceBasePath = str(outputBasePath) + "/faces/" + str(newFaceId) + ".pkl"

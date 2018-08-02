@@ -6,7 +6,9 @@ import sys
 import threading
 from utility.facenetAlign import *
 from utility.Train import Train
+from utility.Model import Model
 from utility.blurr import *
+from utility.Config import Config
 import logging
 import requests
 import json
@@ -15,8 +17,10 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 app = Flask(__name__)
-cutPicture = CutPicture(); 
+cutPicture = CutPicture() 
+config = Config()
 train = Train()
+model = Model()
 
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
@@ -26,14 +30,17 @@ def TrainModel():
         if(train.GetTrainDataListSize() == 0):
             time.sleep(0.5)
         else:
-            train.trainModel(train.GetOldestData().faceIdList,
-                            train.GetOldestData().cutBasePath,
-                            train.GetOldestData().ouputModelPath,
-                            train.GetOldestData().faceIdNamePairs)
-            postAnswer = requests.post('https://localhost/api/model/notify', data =  {'faceIdList':train.GetOldestData().faceIdList,
-                                                                                    'modelId':train.GetOldestData().modelId},
+            data = train.GetOldestData()
+            train.trainModel(
+                            data.cutBasePath,
+                            data.outputFaceBasePath,
+                            data.newFaceId,
+                            data.newFaceName)
+            model.produce_model()
+            model.save_model()
+            postAnswer = requests.post('https://localhost/api/model/notify', data =  {'faceIdList':data.faceIdList,
+                                                                                    'modelId':model.modelId},
                                                                                     verify = False)
-            train.PopOldestData()
 
 thread = threading.Thread(target=TrainModel)
 thread.setDaemon(True)
@@ -61,8 +68,12 @@ def trainPicture():
     cutBasePath = request.form.get('cutBasePath')
     outputBasePath = request.form.get('outputBasePath')
     modelId = request.form.get('modelId')
-    faceIdNamePairs = python_dict = json.loads(request.form.get('faceIdNamePairs'))
-    train.AddTrainData(cutBasePath,outputBasePath,modelId,faceIdNamePairs)
+    newFaceId = request.form.get('newFaceId')
+    newFaceName = request.form.get('newFaceName')
+    faceIdNamePairs = json.loads(request.form.get('faceIdNamePairs'))
+    model.set_faceIdNamePair(faceIdNamePairs)
+    model.set_modelId(modelId)
+    train.AddTrainData(cutBasePath,outputBasePath,newFaceId,newFaceName,faceIdNamePairs)
     return jsonify({'success': 'start training'})
 
 if __name__ == '__main__':
