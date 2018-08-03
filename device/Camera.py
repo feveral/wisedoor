@@ -16,7 +16,7 @@ class Camera:
     def set_camera_index(self,index):
         self._camera_index = index
 
-    def SaveImage(self,path,imageFrame):
+    def saveImage(self,path,imageFrame):
         cv2.imwrite(path,imageFrame)
     
     def __openCamera(self):

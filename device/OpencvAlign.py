@@ -25,10 +25,10 @@ class OpencvAlign:
             return False
 
 
-    def Resize(self):
+    def resize(self):
         for (x, y, w, h) in self.faces:
             cutImg = self.image[y:y + h,x:x + w]
-            resizeImg = cv2.resize(cutImg,(160,160)) 
-            cv2.imwrite("./image/cut.png" , resizeImg)
+            return cv2.resize(cutImg,(160,160)) 
 
-
+    def saveImage(self,path,resizeImg):
+        cv2.imwrite(path , resizeImg)
