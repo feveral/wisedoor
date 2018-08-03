@@ -31,5 +31,6 @@ while(True):
         align.saveImage('./image/cut.png', resizeImg)
         classify_result = classify.classify_image("./image/cut.png",model)
     cv2.putText(frame,classify_result[0],(10,40),cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 0, 0), 1, cv2.LINE_AA)
+        
     cv2.putText(frame,str(classify_result[1]),(10,80),cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 0, 0), 1, cv2.LINE_AA)
     cv2.imshow("Display window", frame)  

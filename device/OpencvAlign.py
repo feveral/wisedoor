@@ -18,11 +18,11 @@ class OpencvAlign:
             minSize=(30, 30),
         )
         #print ('Found {0} faces!'.format(len(self.faces)) )
-
-        if(len(self.faces) > 0):
-            return True
-        else:
-            return False
+        for (x, y, w, h) in self.faces:
+            if(len(self.faces) > 0 and w > 120 and h > 160):
+                return True
+            else:
+                return False
 
 
     def resize(self):
@@ -32,3 +32,8 @@ class OpencvAlign:
 
     def saveImage(self,path,resizeImg):
         cv2.imwrite(path , resizeImg)
+
+    def getCutImage(self):
+        for (x, y, w, h) in self.faces:
+            cutImg = self.image[y:y + h,x:x + w]
+            return cutImg 
