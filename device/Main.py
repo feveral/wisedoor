@@ -9,7 +9,7 @@ from Model import Model
 from blurr import is_blurr
 from Classify import * 
 
-camera = Camera(1)
+camera = Camera(0)
 classify_result = ('unknown', 0.0)
 model = Model("feveraly@gmail.com", 5566, '家裡的門')
 classify = Classify()
