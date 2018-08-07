@@ -26,7 +26,8 @@ while(True):
         start = time.time()
         align = OpencvAlign(frame)
         if(align.Cut()):
-            align.Resize()
+            resizeImg = align.resize()
+            align.saveImage('./image/cut.png', resizeImg)
             classify_result = classify.classify_image("./image/cut.png",model)
             end = time.time()
             print("cost time", end - start)
