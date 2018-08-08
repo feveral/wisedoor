@@ -1,43 +1,36 @@
 import time
-import Camera import Camera
-import OpencvAlign import OpencvAlign
+from Timer import Timer 
+from Camera import Camera
+from OpencvAlign import OpencvAlign
 from requests.auth import HTTPBasicAuth
 from Model import Model
 from blurr import is_blurr
-from Classify import *
+from Classify import Classify
 
 class CheckFaceService():
     def __init__(self):
         self._camera = Camera(0)
-        self._classify_result = {'unknown',0.0}
-        self._model = self.Model("feveraly@gmail.com",5566,'家裡的門')
+        self._model = Model("feveraly@gmail.com", 5566, '家裡的門')
         self._classify = Classify()
-        self._time_count = 0
-        self._classify_fail_count = 0
-        self._frame = []
+        self._align = OpencvAlign()
+        self._timer = Timer()
+        self._fail_count = 0
 
-    def catch_frame(self):
-        self._frame = self._camera.CatchImage()
+    def start_check(self):
+        self._timer.start_timing()
+        self._fail_count = 0
+        while self._fail_count < 3:
+            frame = self._camera.CatchImage()
+            if (is_blurr(frame)):
+                continue
+            if (self._timer.get_time_count() >= 5):
+                return
+            if (self._align.cut(frame)):
+                classify_result = self._classify.classify_image(self._align.image,self._model)
+                self.classify_result_handler(classify_result)
+                self._timer.start_timing()
+                self._align.clear()
 
-    def is_blurr_frame(self):
-        return is_blurr(self._frame))
-    
-    def is_cut_frame(self):
-        return  align.cut(self._frame)
-
-    def is_classify_unknown_frame(self):
-        classify_result = classify.classify_image(align.image,self._model)
-        align.clear()
-
-    def clear_time_count(self):
-        self._time_count = 0
-
-    def clear_classify_fail_count(self):
-        self._classify_fail_count = 0
-    
-    def is_classify_wrong_twice(self):
-        if(self._classify_fail_count >= 2):
-            return True
-        return False
-
-
+    def classify_result_handler(self,classify_result):
+        if (classify_result[0] == 'unknown'):
+            self._fail_count += 1
