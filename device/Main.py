@@ -1,17 +1,13 @@
-#from CheckFaceService import CheckFaceService
-#from Lock import Lock
+from CheckFaceService import CheckFaceService
+from Lock import Lock
+from ButtonController import ButtonController 
 
+lock = Lock()
+buttonController = ButtonController()
 
-#lock = Lock()
+checkFaceService = CheckFaceService()
+checkFaceService.check_success_task = lock.open_door
 
-
-#checkFaceService = CheckFaceService()
-#checkFaceService.start_check(lock.open_door)
-
-from Camera import Camera
-from blurr import is_blurr
-
-camera = Camera(0)
-frame = camera.CatchImage()
-print(is_blurr(frame))
+buttonController.star_task = checkFaceService.start_check 
+buttonController.enable()
 

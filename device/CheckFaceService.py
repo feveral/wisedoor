@@ -15,24 +15,41 @@ class CheckFaceService():
         self._align = OpencvAlign()
         self._timer = Timer()
         self._fail_count = 0
+        self._success = True
+        self._success_task = None
 
-    def start_check(self,to_do):
+    def start_check(self):
         self._timer.start_timing()
         self._fail_count = 0
-        while self._fail_count < 3:
+        self._success = False
+        while self._fail_count < 3 and not self._success :
+            
             frame = self._camera.CatchImage()
+            self._camera.saveImage('./image/catch.png', frame)
+
             if (is_blurr(frame)):
                 continue
-            if (self._timer.get_time_count() >= 5):
-                return
+            #if (self._timer.get_time_count() >= 5):
+            #    return
             if (self._align.cut(frame)):
                 classify_result = self._classify.classify_image(self._align.image,self._model)
-                self._classify_result_handler(classify_result,to_do)
+                self._classify_result_handler(classify_result)
                 self._timer.start_timing()
                 self._align.clear()
+    
+    @property
+    def check_success_task(self):
+        return self._success_task
 
-    def _classify_result_handler(self,classify_result,to_do):
+    @check_success_task.setter
+    def check_success_task(self, task):
+        self._success_task = task
+
+    def _classify_result_handler(self,classify_result):
         if (classify_result[0] == 'unknown'):
+            print('open lock fail')
             self._fail_count += 1
         else:
-            to_do()
+            print('open lock')
+            self._success = True
+            self._success_task()
