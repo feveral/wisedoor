@@ -56,9 +56,8 @@ class Train:
                     emb_array[start_index:end_index,:] = sess.run(embeddings, feed_dict=feed_dict)
                 
                 classifier_filename_exp = os.path.expanduser(output_dir)
-
                 class_names = [ cls.name.replace('_', ' ') for cls in dataset]
-                
+
                 with open(classifier_filename_exp, 'wb') as outfile:
                     pickle.dump((emb_array, labels, class_names), outfile)
 

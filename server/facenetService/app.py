@@ -14,6 +14,7 @@ import requests
 import json
 import time
 import urllib3
+import time
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 app = Flask(__name__)
@@ -48,6 +49,7 @@ thread.start()
 
 @app.route('/align', methods=['POST'])
 def alignPicture():
+    start = time.time()
     data = request.form
     uploadBasePath = data['uploadBasePath']
     faceId = data['faceId']
@@ -58,7 +60,10 @@ def alignPicture():
     #if not (is_blurr(uploadBasePath+ "/" + faceId + "/" + imageName)):
     #    cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
     #    return jsonify({'success': True})
+    end = time.time()
+    print("other:",end - start)
     cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
+    print("alignnnnnn:",time.time() - end)
     return jsonify({'success': True})
     #else:
     #    return jsonify({'success': False})

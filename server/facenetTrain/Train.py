@@ -89,7 +89,9 @@ class Train:
                 # print('Training classifier')
                 model = SVC(kernel='linear', probability=True)
                 model.fit(emb_array, labels)
-            
+                print(emb_array)
+                print(labels)
+
                 # Create a list of class names
                 class_names = [ cls.name.replace('_', ' ') for cls in dataset]
 
