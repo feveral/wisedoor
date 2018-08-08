@@ -54,15 +54,18 @@ class Train:
                     emb_array[start_index:end_index,:] = sess.run(embeddings, feed_dict=feed_dict)
                 
                 classifier_filename_exp = os.path.expanduser(output_dir)
+                class_names = [ cls.name.replace('_', ' ') for cls in dataset]
 
                 print(emb_array.shape)
                 print(emb_array)
+                print(len(labels))
                 print(labels)
+                print(type(class_names))
+                print(class_names)
                 
                 # model = SVC(kernel='linear', probability=True)
                 # model.fit(emb_array, labels)
                 
-                # class_names = [ cls.name.replace('_', ' ') for cls in dataset]
 
                 # with open(classifier_filename_exp, 'wb') as outfile:
                 #     pickle.dump((model, class_names), outfile)
@@ -83,8 +86,8 @@ class Train:
                 faceName = faceIdNamePairs[class_name]
                 dataset.append(facenet.ImageClass(faceName, image_paths))
 
-        #unknown_image_path = self.get_image_paths(unknown_path,"unknown",specificDirList)
-        #dataset.append(facenet.ImageClass("unknown",unknown_image_path))
+        unknown_image_path = self.get_image_paths(unknown_path,"unknown",specificDirList)
+        dataset.append(facenet.ImageClass("unknown",unknown_image_path))
         return dataset
 
     def get_image_paths(self,facedirPath,facedirName,specificDirList):
