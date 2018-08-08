@@ -9,7 +9,7 @@ from Classify import Classify
 
 class CheckFaceService():
     def __init__(self):
-        self._camera = Camera(0)
+        self._camera = Camera(1)
         self._model = Model("feveraly@gmail.com", 5566, '家裡的門')
         self._classify = Classify()
         self._align = OpencvAlign()
@@ -23,12 +23,11 @@ class CheckFaceService():
         self._fail_count = 0
         self._success = False
         while self._fail_count < 3 and not self._success :
-            
             frame = self._camera.CatchImage()
             self._camera.saveImage('./image/catch.png', frame)
 
-            if (is_blurr(frame)):
-                continue
+            #if (is_blurr(frame)):
+            #    continue
             #if (self._timer.get_time_count() >= 5):
             #    return
             if (self._align.cut(frame)):

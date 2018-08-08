@@ -1,5 +1,6 @@
 import cv2
 import time
+import threading
 import numpy as np
 
 class Camera:
@@ -7,9 +8,18 @@ class Camera:
         self._camera_index = index
         self.cap = None
         self.frame = []
+        self.__openCamera()
+        self._catchImageThread = threading.Thread(target=self._keepCatchImage)
+        self._catchImageThread.setDaemon(True)
+        self._catchImageThread.start()
 
     def is_open(self):
         return self.cap.isOpened()
+
+    def _keepCatchImage(self):
+        while True:
+            self.CatchImage()
+            time.sleep(0.1)
 
     def CatchImage(self):
         if(not self.cap):
