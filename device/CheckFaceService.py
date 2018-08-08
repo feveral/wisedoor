@@ -16,7 +16,7 @@ class CheckFaceService():
         self._timer = Timer()
         self._fail_count = 0
 
-    def start_check(self):
+    def start_check(self,to_do):
         self._timer.start_timing()
         self._fail_count = 0
         while self._fail_count < 3:
@@ -27,10 +27,12 @@ class CheckFaceService():
                 return
             if (self._align.cut(frame)):
                 classify_result = self._classify.classify_image(self._align.image,self._model)
-                self.classify_result_handler(classify_result)
+                self._classify_result_handler(classify_result,to_do)
                 self._timer.start_timing()
                 self._align.clear()
 
-    def classify_result_handler(self,classify_result):
+    def _lassify_result_handler(self,classify_result,to_do):
         if (classify_result[0] == 'unknown'):
             self._fail_count += 1
+        else:
+            to_do()

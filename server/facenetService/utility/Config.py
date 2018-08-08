@@ -7,5 +7,3 @@ class Config():
         self.cutBasePath = os.getcwd() + '/facenetService/image/cut'
         self.outputFaceBasePath = os.getcwd() + '/facenetService/models/faces'
         self.outputModelBasePath = os.getcwd() + '/facenetService/models'
-        self.lock_port_pin = 40 
-        self.lock_time_count = 5
