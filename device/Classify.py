@@ -26,7 +26,7 @@ class Classify():
             self.embedding_size =  self.embeddings.get_shape()[1]
         self.sess = tf.Session(graph=tensorflow_graph)
 
-    def classify_image(self,input_file_path,model_object):
+    def classify_image(self,image,model_object):
         np.random.seed(seed=666)
 
         model = model_object.get_model()
@@ -35,12 +35,12 @@ class Classify():
         nrof_images = 1
         emb_array = np.zeros((nrof_images,  self.embedding_size))
 
-        paths_batch = [input_file_path]
-        images = facenet.load_data(paths_batch, False, False, 160)
+        images = facenet.load_data(image, False, False, 160)
+        
         feed_dict = { self.images_placeholder:images, self.phase_train_placeholder:False }
-        start = time.time()
+        
         emb_array[0:1,:] = self.sess.run(self.embeddings, feed_dict=feed_dict)
-        print(start - time.time())
+        
         predictions = model.predict_proba(emb_array)
         best_class_indices = np.argmax(predictions, axis=1)
         best_class_probabilities = predictions[np.arange(len(best_class_indices)), best_class_indices]

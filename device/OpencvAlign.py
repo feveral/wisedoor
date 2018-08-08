@@ -4,31 +4,40 @@ import shutil
 import numpy as np
 
 class OpencvAlign:
-    def __init__(self,image):
-        self.image = image
-        self.faces = []
+    def __init__(self):
+        self._image = None
+        self._faces = None
 
-    def Cut(self):
+    def cut(self,frame):
+        self._image = frame
         casc_path = './haarcascade_frontalface_default.xml'
         face_cascade = cv2.CascadeClassifier(casc_path)
-        self.faces = face_cascade.detectMultiScale(
-            self.image,
+        self._faces = face_cascade.detectMultiScale(
+            frame,
             scaleFactor=1.25,
             minNeighbors=2,
             minSize=(30, 30),
         )
-        #print ('Found {0} faces!'.format(len(self.faces)) )
+        for index, (x, y, w, h) in enumerate(self._faces):
+            if (len(self._faces) > 0 and w > 120 and h > 160):
+                self._faces = [self._faces[index]]
+                self._resize()
+                return True
+            else:
+                return False
 
-        if(len(self.faces) > 0):
-            return True
-        else:
-            return False
+    def _resize(self):
+        for (x, y, w, h) in self._faces:
+            self._image = self._image[y:y + h,x:x + w]
+            self._image = cv2.resize(self._image,(160,160))
+    
+    def saveImage(self,path):
+        cv2.imwrite(path , self._image)
 
+    def clear(self):
+        self._image = None
+        self._faces = None
 
-    def resize(self):
-        for (x, y, w, h) in self.faces:
-            cutImg = self.image[y:y + h,x:x + w]
-            return cv2.resize(cutImg,(160,160)) 
-
-    def saveImage(self,path,resizeImg):
-        cv2.imwrite(path , resizeImg)
+    @property
+    def image(self):
+        return self._image
