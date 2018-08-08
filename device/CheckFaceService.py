@@ -9,9 +9,9 @@ from Classify import Classify
 
 class CheckFaceService():
     def __init__(self):
-        self._camera = Camera(1)
+        self._camera = Camera(0)
         self._model = Model("feveraly@gmail.com", 5566, '家裡的門')
-        self._classify = Classify()
+        self._classify = Classify(self._model)
         self._align = OpencvAlign()
         self._timer = Timer()
         self._fail_count = 0
@@ -24,18 +24,23 @@ class CheckFaceService():
         self._success = False
         while self._fail_count < 3 and not self._success :
             frame = self._camera.CatchImage()
-            self._camera.saveImage('./image/catch.png', frame)
 
-            #if (is_blurr(frame)):
-            #    continue
+            start = time.time() 
+            if (is_blurr(frame)):
+                continue
             #if (self._timer.get_time_count() >= 5):
             #    return
             if (self._align.cut(frame)):
-                classify_result = self._classify.classify_image(self._align.image,self._model)
+                classify_result = self._classify.classify_image(self._align.image)
+                print(time.time() - start)
                 self._classify_result_handler(classify_result)
                 self._timer.start_timing()
                 self._align.clear()
-    
+   
+    @property
+    def model(self):
+        return self._model
+
     @property
     def check_success_task(self):
         return self._success_task

@@ -9,6 +9,8 @@ checkFaceService = CheckFaceService()
 checkFaceService.check_success_task = lock.open_door
 
 buttonController.star_task = checkFaceService.start_check 
+
+buttonController.password_correct_task = checkFaceService.model.update
 buttonController.enable()
 
 '''

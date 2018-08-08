@@ -49,7 +49,7 @@ class ButtonController():
 
     @property
     def star_task(self):
-        return self_star_task
+        return self._star_task
 
     @star_task.setter
     def star_task(self, task):
@@ -74,11 +74,11 @@ class ButtonController():
     def _process_buffer(self):
         print('buffer :',self._buffer)
         if(self._buffer[-1] == "*"):
+            self._buffer = []
             self.disable()
             self._star_task()
             self.enable()
         elif(self._buffer[-1] == "#"):
-            pass
-            #self._check_password()
-            #self._password_correct_task()
-        self._buffer = []
+            if(self._check_password()):
+                self._password_correct_task()
+            self._buffer = []
