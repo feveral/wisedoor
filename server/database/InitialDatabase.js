@@ -103,8 +103,16 @@ require('fs').readdir('facenetService/image/cut', (err, files) => {
 
 require('fs').readdir('facenetService/models', (err, files) => {
   for(let i = 0 ; i < files.length ; i++) {
-    if (files[i] != `20170512-110547.pb`) {
+    if (files[i] != `20170512-110547.pb` && files[i] != `faces`) {
       require('rimraf')(`facenetService/models/${files[i]}`,()=>{})
+    }
+  }
+})
+
+require('fs').readdir('facenetService/models/faces', (err, files) => {
+  for (let i = 0; i < files.length; i++) {
+    if (files[i] != `unknown.pkl`) {
+      require('rimraf')(`facenetService/models/faces/${files[i]}`, () => { })
     }
   }
 })

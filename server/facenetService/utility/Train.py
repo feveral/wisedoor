@@ -4,6 +4,7 @@ from __future__ import print_function
 
 from utility import facenet
 from utility.TrainData import TrainData
+from utility.Config import Config
 import tensorflow as tf
 import numpy as np
 import argparse
@@ -24,12 +25,13 @@ class Train:
     def __init__(self):
         self.trainDataList = []
         
-    def trainModel(self, DirList, input_dir, output_dir, faceIdNamePairs):
-        self.specificDirList = DirList
+    def trainModel(self,input_dir, output_dir, faceId, faceName):
+        specificDirList = [faceId]
+        faceIdNamePairs = {faceId:faceName}
         with tf.Graph().as_default():
             with tf.Session() as sess:
                 np.random.seed(seed=666)
-                dataset = self.get_dataset(input_dir,self.specificDirList,faceIdNamePairs)
+                dataset = self.get_dataset(input_dir,specificDirList,faceIdNamePairs)
 
                 for cls in dataset:
                     assert(len(cls.image_paths)>0, 'There must be at least one image for each class in the dataset')            
@@ -56,13 +58,10 @@ class Train:
                 classifier_filename_exp = os.path.expanduser(output_dir)
                 class_names = [ cls.name.replace('_', ' ') for cls in dataset]
 
-                print(emb_array.shape)
-                print(emb_array)
-                print(len(labels))
-                print(labels)
-                print(type(class_names))
-                print(class_names)
-                
+                with open(classifier_filename_exp, 'wb') as outfile:
+                    pickle.dump((emb_array, labels, class_names), outfile)
+
+
                 # model = SVC(kernel='linear', probability=True)
                 # model.fit(emb_array, labels)
                 
@@ -86,8 +85,8 @@ class Train:
                 faceName = faceIdNamePairs[class_name]
                 dataset.append(facenet.ImageClass(faceName, image_paths))
 
-        unknown_image_path = self.get_image_paths(unknown_path,"unknown",specificDirList)
-        dataset.append(facenet.ImageClass("unknown",unknown_image_path))
+        #unknown_image_path = self.get_image_paths(unknown_path,"unknown",specificDirList)
+        #dataset.append(facenet.ImageClass("unknown",unknown_image_path))
         return dataset
 
     def get_image_paths(self,facedirPath,facedirName,specificDirList):
@@ -97,19 +96,16 @@ class Train:
             image_paths = [os.path.join(facedirPath,img) for img in images]
         return image_paths
 
-    def AddTrainData(self,cutBasePath,outputBasePath,modelId,faceIdNameDictionary):
-        newTrainData = TrainData(cutBasePath,outputBasePath,modelId,faceIdNameDictionary)
+    def AddTrainData(self,cutBasePath,outputBasePath,newFaceId,newFaceName,faceIdNamePairs):
+        newTrainData = TrainData(cutBasePath,outputBasePath,newFaceId,newFaceName,faceIdNamePairs)
         self.trainDataList.append(newTrainData)
 
     def GetOldestData(self):
-        return self.trainDataList[0]
+        return self.trainDataList.pop(0)
         
     def GetTrainDataListSize(self):
         return len(self.trainDataList)
 
-    def PopOldestData(self):
-        self.trainDataList.pop(0)
-        return "ok"
 
 
 
