@@ -31,7 +31,7 @@ class CheckFaceService():
                 self._timer.start_timing()
                 self._align.clear()
 
-    def _lassify_result_handler(self,classify_result,to_do):
+    def _classify_result_handler(self,classify_result,to_do):
         if (classify_result[0] == 'unknown'):
             self._fail_count += 1
         else:
