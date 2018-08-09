@@ -13,14 +13,14 @@ buttonController = ButtonController()
 checkFaceService = CheckFaceService()
 checkFaceService.check_success_task = lock.open_door
 
-buttonController.star_task = checkFaceService.start_check 
-
-buttonController.password_correct_task = lock.open_door
-buttonController.enable()
 
 taskManager = TaskManager()
 taskManager.add_task(checkFaceService.model.update,3)
 taskManager.add_task(checkFaceService.camera.CatchImage,0.1)
+
+buttonController.star_task = checkFaceService.start_check 
+buttonController.password_correct_task = lock.open_door
+buttonController.enable()
 
 '''
 def check_success():

@@ -14,8 +14,13 @@ class Model():
 
     def update(self):  
         payload = {'email':self.user_email,'password':self.password,'equipmentName':self.equipment_name}
-        new_model = requests.post("https://192.168.1.8/api/model", json=payload, verify = False)
-        print(new_model)
+        try:
+            new_model = requests.post("https://192.168.1.8/api/model", json=payload, verify = False)
+            print(new_model)
+        except:
+            print('internet not connected')
+            self.reload_model()
+            return
         with open(self.model_path, 'wb') as outfile: 
             outfile.write(new_model.content)
             self.reload_model()
