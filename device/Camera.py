@@ -9,9 +9,9 @@ class Camera:
         self.cap = None
         self.frame = []
         self.__openCamera()
-        self._catchImageThread = threading.Thread(target=self._keepCatchImage)
-        self._catchImageThread.setDaemon(True)
-        self._catchImageThread.start()
+        # self._catchImageThread = threading.Thread(target=self._keepCatchImage)
+        # self._catchImageThread.setDaemon(True)
+        # self._catchImageThread.start()
 
     def is_open(self):
         return self.cap.isOpened()

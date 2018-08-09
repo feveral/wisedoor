@@ -12,11 +12,14 @@ import math
 import pickle
 from sklearn.svm import SVC
 import time
+import cv2
 
 model_path  = "./models/20170512-110547.pb"
+init_image_path = "./image/init.png"
 
 class Classify():
-    def __init__(self):
+    def __init__(self,model):
+        self._model = model
         tensorflow_graph = tf.Graph()
         with tensorflow_graph.as_default():
             facenet.load_model(model_path)
@@ -25,12 +28,14 @@ class Classify():
             self.phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
             self.embedding_size =  self.embeddings.get_shape()[1]
         self.sess = tf.Session(graph=tensorflow_graph)
+        init_frame = cv2.imread(init_image_path)
+        self.classify_image(init_frame)
 
-    def classify_image(self,image,model_object):
+    def classify_image(self,image):
         np.random.seed(seed=666)
 
-        model = model_object.get_model()
-        class_names = model_object.get_class_names()
+        model = self._model.get_model()
+        class_names = self._model.get_class_names()
 
         nrof_images = 1
         emb_array = np.zeros((nrof_images,  self.embedding_size))
