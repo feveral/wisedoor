@@ -26,8 +26,8 @@ class CheckFaceService():
             frame = self._camera.CatchImage()
             self._camera.saveImage('./image/catch.png', frame)
 
-            #if (is_blurr(frame)):
-            #    continue
+            if (is_blurr(frame)):
+                continue
             #if (self._timer.get_time_count() >= 5):
             #    return
             if (self._align.cut(frame)):
