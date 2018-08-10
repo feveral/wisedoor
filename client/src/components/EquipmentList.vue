@@ -5,6 +5,7 @@
         <button class="btn btn-outline-dark equipment-button" data-toggle="collapse" :data-target="'#equipment' + equipment.Id" aria-expanded="true" :aria-controls="'#equipment' + equipment.Id">
           {{equipment.Name}}
         </button>
+
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#set-password-modal">
           設定密碼
         </button>
@@ -29,6 +30,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
       <div :id="'equipment' + equipment.Id" class="collapse" aria-labelledby="headingOne" data-parent="#equipment-list">
