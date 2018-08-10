@@ -74,4 +74,15 @@ module.exports = class Equipment {
       throw new Error('Error occured while executing Equipment.FindModelIdByEquipmentId') 
     }
   }
+
+  static async UpdatePasswordByEquipmentId(equipmentId,password){
+    try {
+      const result = await db.query(`update EQUIPMENT set Password='${password}' where Id='${equipmentId}'`)
+      if (result.affectedRows == 0) {
+        throw new Error('Error occured while executing Equipment.UpdatePasswordByEquipmentId : cannot find this equipmentId') 
+      }
+    } catch (error) {
+      throw new Error('Error occured while executing Equipment.UpdatePasswordByEquipmentId') 
+    }
+  }
 }

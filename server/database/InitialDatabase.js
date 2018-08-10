@@ -25,7 +25,8 @@ db.query(
     `CREATE TABLE EQUIPMENT
      (
        Id VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
-       OwnerEmail VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+       OwnerEmail VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
+       Password VARCHAR(255) CHARACTER SET utf8 NOT NULL ,  
        Name VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
        ModelId VARCHAR(255) CHARACTER SET utf8 , 
        IsTrain BOOLEAN NOT NULL , 
@@ -76,7 +77,8 @@ db.query(
   )
 db.query(`insert into USER VALUES('feveraly@gmail.com','宗翰','5566');`)
 db.query(`insert into USER VALUES('john@gmail.com','忠禮','5566');`)
-db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com','家裡的門',NULL,false);`)
+db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com',5678,'家裡的門',NULL,false);`)
+db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda35bbbb8','feveraly@gmail.com',8888,'家裡的門222',NULL,false);`)
 db.end()
 
 if (!require('fs').existsSync('facenetService/image/raw')) {

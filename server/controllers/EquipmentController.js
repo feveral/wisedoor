@@ -3,7 +3,7 @@ const FaceBelongEquipment = require('../models/FaceBelongEquipment')
 
 module.exports = {
 
-  async GetEquipments(req, res) {
+  async GetEquipments (req, res) {
     const equipments = await Equipment.FindEquipmentsByUserEmail('feveraly@gmail.com')
     res.send(equipments)
   },
@@ -17,5 +17,18 @@ module.exports = {
     } catch (error) {
       res.status(500).send({ error: 'register equipment error' }) 
     }
+  },
+
+  async SetPassword (req, res){
+    const userEmail = req.user
+    const equipmentName = req.body.equipmentName
+    const equipmentId = await Equipment.FindIdByOwnerEmailAndName(userEmail,equipmentName)
+    try{
+      await Equipment.UpdatePasswordByEquipmentId(equipmentId, req.body.password)
+      res.status(200).send({success:'set equipmemt password  successfully'}) 
+    } catch (error) {
+      res.status(500).send({ error: 'set equipmemt password error' }) 
+    }
+    
   }
 }
