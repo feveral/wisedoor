@@ -37,18 +37,8 @@ module.exports = {
     const equipmentName = req.body.equipmentName
     const userEmail = req.body.email
     const userPassword = req.body.password
-    try {
-      if (!User.IsSignInCorrect(userEmail, userPassword)) {
-        res.send({ error: 'wrong email or password' })
-      }
-    } catch (error) {
-      console.log(error)
-      res.send({ error: 'wrong email or password' })
-    }
     const equipmentId = await Equipment.FindIdByOwnerEmailAndName(userEmail,equipmentName)
     const password = await Equipment.FindPasswordByEquipmentId(equipmentId)
-    console.log(equipmentId)
-    console.log(password)
     res.send(password)
   },
 }

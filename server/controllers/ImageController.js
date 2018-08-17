@@ -93,14 +93,15 @@ module.exports = {
 
     trainFace (req, res, next) {
         const formData =
-            {
-                "cutBasePath": cutBasePath,
-                "faceIdNamePairs": JSON.stringify(req.faceIdNamePairs),
-                "outputBasePath": modelBasePath,
-                "modelId": req.modelId,
-                "newFaceId": req.faceId,
-                "newFaceName": req.body.faceName 
-            }
+        {
+            "cutBasePath": cutBasePath,
+            "faceIdNamePairs": JSON.stringify(req.faceIdNamePairs),
+            "outputBasePath": modelBasePath,
+            "modelId": req.modelId,
+            "newFaceId": req.faceId,
+            "newFaceName": req.body.faceName 
+        }
+
         request.post({ url: 'http://localhost:3000/train', formData: formData }
             , async (error, response, body) => {
                 if (!error && response.statusCode == 200) {

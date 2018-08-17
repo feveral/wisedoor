@@ -14,7 +14,7 @@ class PasswordController():
         try:
             self.new_password = requests.post("https://localhost/api/equipment/getPassword", json=payload, verify = False)
         except Exception as e: 
-            print('internet not connected')
+            print('internet not connected while get password from server.')
             return
         self._password = int(self.new_password.content)
 

@@ -8,7 +8,7 @@
     "init": "sudo node database/InitialDatabase.js",
     "facenet": "sudo python3 ./facenetService/app.py",
     "start": "sudo NODE_ENV=production node app.js",
-    "dev": "./node_modules/nodemon/bin/nodemon.js app.js --exec 'sudo node' "
+    "dev": "sudo node app.js"
   },
   "author": "",
   "license": "ISC",

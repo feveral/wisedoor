@@ -2,6 +2,19 @@ const User = require('../models/User')
 
 module.exports = {
 
+  async authenticate (req, res, next) {
+    const userEmail = req.body.email
+    const userPassword = req.body.password
+    try {
+      if (!User.IsSignInCorrect(userEmail, userPassword)) {
+        res.send({ error: 'wrong email or password' })
+      }
+    } catch (error) {
+      res.send({ error: 'wrong email or password' })
+    }
+    next()
+  },
+
   async login (req, res) {
     const name = await User.findNameByEmail(req.user)
     res.send( { success:true,name:name } )
