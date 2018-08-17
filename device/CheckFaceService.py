@@ -19,6 +19,8 @@ class CheckFaceService():
         self._success_task = None
 
     def start_check(self):
+        if self._model.is_empty:
+            return
         self._timer.start_timing()
         self._fail_count = 0
         self._success = False

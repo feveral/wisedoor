@@ -4,7 +4,6 @@ from CheckFaceService import CheckFaceService
 from TaskManager import TaskManager
 #from PasswordController import  PasswordController
 
-
 #lock = Lock()
 #buttonController = ButtonController()
 

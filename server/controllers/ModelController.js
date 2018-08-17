@@ -11,8 +11,12 @@ module.exports = {
     const userEmail = req.body.email
     const equipmentId = await Equipment.FindIdByOwnerEmailAndName(userEmail,equipmentName)
     const modelId = await Equipment.FindModelIdByEquipmentId(equipmentId)
-    if (! (await Model.IsModelTrain(modelId))) {
-      res.send('fail')
+    
+    if (modelId == null) {
+      res.send('empty')
+    }
+    else if ((await Model.IsModelTrain(modelId)) == false) {
+      res.send('training')
     }
     fs.readFile(`./facenetService/models/${modelId}.pkl`, (err, data) => {
       res.send(data)
