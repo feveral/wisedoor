@@ -29,6 +29,8 @@ module.exports = (app, passport) => {
 
     equipmentRouter.get('/', EquipmentController.GetEquipments)
     equipmentRouter.post('/',EquipmentController.register)
+    equipmentRouter.post('/setPassword',EquipmentController.SetPassword)
+    equipmentRouter.post('/getPassword',EquipmentController.GetPassword)
     faceRouter.get('/:equipmentId', FaceController.GetFaces)
     modelRouter.post('/', ModelController.GetModel)
     modelRouter.post('/notify',ModelController.NotifyTrainFinish)

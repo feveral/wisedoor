@@ -17,6 +17,7 @@
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
     <register-equipment-modal @registerEquipmentSuccess="onRegisterEquipmentSuccess()"></register-equipment-modal>
     <add-face-modal @addFace="onAddFace($event)"></add-face-modal>
+    <set-equipment-password-modal></set-equipment-password-modal>
     <router-view/>
   </div>
 </template>
@@ -33,6 +34,7 @@ import EquipmentList from '@/components/EquipmentList'
 import UploadFaceProgress from '@/components/UploadFaceProgress'
 import AddFaceModal from '@/components/AddFaceModal'
 import RegisterEquipmentModal from '@/components/RegisterEquipmentModal'
+import SetEquipmentPasswordModal from '@/components/SetEquipmentPasswordModal'
 
 export default {
   name: 'Main',
@@ -44,7 +46,8 @@ export default {
     EquipmentList,
     UploadFaceProgress,
     AddFaceModal,
-    RegisterEquipmentModal
+    RegisterEquipmentModal,
+    SetEquipmentPasswordModal
   },
 
   mounted () {

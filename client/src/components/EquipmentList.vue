@@ -4,7 +4,7 @@
       <div class="card-header">
         <button class="btn btn-outline-dark equipment-button" data-toggle="collapse" :data-target="'#equipment' + equipment.Id" aria-expanded="true" :aria-controls="'#equipment' + equipment.Id">
           {{equipment.Name}}
-         </button>
+        </button>
       </div>
       <div :id="'equipment' + equipment.Id" class="collapse" aria-labelledby="headingOne" data-parent="#equipment-list">
         <div class="card-body">
@@ -25,7 +25,8 @@ export default {
 
   data () {
     return {
-      equipments: []
+      equipments: [],
+      password: ""
     }
   },
 
@@ -42,7 +43,21 @@ export default {
       Promise.all(jobs).then((results) => {
         this.equipments = response.data
       });
-    }
+    },
+
+    async setPassword (equipmentName) {
+      console.log(equipmentName)
+      if(this.password.length < 4 ){
+        alert("密碼太短 至少要4位元")
+      }
+      else if(isNaN(this.password)){
+        alert("密碼只能是數字喔")
+      }
+      else{
+        let response =  await EquipmentService.SetPassword(equipmentName,this.password)
+        $('#set-password-modal').modal('hide')
+      }
+    },
   }
 }
 </script>
@@ -57,5 +72,4 @@ export default {
   font-size: 22px;
   font-weight: bold;
 }
-
 </style>
