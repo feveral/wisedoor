@@ -3,8 +3,9 @@
 ## WARN
 
 ## Production
-- 要改`server/controllers/ImageController.js`的 post url , 改成主機IP
+- 要改`server/controllers/ImageController.js`的 post url , 改成主機網址
 - ‵server/config/config.js` 的 mysql 密碼要變更
+- `server/facenetService/app.py` 的 localhost 要改成主機網址
 
 ## TODO
 - face可刪除(server)(client)
