@@ -8,7 +8,8 @@ class PasswordController():
         self.password = password
         self.equipment_name = equipment_name
         self.new_password = ""
-    
+        self.update()
+
     def update(self):  
         payload = {'email':self.user_email,'password':self.password,'equipmentName':self.equipment_name}
         try:
@@ -16,13 +17,8 @@ class PasswordController():
         except Exception as e: 
             print('internet not connected while get password from server.')
             return
-        self._password = int(self.new_password.content)
+        print(self._password)
+        if(int(self.new_password.content) != self._password):
+            self._password = int(self.new_password.content)
 
-    @property
-    def password(self):
-        return self._password
-
-    @password.setter
-    def password(self,new_password):
-        self._password = new_password
 
