@@ -56,9 +56,11 @@ class CheckFaceService():
 
     def _classify_result_handler(self,classify_result):
         if (classify_result[0] == 'unknown'):
+            print(str(classify_result[0])+":"+str(classify_result[1]))
             print('open lock fail')
             self._fail_count += 1
         else:
+            print(str(classify_result[0])+":"+str(classify_result[1]))
             print('open lock')
-            self._success = True
-            self._success_task()
+            #self._success = True
+            #self._success_task()
