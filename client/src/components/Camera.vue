@@ -4,6 +4,7 @@
       <video @click="OpenCamera()" id="video" ref="video" width="640" height="480" class="col-12" autoplay="" >
       </video>
     </div>
+    <p>{{errorMessage}}</p>
   </div>
 </template>
 
@@ -18,7 +19,8 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       cameraIndex: 0,
-      debug: ''
+      debug: '',
+      errorMessage: ''
     }
   },
 
@@ -29,8 +31,19 @@ export default {
   methods: {
     
     async OpenCamera(){
+        this.errorMessage = 'wetger'
+      
       // IPhone 無法使用 , HTC10 前鏡頭無法打開 , LG G6 可正常使用
       let video = this.$refs.video
+      navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: true
+      }).then((stream)=> {
+        video.srcObject = stream;
+      }).catch((error)=>{
+      
+      })
+      /*
       navigator.mediaDevices.enumerateDevices().then( (devices) => {
           devices = devices.filter( (devices) => { return devices.kind === 'videoinput'; });
           if (devices.length == 1) { // 只有一個鏡頭
@@ -46,7 +59,7 @@ export default {
             video.src = window.URL.createObjectURL(stream);
             video.play();
           })
-      })
+      })*/
     },
     
     getVideoImage(){
