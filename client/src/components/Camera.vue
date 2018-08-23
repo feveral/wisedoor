@@ -1,7 +1,7 @@
 <template>
   <div id="camera" >
     <div class="row mb-4 justify-content-center">
-      <video @click="OpenCamera()" id="video" ref="video" width="640" height="480" class="col-12" autoplay="" >
+      <video @click="OpenCamera()" id="video" ref="video" width="640" height="480" class="col-12" autoplay playsinline >
       </video>
     </div>
     <p>{{errorMessage}}</p>
