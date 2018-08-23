@@ -30,7 +30,7 @@ let passport = require('./passport')(app)
 let routes = require('./routes')(app, passport)
 
 app.use(history()) // This line must be added below routes , not above
-app.use(express.static('../client/dist'))
+app.use(express.static('../client/temp'))
 
 http.createServer(httpApp).listen(httpApp.get('port'), () => console.log(`HTTP Server listen on port ${httpApp.get('port')}`))
 https.createServer(credentials, app).listen(app.get('port'), () => console.log(`HTTPS Server listen on port ${app.get('port')}`))
