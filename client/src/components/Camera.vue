@@ -32,17 +32,16 @@ export default {
     
     async OpenCamera(){
       
-      // IPhone 無法使用 , HTC10 前鏡頭無法打開 , LG G6 可正常使用
-      //let video = this.$refs.video
-      navigator.mediaDevices.getUserMedia({
-        audio: false,
-        video: true
-      }).then((stream)=> {
-        const video = document.querySelector('video');
-        video.srcObject = stream;
-      })
-      
-      /*
+      // ////  Smart Phone Version
+      // navigator.mediaDevices.getUserMedia({
+      //   audio: false,
+      //   video: true
+      // }).then((stream)=> {
+      //   const video = document.querySelector('video');
+      //   video.srcObject = stream;
+      // })
+      //////
+      let video = this.$refs.video
       navigator.mediaDevices.enumerateDevices().then( (devices) => {
           devices = devices.filter( (devices) => { return devices.kind === 'videoinput'; });
           if (devices.length == 1) { // 只有一個鏡頭
@@ -58,7 +57,7 @@ export default {
             video.src = window.URL.createObjectURL(stream);
             video.play();
           })
-      })*/
+      })
     },
     
     getVideoImage(){
