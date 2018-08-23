@@ -34,20 +34,14 @@ export default {
       
       // IPhone 無法使用 , HTC10 前鏡頭無法打開 , LG G6 可正常使用
       //let video = this.$refs.video
-      const video = document.querySelector('video');
       navigator.mediaDevices.getUserMedia({
         audio: false,
         video: true
       }).then((stream)=> {
+        const video = document.querySelector('video');
         video.srcObject = stream;
-        const videoTracks = stream.getVideoTracks();
-        console.log('Got stream with constraints:', constraints);
-        console.log(`Using video device: ${videoTracks[0].label}`);
-        window.stream = stream; // make variable available to browser console
-        video.srcObject = stream;
-      }).catch((error)=>{
-      
       })
+      
       /*
       navigator.mediaDevices.enumerateDevices().then( (devices) => {
           devices = devices.filter( (devices) => { return devices.kind === 'videoinput'; });
