@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import config 
 import time
+from PasswordController import PasswordController 
 
 class ButtonController():
     def __init__(self):
@@ -11,6 +12,7 @@ class ButtonController():
         self._star_task = None
         self._password_correct_task = None
         self._password = [5,6,7,8]
+        self._password_controller = PasswordController("feveraly@gmail.com", 5566, '家裡的門')
 
     def _setup(self):
         GPIO.setmode(GPIO.BOARD)
@@ -48,6 +50,10 @@ class ButtonController():
         self._is_enable = False
 
     @property
+    def password_controller(self):
+        return self._password_controller
+
+    @property
     def star_task(self):
         return self._star_task
 
@@ -64,10 +70,10 @@ class ButtonController():
         self._password_correct_task = task
 
     def _check_password(self):
-        if (len(self._buffer) != len(self._password) + 1):
+        if (len(self._buffer) != len(self._password_controller.password)):
             return False
-        for i in range(len(self._password)):
-            if (self._buffer[i] != self._password[i]):
+        for i in range(len(self._password_controller.password)):
+            if (int(self._buffer[i]) != int(self._password_controller.password[i])):
                 return False
         return True
                     

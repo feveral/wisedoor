@@ -1,7 +1,7 @@
 USER_EMAIL = 'feveraly@gmail.com'
 USER_PASSWORD = 5566
 EQUIPMENT_NAME = '家裡的門'
-SERVER_URL = 'https://192.168.1.8/'
+SERVER_URL = 'https://localhost/'
 MODEL_PATH = "./main.pkl"
 BUTTON_ROW_PIN = [16,18,22,24]
 BUTTON_COL_PIN = [8,10,12]
