@@ -7,11 +7,13 @@
           <h5 class="mb-3 text-center big-font-size">您的設備列表</h5>
           <equipment-list ref="equipmentList"></equipment-list>
         </div>
-        <div class="col-12 col-lg-8 row">
-          <camera @upgradeProgress="onUpgradeProgress($event)" @notifyTrainStart="CheckModelIsTrain" ref="camera" class="col-12"></camera>
+        <div class="col-12 col-lg-8">
+          <div class=" row">
+            <camera @upgradeProgress="onUpgradeProgress($event)" @notifyTrainStart="CheckModelIsTrain" ref="camera" class="col-12"></camera>
+            <upload-face-progress ref="progress" class="col-12"></upload-face-progress>
+          </div>
         </div>
         <train-menu @addFace="onAddFace()" class="col-12 col-lg-2"></train-menu>
-        <upload-face-progress ref="progress" class="col-12 col-lg-8"></upload-face-progress>
       </div>
     </div>
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
