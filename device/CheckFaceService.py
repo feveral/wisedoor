@@ -62,5 +62,5 @@ class CheckFaceService():
         else:
             print(str(classify_result[0])+":"+str(classify_result[1]))
             print('open lock')
-            #self._success = True
-            #self._success_task()
+            self._success = True
+            self._success_task()
