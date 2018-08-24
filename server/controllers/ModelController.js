@@ -18,9 +18,11 @@ module.exports = {
     else if ((await Model.IsModelTrain(modelId)) == false) {
       res.send('training')
     }
-    fs.readFile(`./facenetService/models/${modelId}.pkl`, (err, data) => {
-      res.send(data)
-    })
+    else{
+      fs.readFile(`./facenetService/models/${modelId}.pkl`, (err, data) => {
+        res.send(data)
+      })
+    }
   },
 
   async NotifyTrainFinish(req, res){

@@ -65,12 +65,19 @@ module.exports = class Equipment {
   }
 
   static async UpdateModelIdByEquipmentId(equipmentId,newModelId){
+    let result;
     try {
-      const result = await db.query(`update EQUIPMENT set ModelId='${newModelId}' where Id='${equipmentId}'`)
+      if(newModelId != "null"){
+        result = await db.query(`update EQUIPMENT set ModelId='${newModelId}' where Id='${equipmentId}'`)
+      }
+      else{
+        result = await db.query(`update EQUIPMENT set ModelId=NULL where Id='${equipmentId}'`)
+      }
       if (result.affectedRows == 0) {
         throw new Error('Error occured while executing Equipment.FindModelIdByEquipmentId : cannot find this equipmentId') 
       }
     } catch (error) {
+      console.log(error)
       throw new Error('Error occured while executing Equipment.FindModelIdByEquipmentId') 
     }
   }

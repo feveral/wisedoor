@@ -27,6 +27,7 @@ class Model():
         self.faceIdNamePair = faceIdNamePair
 
     def produce_model(self):
+        self.model = None
         emb_array, labels, class_names = self.load_one_face("unknown")
         self.emb_array = emb_array
         self.labels = [0] * len(emb_array[:])
@@ -37,6 +38,8 @@ class Model():
             self.emb_array = np.concatenate((self.emb_array,emb_array))
             self.labels = self.labels + labels
             self.class_names = self.class_names + class_names
+            print(self.class_names)
+            print(self.labels)
         self.model = SVC(kernel='linear', probability=True)
         self.model.fit(self.emb_array, self.labels)
     
