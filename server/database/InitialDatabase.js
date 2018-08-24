@@ -91,7 +91,7 @@ db.query(
 db.query(`insert into USER VALUES('feveraly@gmail.com','宗翰','5566');`)
 db.query(`insert into USER VALUES('john@gmail.com','忠禮','5566');`)
 db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com',5678,'家裡的門',NULL,false);`)
-db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda35bbbb8','feveraly@gmail.com',8888,'家裡的門222',NULL,false);`)
+db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda35bbbb8','feveraly@gmail.com',8888,'公司的門',NULL,false);`)
 db.end()
 
 if (!require('fs').existsSync('facenetService/image/raw')) {

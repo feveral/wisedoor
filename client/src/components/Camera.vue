@@ -3,6 +3,7 @@
     <div class="row mb-4 justify-content-center">
       <video @click="OpenCamera()" id="video" ref="video"  class="col-12" autoplay playsinline >
       </video>
+      <upload-face-progress ref="progress" class="col-12 col-lg-10"></upload-face-progress>
     </div>
     <p>{{errorMessage}}</p>
   </div>
@@ -11,9 +12,13 @@
 <script>
 
 import ImageService from '@/services/ImageService'
-
+import UploadFaceProgress from '@/components/UploadFaceProgress'
 export default {
   name: 'Camera',
+  
+  components: {
+    UploadFaceProgress
+  },
 
   data () {
     return {
@@ -83,10 +88,10 @@ export default {
           alert('上傳失敗')
           break
         }
-        this.$emit('upgradeProgress',response.data.progress)
+        this.$refs.progress.setPercentage(response.data.progress)
       } while (response.data.progress < 100)
       alert('上傳完成 臉孔處理中')
-      this.$emit('upgradeProgress',0)
+      this.$refs.progress.setPercentage(0)
       this.$emit('notifyTrainStart',equipmentName)
     }
   }
@@ -98,6 +103,10 @@ export default {
   text-align: center;
   padding: 0;
   max-width: 100%;
+}
+
+#video {
+  margin-bottom: 8px;
 }
 
 #upload {

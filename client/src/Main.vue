@@ -1,17 +1,16 @@
 <template>
   <div id="main">
-    <headers ref='headers' @logout="onLogout()"></headers>
+    <headers ref='headers' @logout="onLogout()" @clickAddFace="changeToCameraMode()" @clickEquipmentList="changeToEquipmentListMode()"></headers>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-12 col-lg-2">
+        <div class="col-12 col-lg-2" v-if="isEquipmentListShow">
           <h5 class="mb-3 text-center big-font-size">您的設備列表</h5>
           <equipment-list ref="equipmentList"></equipment-list>
         </div>
-        <div class="col-12 col-lg-8 row">
+        <div class="col-12 col-lg-8 row" v-if="isCameraShow">
           <camera @upgradeProgress="onUpgradeProgress($event)" @notifyTrainStart="CheckModelIsTrain" ref="camera" class="col-12"></camera>
         </div>
-        <train-menu @addFace="onAddFace()" class="col-12 col-lg-2"></train-menu>
-        <upload-face-progress ref="progress" class="col-12 col-lg-8"></upload-face-progress>
+        <train-menu @addFace="onAddFace()" v-if="isTrainMenuShow" class="col-12 col-lg-2"></train-menu>
       </div>
     </div>
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
@@ -36,8 +35,20 @@ import AddFaceModal from '@/components/AddFaceModal'
 import RegisterEquipmentModal from '@/components/RegisterEquipmentModal'
 import SetEquipmentPasswordModal from '@/components/SetEquipmentPasswordModal'
 
+import Media from 'vue-media'
+
 export default {
   name: 'Main',
+
+  data () {
+    return {
+      isGreaterThan768: window.innerWidth > 768,
+      isCameraShow: true,
+      isTrainMenuShow: true,
+      isEquipmentListShow: true,
+    }
+  },
+
   components: {
     Camera,
     Headers,
@@ -47,15 +58,42 @@ export default {
     UploadFaceProgress,
     AddFaceModal,
     RegisterEquipmentModal,
-    SetEquipmentPasswordModal
+    SetEquipmentPasswordModal,
+    Media
   },
 
   mounted () {
     this.GoToLoginIfNotLogin()
     this.SetUserName()
+    this.isTrainMenuShow = this.isGreaterThan768
+    this.isEquipmentListShow = this.isGreaterThan768
   },
 
   methods: {
+
+    changeToCameraMode () {
+      if (!this.isGreaterThan768) {
+        this.isCameraShow = true
+        this.isTrainMenuShow = false
+        this.isEquipmentListShow = false
+      } 
+    },
+
+    changeToTrainMenuMode () {
+      if (!this.isGreaterThan768) {
+        this.isCameraShow = false
+        this.isTrainMenuShow = true
+        this.isEquipmentListShow = false
+      } 
+    },
+
+    changeToEquipmentListMode () {
+      if (!this.isGreaterThan768) {
+        this.isCameraShow = false
+        this.isTrainMenuShow = false
+        this.isEquipmentListShow = true
+      } 
+    },
 
     onLoginSuccess (name) {
       this.$refs.headers.setUserName(name)
@@ -74,7 +112,7 @@ export default {
     },
 
     onUpgradeProgress (percentage) {
-      this.$refs.progress.setPercentage(percentage)
+      //this.$refs.progress.setPercentage(percentage)
     },
 
     async SetUserName () {

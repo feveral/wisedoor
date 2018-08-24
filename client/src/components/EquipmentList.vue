@@ -8,6 +8,7 @@
       </div>
       <div :id="'equipment' + equipment.Id" class="collapse" aria-labelledby="headingOne" data-parent="#equipment-list">
         <div class="card-body">
+          <p id="no-face-prompt" v-if="equipment.Face.length == 0">尚未新增臉孔</p>
           <button type="button" class="face-button btn btn-outline-primary col-12 mb-2"  v-for="face in equipment.Face">{{face.Name}}</button>
         </div>
       </div>
@@ -71,5 +72,13 @@ export default {
 .face-button {
   font-size: 22px;
   font-weight: bold;
+}
+
+.scroll {
+  overflow: scroll;
+}
+
+#no-face-prompt {
+  color: gray;
 }
 </style>
