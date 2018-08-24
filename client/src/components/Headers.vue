@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
       <div class="container">
         <a class="navbar-brand" href="#">智慧門鎖</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <button id="nav-bar-toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -59,7 +59,18 @@ export default {
     }
   },
 
+  mounted () {
+    this.setLinkCollapse () 
+  },
+
   methods: {
+
+    setLinkCollapse () {
+      $('#navbarSupportedContent>ul').click(function(){
+          $("#navbarSupportedContent").collapse('hide');
+      });
+    },
+
     setUserName (name) {
       this.userName = `Hi ! ${name}`
       this.isLogin = true
