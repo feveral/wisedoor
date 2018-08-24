@@ -1,9 +1,10 @@
 <template>
   <div id="camera" >
     <div class="row mb-4 justify-content-center">
-      <video @click="OpenCamera()" id="video" ref="video" width="640" height="480" class="col-12" autoplay="" >
+      <video @click="OpenCamera()" id="video" ref="video"  class="col-12" autoplay playsinline >
       </video>
     </div>
+    <p>{{errorMessage}}</p>
   </div>
 </template>
 
@@ -18,7 +19,8 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       cameraIndex: 0,
-      debug: ''
+      debug: '',
+      errorMessage: ''
     }
   },
 
@@ -29,7 +31,16 @@ export default {
   methods: {
     
     async OpenCamera(){
-      // IPhone 無法使用 , HTC10 前鏡頭無法打開 , LG G6 可正常使用
+      
+      // ////  Smart Phone Version
+      // navigator.mediaDevices.getUserMedia({
+      //   audio: false,
+      //   video: true
+      // }).then((stream)=> {
+      //   const video = document.querySelector('video');
+      //   video.srcObject = stream;
+      // })
+      //////
       let video = this.$refs.video
       navigator.mediaDevices.enumerateDevices().then( (devices) => {
           devices = devices.filter( (devices) => { return devices.kind === 'videoinput'; });
@@ -53,8 +64,8 @@ export default {
       const video = document.getElementById('video')
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d');
-      const width = video.width
-      const height = video.height
+      const width = video.clientWidth
+      const height = video.clientHeight
       canvas.width = width
       canvas.height = height
       context.drawImage(video,0,0,width,height,0,0,width,height)

@@ -53,6 +53,19 @@ db.query(
        PRIMARY KEY(Id) 
      );`
   )
+
+db.query(
+  `CREATE TABLE HISTORY
+     (
+       Id VARCHAR(255) CHARACTER SET utf8 NOT NULL,
+       EquipmentId VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
+       FaceId VARCHAR(255) CHARACTER SET utf8 NOT NULL,
+       OpenTime DATETIME NOT NULL,
+       PRIMARY KEY(Id),
+       FOREIGN KEY(FaceId) REFERENCES FACE(Id),
+       FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
+     );`
+)
   
 db.query(
     `CREATE TABLE FACE_BELONG_MODEL
