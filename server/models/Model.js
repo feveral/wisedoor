@@ -25,6 +25,16 @@ module.exports = class Model {
     }
   }
 
+  static async DeleteModelByModelId(modelId) {
+    try{
+      const response = await db.query(`delete from  MODEL WHERE Id='${modelId}'`)
+      if(response.affectedRows == 0)
+        throw new Error('Error occured while executing Model.DeleteModelByModelId : cannot find modelId')
+    } catch (error) {
+      throw new Error('Error occured while executing Model.DeleteModelByModelId')
+    }
+  }
+
   static async ProduceUniqueId() {
     const newId = await randomHex(16).substring(2)
     if (await this.IsIdExist(newId)) {

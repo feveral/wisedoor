@@ -6,6 +6,7 @@ const Model = require('../models/Model')
 const modelBasePath = `${process.cwd()}/facenetService/models`
 const request = require('request');
 const fs = require('fs');
+const rimraf = require('rimraf');
 
 module.exports = {
 
@@ -21,6 +22,17 @@ module.exports = {
     const deleteFaceInEquipmentresult = await FaceBelongEquipment.DeleteFaceByEquipmentId(faceId,equipmentId)
     req.modelId = await Equipment.FindModelIdByEquipmentId(equipmentId)
     const deleteFaceInModelresult = await FaceBelongModel.Delete(faceId,req.modelId)
+
+    await Face.Delete(req.body.faceId)
+    fs.unlink(`${process.cwd()}/facenetService/models/faces/${req.body.faceId }.pkl`, (err) => {
+        if (err) throw err;
+    });
+    rimraf(`${process.cwd()}/facenetService/image/cut/${req.body.faceId }`, (err) => {
+        if (err) throw err;
+    });
+    rimraf(`${process.cwd()}/facenetService/image/raw/${req.body.faceId }`, (err) => {
+        if (err) throw err;
+    });
     next()
   },
 
@@ -50,6 +62,7 @@ module.exports = {
     }
     else{
         await Equipment.UpdateModelIdByEquipmentId(req.body.equipmentId,"null")
+        Model.DeleteModelByModelId(req.modelId)
         fs.unlink(`${process.cwd()}/facenetService/models/${req.modelId}.pkl`, (err) => {
             if (err) throw err;
             console.log('successfully delete ' +  `${req.modelId}` + '.pkl');
