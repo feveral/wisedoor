@@ -9,7 +9,9 @@
       <div :id="'equipment' + equipment.Id" class="collapse" aria-labelledby="headingOne" data-parent="#equipment-list">
         <div class="card-body">
           <p id="no-face-prompt" v-if="equipment.Face.length == 0">尚未新增臉孔</p>
-          <button type="button" class="face-button btn btn-outline-primary col-12 mb-2"  v-for="face in equipment.Face">{{face.Name}}</button>
+          <button type="button" class="face-button btn btn-outline-primary col-8 mb-2"  v-for="face in equipment.Face">{{face.Name}}
+            <button type="button"  v-on:click="deleteFace(face.Id,equipment.Id)">x</button>
+          </button>
         </div>
       </div>
     </div>
@@ -58,6 +60,12 @@ export default {
         let response =  await EquipmentService.SetPassword(equipmentName,this.password)
         $('#set-password-modal').modal('hide')
       }
+    },
+
+    async deleteFace (faceId,equipmentId){
+      console.log(faceId)
+      let response =  await FaceService.UploadDeleteFace(faceId,equipmentId)
+      this.UpdateEquipmentList()
     },
   }
 }

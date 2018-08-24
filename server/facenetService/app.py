@@ -81,5 +81,19 @@ def trainPicture():
     train.AddTrainData(cutBasePath,outputBasePath,newFaceId,newFaceName,faceIdNamePairs)
     return jsonify({'success': 'start training'})
 
+@app.route('/retrain', methods=['POST'])
+def reTrainModel():
+    outputBasePath = request.form.get('outputBasePath')
+    modelId = request.form.get('modelId')
+    faceIdNamePairs = json.loads(request.form.get('faceIdNamePairs'))
+    model.set_faceIdNamePair(faceIdNamePairs)
+    model.set_modelId(modelId)
+    start = time.time()
+    model.produce_model()
+    model.save_model()
+    print(faceIdNamePairs)
+    print("waste time:" + str(time.time() - start))
+    return jsonify({'success': 'retrain ok'})
+
 if __name__ == '__main__':
     app.run(host='localhost', debug=True, port = 3000, use_reloader=False)

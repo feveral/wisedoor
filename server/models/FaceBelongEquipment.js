@@ -59,4 +59,11 @@ module.exports = class FaceBelongEquipment {
                                    Id=FaceId`)
     return result
   }
+
+  static async DeleteFaceByEquipmentId(faceId,equipmentId){
+    const result = await db.query(`delete from FACE_BELONG_EQUIPMENT 
+                                   where EquipmentId='${equipmentId}' AND
+                                   FaceId='${faceId}'`)
+    return result
+  }
 }
