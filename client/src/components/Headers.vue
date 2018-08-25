@@ -20,7 +20,7 @@
                       <a class="nav-link loginout-button" href="#" @click="$emit('clickEquipmentList')">設備列表</a>
                   </li>
                   <li class="nav-item active">
-                      <a class="nav-link loginout-button" href="#">開門紀錄</a>
+                      <a class="nav-link loginout-button" href="#" @click="$emit('clickOpenDoorRecord')">開門紀錄</a>
                   </li>
                   <li class="nav-item active">
                       <a class="nav-link loginout-button" href="#" data-toggle="modal" data-target="#set-equipment-password-modal">密碼設定</a>

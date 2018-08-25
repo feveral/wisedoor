@@ -1,9 +1,9 @@
 <template>
   <div id="train-menu">
     <div class="row justify-content-around">
-      <button class="mb-4 col-5 col-lg-12 btn btn-outline-dark train-menu-button" data-toggle="modal" data-target="#add-face-modal">新增臉孔</button>
+      <button class="mb-4 col-5 col-lg-12 btn btn-outline-dark train-menu-button" data-toggle="modal" data-target="#add-face-modal" @click="$emit('clickAddFace')">新增臉孔</button>
       <button class="mb-4 col-5 col-lg-12 btn btn-outline-dark train-menu-button" data-toggle="modal" data-target="#register-equipment-modal">新增設備</button>
-      <button class="mb-4 col-5 col-lg-12 btn btn-outline-dark train-menu-button">開門紀錄</button>
+      <button class="mb-4 col-5 col-lg-12 btn btn-outline-dark train-menu-button" @click="$emit('clickOpenDoorRecord')">開門紀錄</button>
       <button class="mb-4 col-5 col-lg-12 btn btn-outline-dark train-menu-button" data-toggle="modal" data-target="#set-equipment-password-modal">設定密碼</button>
     </div>
   </div>
