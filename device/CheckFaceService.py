@@ -17,6 +17,7 @@ class CheckFaceService():
         self._fail_count = 0
         self._success = True
         self._success_task = None
+        self._record_task = None
 
     def start_check(self):
         if self._model.is_empty:
@@ -34,7 +35,7 @@ class CheckFaceService():
             if (self._align.cut(frame)):
                 classify_result = self._classify.classify_image(self._align.image)
                 print(time.time() - start)
-                self._classify_result_handler(classify_result)
+                self._classify_result_handler(classify_result,frame)
                 self._timer.start_timing()
                 self._align.clear()
 
@@ -50,17 +51,30 @@ class CheckFaceService():
     def check_success_task(self):
         return self._success_task
 
+    @property
+    def record_task(self):
+        return self._record_task
+
     @check_success_task.setter
     def check_success_task(self, task):
         self._success_task = task
 
-    def _classify_result_handler(self,classify_result):
+    @record_task.setter
+    def record_task(self, task):
+        self._record_task = task
+
+
+    def _classify_result_handler(self,classify_result,frame):
         if (classify_result[0] == 'unknown'):
             print(str(classify_result[0])+":"+str(classify_result[1]))
             print('open lock fail')
             self._fail_count += 1
+            if(self._fail_count >= 3):
+                self.record_task("fail","face",classify_result[0],frame)
+
         else:
             print(str(classify_result[0])+":"+str(classify_result[1]))
             print('open lock')
+            self.record_task("success","face",classify_result[0],frame)
             #self._success = True
             #self._success_task()
