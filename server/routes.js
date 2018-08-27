@@ -43,6 +43,7 @@ module.exports = (app, passport) => {
     modelRouter.post('/check', ModelController.CheckModelIsTrain)
     
     historyRouter.post('/', HistoryController.AddHistory)
+    historyRouter.post('/test',HistoryController.Test)
 
     app.use('/api/authentication', AuthenticationRouter)
     app.use('/api/equipment', equipmentRouter)
