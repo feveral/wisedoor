@@ -20,5 +20,10 @@ module.exports = {
         } catch (error) {
             res.status(500).send({error: 'fail to add history.'})
         }
+    },
+
+    async Test(req,res){
+        console.log(req.body.time)
+        res.status(200).send({success: 'Add history successful.'})
     }
 }

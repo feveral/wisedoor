@@ -72,6 +72,7 @@ class CheckFaceService():
             self._fail_count += 1
             if(self._fail_count >= 3):
                 self.record_task("fail","face",classify_result[0],frame)
+                print("failllll")
 
         else:
             print(str(classify_result[0])+":"+str(classify_result[1]))
