@@ -5,7 +5,6 @@
       </video>
       <upload-face-progress ref="progress" class="col-12 col-lg-10"></upload-face-progress>
     </div>
-    <p>{{errorMessage}}</p>
   </div>
 </template>
 
@@ -25,7 +24,6 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       cameraIndex: 0,
       debug: '',
-      errorMessage: ''
     }
   },
 
