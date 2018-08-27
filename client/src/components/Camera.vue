@@ -5,9 +5,6 @@
       </video>
       <upload-face-progress ref="progress" class="col-12 col-lg-10"></upload-face-progress>
     </div>
-    <media :query="{minWidth:768}">
-      <div class="mb-4"></div>
-    </media>    
   </div>
 </template>
 

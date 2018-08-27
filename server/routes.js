@@ -11,8 +11,8 @@ module.exports = (app, passport) => {
     const imageRouter = express.Router().all('*', AuthenticationController.authenticate)
     const equipmentRouter = express.Router().all('*', AuthenticationController.authenticate)
     const faceRouter = express.Router().all('*', AuthenticationController.authenticate)
-    const modelRouter = express.Router().all('*', AuthenticationController.authenticate)
     const historyRouter = express.Router().all('*', AuthenticationController.authenticate)
+    const modelRouter = express.Router()
 
     AuthenticationRouter.post('/login', passport.authenticate('local', { session: true }), AuthenticationController.login)
     AuthenticationRouter.get('/logout', AuthenticationController.logout)
@@ -34,7 +34,7 @@ module.exports = (app, passport) => {
     faceRouter.get('/:equipmentId', FaceController.GetFaces)
     faceRouter.post('/delete', FaceController.DeleteFace,
                                 FaceController.ReTrainModel)
-    modelRouter.post('/', ModelController.GetModel)
+    modelRouter.post('/', AuthenticationController.authenticate, ModelController.GetModel)
     modelRouter.post('/notify',ModelController.NotifyTrainFinish)
     modelRouter.post('/check', ModelController.CheckModelIsTrain)
     

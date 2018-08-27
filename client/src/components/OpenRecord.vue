@@ -4,9 +4,9 @@
     <thead>
         <tr>
         <th scope="col">#</th>
-        <th scope="col">time</th>
-        <th scope="col">name</th>
-        <th scope="col">picture</th>
+        <th scope="col">開門時間</th>
+        <th scope="col">人名</th>
+        <th scope="col">開門照片</th>
         </tr>
     </thead>
     <tbody>

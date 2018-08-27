@@ -3,14 +3,16 @@
     <div class="card" v-for="equipment in equipments">
       <div class="card-header">
         <button class="btn btn-outline-dark equipment-button" data-toggle="collapse" :data-target="'#equipment' + equipment.Id" aria-expanded="true" :aria-controls="'#equipment' + equipment.Id">
-          {{equipment.Name}}
+          {{equipment.Name + ' (' + equipment.Face.length + '人)'}}
         </button>
       </div>
       <div :id="'equipment' + equipment.Id" class="collapse" aria-labelledby="headingOne" data-parent="#equipment-list">
         <div class="card-body">
           <p id="no-face-prompt" v-if="equipment.Face.length == 0">尚未新增臉孔</p>
-          <button type="button" class="face-button btn btn-outline-primary col-8 mb-2"  v-for="face in equipment.Face">{{face.Name}}
-            <button type="button"  v-on:click="deleteFace(face.Id,equipment.Id)">x</button>
+          <button type="button" class="row face-button btn btn-outline-primary mb-2"  v-for="face in equipment.Face">{{face.Name}}
+              <a href="#"  v-on:click="deleteFace(face.Id,equipment.Id)">
+                <img src="@/assets/icon_delete.png" alt="" class="icon">
+              </a>
           </button>
         </div>
       </div>
@@ -72,6 +74,23 @@ export default {
 </script>
 
 <style>
+@media only screen and (max-width: 768px) {
+  .icon {
+    max-width: 9%;
+    width: 100%;
+    float: right;
+    vertical-align:middle;
+  }  
+}
+
+@media only screen and (min-width: 768px) {
+  .icon {
+    max-width: 15%;
+    width: 100%;
+    float: right;
+    vertical-align:middle;
+  }  
+}
 
 .equipment-button {
   font-size: 20px;
@@ -80,6 +99,7 @@ export default {
 .face-button {
   font-size: 22px;
   font-weight: bold;
+  position:relative; 
 }
 
 .scroll {

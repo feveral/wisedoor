@@ -8,25 +8,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link loginout-button" href="#" @click="$emit('clickAddFace')" data-toggle="modal" data-target="#add-face-modal">新增臉孔</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link loginout-button" href="#" data-toggle="modal" data-target="#register-equipment-modal">新增設備</a>
+                </li>
                 <media :query="{maxWidth:768}">
-                  <div>
-                  <li class="nav-item active">
-                      <a class="nav-link loginout-button" href="#" @click="$emit('clickAddFace')" data-toggle="modal" data-target="#add-face-modal">新增臉孔</a>
-                  </li>
-                  <li class="nav-item active">
-                      <a class="nav-link loginout-button" href="#" data-toggle="modal" data-target="#register-equipment-modal">新增設備</a>
-                  </li>
                   <li class="nav-item active">
                       <a class="nav-link loginout-button" href="#" @click="$emit('clickEquipmentList')">設備列表</a>
                   </li>
-                  <li class="nav-item active">
-                      <a class="nav-link loginout-button" href="#" @click="$emit('clickOpenDoorRecord')">開門紀錄</a>
-                  </li>
-                  <li class="nav-item active">
-                      <a class="nav-link loginout-button" href="#" data-toggle="modal" data-target="#set-equipment-password-modal">密碼設定</a>
-                  </li>
-                  </div>
-                </media>
+                </media>  
+                <li class="nav-item active">
+                    <a class="nav-link loginout-button" href="#" @click="$emit('clickOpenDoorRecord')">開門紀錄</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link loginout-button" href="#" data-toggle="modal" data-target="#set-equipment-password-modal">密碼設定</a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link loginout-button" href="#" data-toggle="modal" data-target="#login-modal">{{ userName }}</a>
                 </li>
@@ -40,6 +38,9 @@
     <media :query="{minWidth:768}">
       <div class="mb-4"></div>
     </media>    
+    <media :query="{maxWidth:768}">
+      <div class="mb-2"></div>
+    </media>  
   </div>
 </template>
 

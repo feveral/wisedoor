@@ -3,17 +3,17 @@
     <headers ref='headers' @logout="onLogout()" @clickAddFace="changeToCameraMode()" @clickOpenDoorRecord="changeToDoorRecordMode()" @clickEquipmentList="changeToEquipmentListMode()"></headers>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-12 col-lg-2" v-if="isEquipmentListShow">
+        <div class="col-12 col-lg-3" v-if="isEquipmentListShow">
           <h5 class="mb-3 text-center big-font-size">您的設備列表</h5>
           <equipment-list ref="equipmentList"></equipment-list>
         </div>
-        <div class="col-12 col-lg-8 row" v-if="isCameraShow">
+        <div class="col-12 col-lg-9 row" v-if="isCameraShow">
           <camera @upgradeProgress="onUpgradeProgress($event)" @notifyTrainStart="CheckModelIsTrain" ref="camera" class="col-12"></camera>
         </div>
-        <div class="col-12 col-lg-8 row" v-if="isOpenDoorRecordShow">
-          <login-record ref="loginRecord" class="col-12"></login-record>
+        <div class="col-12 col-lg-9 row" v-if="isOpenDoorRecordShow">
+          <open-record class="col-12"></open-record>
         </div>
-        <train-menu @clickAddFace="changeToCameraMode()" @addFace="onAddFace()" @clickOpenDoorRecord="changeToDoorRecordMode()" v-if="isTrainMenuShow" class="col-12 col-lg-2"></train-menu>
+        <!-- <train-menu @clickAddFace="changeToCameraMode()" @addFace="onAddFace()" @clickOpenDoorRecord="changeToDoorRecordMode()" v-if="isTrainMenuShow" class="col-12 col-lg-2"></train-menu> -->
       </div>
     </div>
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
@@ -37,7 +37,7 @@ import UploadFaceProgress from '@/components/UploadFaceProgress'
 import AddFaceModal from '@/components/AddFaceModal'
 import RegisterEquipmentModal from '@/components/RegisterEquipmentModal'
 import SetEquipmentPasswordModal from '@/components/SetEquipmentPasswordModal'
-import LoginRecord from '@/components/LoginRecord'
+import OpenRecord from '@/components/OpenRecord'
 
 import Media from 'vue-media'
 
@@ -65,7 +65,7 @@ export default {
     RegisterEquipmentModal,
     SetEquipmentPasswordModal,
     Media,
-    LoginRecord
+    OpenRecord
   },
 
   mounted () {
