@@ -1,11 +1,13 @@
 <template>
   <div id="camera" >
-    <div class="row mb-4 justify-content-center">
+    <div class="row justify-content-center">
       <video @click="OpenCamera()" id="video" ref="video"  class="col-12" autoplay playsinline >
       </video>
       <upload-face-progress ref="progress" class="col-12 col-lg-10"></upload-face-progress>
     </div>
-    <p>{{errorMessage}}</p>
+    <media :query="{minWidth:768}">
+      <div class="mb-4"></div>
+    </media>    
   </div>
 </template>
 
@@ -13,19 +15,21 @@
 
 import ImageService from '@/services/ImageService'
 import UploadFaceProgress from '@/components/UploadFaceProgress'
+import Media from 'vue-media'
+
+
 export default {
   name: 'Camera',
   
   components: {
+    Media,
     UploadFaceProgress
   },
 
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       cameraIndex: 0,
       debug: '',
-      errorMessage: ''
     }
   },
 

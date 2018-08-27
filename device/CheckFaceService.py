@@ -1,4 +1,5 @@
 import time
+import config
 from Timer import Timer 
 from Camera import Camera
 from OpencvAlign import OpencvAlign
@@ -10,7 +11,7 @@ from Classify import Classify
 class CheckFaceService():
     def __init__(self):
         self._camera = Camera(0)
-        self._model = Model("feveraly@gmail.com", 5566, '家裡的門')
+        self._model = Model(config.USER_EMAIL, config.USER_PASSWORD, config.EQUIPMENT_NAME)
         self._classify = Classify(self._model)
         self._align = OpencvAlign()
         self._timer = Timer()

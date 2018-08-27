@@ -1,6 +1,6 @@
 <template>
   <div id="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
         <a class="navbar-brand" href="#">智慧門鎖</a>
         <button id="nav-bar-toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -37,6 +37,9 @@
         </div>
       </div>
     </nav>
+    <media :query="{minWidth:768}">
+      <div class="mb-4"></div>
+    </media>    
   </div>
 </template>
 
