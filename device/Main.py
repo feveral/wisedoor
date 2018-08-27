@@ -14,11 +14,11 @@ historyController = HistoryController("feveraly@gmail.com", 5566, '家裡的門'
 #PasswordController = PasswordController("feveraly@gmail.com", 5566, '家裡的門')
 checkFaceService = CheckFaceService()
 #checkFaceService.check_success_task = lock.open_door
-#checkFaceService.record_task = historyController.AddRecord
-#checkFaceService.start_check()
+checkFaceService.record_task = historyController.AddRecord
+checkFaceService.start_check()
 
 #taskManager = TaskManager()
-checkFaceService.model.update()
+#checkFaceService.model.update()
 #taskManager.add_task(checkFaceService.model.update,2)
 #taskManager.add_task(ButtonController.password_controller.update,3)
 #taskManager.add_task(checkFaceService.camera.CatchImage,0.1)
