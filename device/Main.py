@@ -1,13 +1,13 @@
 from CheckFaceService import CheckFaceService
 #from Lock import Lock
 #from ButtonController import ButtonController 
-from TaskManager import TaskManager
+from TaskManager import taskManager
 from PasswordController import  PasswordController
 # from PCButtonController import PCButtonController 
 from HistoryController import HistoryController
 
 #PCButtonController = PCButtonController()
-#historyController = HistoryController("feveraly@gmail.com", 5566, '家裡的門')
+historyController = HistoryController("feveraly@gmail.com", 5566, '家裡的門')
 #lock = Lock()
 #buttonController = ButtonController()
 
@@ -27,6 +27,9 @@ checkFaceService.model.update()
 #buttonController.star_task = checkFaceService.start_check 
 #buttonController.password_correct_task = lock.open_door
 #buttonController.enable()
+
+
+
 
 '''
 def check_success():
