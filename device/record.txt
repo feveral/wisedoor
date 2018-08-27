@@ -1,0 +1,9 @@
+2018-08-26 23:20:28.728200/success/face/AAA/./image/da7e131e3e0e773baeeb5d958ff97adc.jpg
+2018-08-26 23:20:28.841321/success/face/AAA/./image/e6b92a2ab3bfa954d9904319888bc1b3.jpg
+2018-08-26 23:20:28.958736/success/face/AAA/./image/dde385156a88372d00220278d6bed25b.jpg
+2018-08-26 23:20:29.362126/success/face/AAA/./image/e9dccba226bd2adf521e0b522d07c13c.jpg
+2018-08-26 23:20:29.659082/success/face/AAA/./image/65df18588a8b225ffe0f079d6ea605a4.jpg
+2018-08-26 23:20:29.776225/success/face/AAA/./image/d7f12826c5769e16316496b9d55e85d7.jpg
+2018-08-26 23:20:29.953390/success/face/AAA/./image/8358cd5e940afe9c2e4cc586e555b7f6.jpg
+2018-08-26 23:20:30.186787/success/face/AAA/./image/b84bee41f940e01f0a461777315c585a.jpg
+2018-08-26 23:20:30.301101/fail/face/unknown/./image/948c1ce40eadba7604487ff5cb653115.jpg

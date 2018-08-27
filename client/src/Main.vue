@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <headers ref='headers' @logout="onLogout()" @clickAddFace="changeToCameraMode()" @clickEquipmentList="changeToEquipmentListMode()"></headers>
+    <headers ref='headers' @logout="onLogout()" @clickAddFace="changeToCameraMode()" @clickOpenDoorRecord="changeToDoorRecordMode()" @clickEquipmentList="changeToEquipmentListMode()"></headers>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-lg-2" v-if="isEquipmentListShow">
@@ -10,7 +10,10 @@
         <div class="col-12 col-lg-8 row" v-if="isCameraShow">
           <camera @upgradeProgress="onUpgradeProgress($event)" @notifyTrainStart="CheckModelIsTrain" ref="camera" class="col-12"></camera>
         </div>
-        <train-menu @addFace="onAddFace()" v-if="isTrainMenuShow" class="col-12 col-lg-2"></train-menu>
+        <div class="col-12 col-lg-8 row" v-if="isOpenDoorRecordShow">
+          <login-record ref="loginRecord" class="col-12"></login-record>
+        </div>
+        <train-menu @clickAddFace="changeToCameraMode()" @addFace="onAddFace()" @clickOpenDoorRecord="changeToDoorRecordMode()" v-if="isTrainMenuShow" class="col-12 col-lg-2"></train-menu>
       </div>
     </div>
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
@@ -34,6 +37,7 @@ import UploadFaceProgress from '@/components/UploadFaceProgress'
 import AddFaceModal from '@/components/AddFaceModal'
 import RegisterEquipmentModal from '@/components/RegisterEquipmentModal'
 import SetEquipmentPasswordModal from '@/components/SetEquipmentPasswordModal'
+import LoginRecord from '@/components/LoginRecord'
 
 import Media from 'vue-media'
 
@@ -46,6 +50,7 @@ export default {
       isCameraShow: true,
       isTrainMenuShow: true,
       isEquipmentListShow: true,
+      isOpenDoorRecordShow: false,
     }
   },
 
@@ -59,7 +64,8 @@ export default {
     AddFaceModal,
     RegisterEquipmentModal,
     SetEquipmentPasswordModal,
-    Media
+    Media,
+    LoginRecord
   },
 
   mounted () {
@@ -70,12 +76,18 @@ export default {
   },
 
   methods: {
-
     changeToCameraMode () {
       if (!this.isGreaterThan768) {
         this.isCameraShow = true
         this.isTrainMenuShow = false
         this.isEquipmentListShow = false
+        this.isOpenDoorRecordShow = false
+      }
+      else{
+        this.isCameraShow = true
+        this.isTrainMenuShow = true
+        this.isEquipmentListShow = true
+        this.isOpenDoorRecordShow = false
       } 
     },
 
@@ -84,6 +96,7 @@ export default {
         this.isCameraShow = false
         this.isTrainMenuShow = true
         this.isEquipmentListShow = false
+        this.isOpenDoorRecordShow = false
       } 
     },
 
@@ -92,7 +105,23 @@ export default {
         this.isCameraShow = false
         this.isTrainMenuShow = false
         this.isEquipmentListShow = true
+        this.isOpenDoorRecordShow = false
       } 
+    },
+
+    changeToDoorRecordMode(){
+      if (!this.isGreaterThan768) {
+        this.isCameraShow = false
+        this.isTrainMenuShow = false
+        this.isEquipmentListShow = false
+        this.isOpenDoorRecordShow = true
+      }
+      else{
+        this.isCameraShow = false
+        this.isTrainMenuShow = true
+        this.isEquipmentListShow = true
+        this.isOpenDoorRecordShow = true
+      }
     },
 
     onLoginSuccess (name) {

@@ -9,13 +9,16 @@ from Model import Model
 from blurr import is_blurr
 from Classify import * 
 from CheckFaceService import *
+from HistoryController import HistoryController
 
+historyController = HistoryController()
 # camera = Camera(0)
 # classify_result = ('unknown', 0.0)
 # model = Model("feveraly@gmail.com", 5566, '家裡的門')
 # classify = Classify()
 # align = OpencvAlign()
 checkFaceService = CheckFaceService()
+checkFaceService.record_task = historyController.AddRecord
 checkFaceService.start_check()
 
 
