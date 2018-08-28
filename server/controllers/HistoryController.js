@@ -12,7 +12,7 @@ module.exports = {
         const RecordResult= await History.FindDataByEquipmentId(equipmentId)
         Record = JSON.parse(JSON.stringify(RecordResult));
         for (var index = 0; index < Record.length; index++){
-            var data = fs.readFileSync("./image/" + `${Record[index]["Id"]}.jpg`)
+            var data = fs.readFileSync("./facenetService/image/history/" + `${Record[index]["Id"]}.jpg`)
             base64Image = new Buffer(data, 'binary').toString('base64')
             Record[index]["FaceImage"] = base64Image
             Record[index]["OpenTime"] = module.exports.setTimeCorrect(Record[index]["OpenTime"])
@@ -33,7 +33,7 @@ module.exports = {
             var faceId = ""
             const equipmentId = await Equipment.FindIdByOwnerEmailAndName(userEmail, equipmentName)
             const historyId = await History.Add(equipmentId, openPeopleName, openTime, doorState, openDoorType)
-            fs.writeFile("./image/" + `${historyId}` + ".jpg", req.body.image, 'base64', err => {
+            fs.writeFile("./facenetService/image/history/" + `${historyId}` + ".jpg", req.body.image, 'base64', err => {
                 if (err){
                     console.log(err)
                 }
