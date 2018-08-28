@@ -3,7 +3,7 @@
     <table class="table table-hover">
     <thead>
         <tr>
-        <th scope="col">#</th>
+        <th scope="col">結果</th>
         <th scope="col">開門時間</th>
         <th scope="col">人名</th>
         <th scope="col">開門照片</th>

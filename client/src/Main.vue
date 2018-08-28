@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <headers ref='headers' @logout="onLogout()" @clickAddFace="changeToCameraMode()" @clickOpenDoorRecord="changeToDoorRecordMode()" @clickEquipmentList="changeToEquipmentListMode()"></headers>
+    <headers ref='headers' @logout="onLogout()" @clickAddFace="changeToCameraMode()" @clickOpenDoorRecord="changeToDoorRecordMode()" @clickEquipmentList="changeToEquipmentListMode()" @clickChangeToOnlineClassify="changeToOnlineClassifyMode()"></headers>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-lg-3" v-if="isEquipmentListShow">
@@ -77,6 +77,7 @@ export default {
 
   methods: {
     changeToCameraMode () {
+      this.$refs.camera.changeToAddFaceMode()
       if (!this.isGreaterThan768) {
         this.isCameraShow = true
         this.isTrainMenuShow = false
@@ -122,6 +123,10 @@ export default {
         this.isEquipmentListShow = true
         this.isOpenDoorRecordShow = true
       }
+    },
+
+    changeToOnlineClassifyMode(){
+      this.$refs.camera.changeToOnlineClassifyMode()
     },
 
     onLoginSuccess (name) {

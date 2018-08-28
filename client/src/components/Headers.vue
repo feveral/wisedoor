@@ -14,6 +14,9 @@
                 <li class="nav-item active">
                     <a class="nav-link loginout-button" href="#" data-toggle="modal" data-target="#register-equipment-modal">新增設備</a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link loginout-button" href="#" @click="$emit('clickChangeToOnlineClassify')">線上辨識</a>
+                </li>
                 <media :query="{maxWidth:768}">
                   <li class="nav-item active">
                       <a class="nav-link loginout-button" href="#" @click="$emit('clickEquipmentList')">設備列表</a>

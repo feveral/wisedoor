@@ -7,11 +7,13 @@ module.exports = (app, passport) => {
     const FaceController = require('./controllers/FaceController')
     const ModelController = require('./controllers/ModelController') 
     const HistoryController = require('./controllers/HistoryController')
+    const FacenetServiceController = require('./controllers/FacenetServiceController')
     const AuthenticationRouter = express.Router()
     const imageRouter = express.Router().all('*', AuthenticationController.authenticate)
     const equipmentRouter = express.Router().all('*', AuthenticationController.authenticate)
     const faceRouter = express.Router().all('*', AuthenticationController.authenticate)
     const historyRouter = express.Router().all('*', AuthenticationController.authenticate)
+    const facenetServiceRouter = express.Router().all('*', AuthenticationController.authenticate)
     const modelRouter = express.Router()
 
     AuthenticationRouter.post('/login', passport.authenticate('local', { session: true }), AuthenticationController.login)
@@ -41,10 +43,14 @@ module.exports = (app, passport) => {
     historyRouter.post('/', HistoryController.AddHistory)
     historyRouter.post('/test',HistoryController.Test)
 
+    facenetServiceRouter.post('/classify',  FacenetServiceController.saveClassifyData ,
+                                            FacenetServiceController.classify)
+
     app.use('/api/authentication', AuthenticationRouter)
     app.use('/api/equipment', equipmentRouter)
     app.use('/api/face', faceRouter)
     app.use('/api/image', imageRouter)
     app.use('/api/model', modelRouter)
     app.use('/api/history', historyRouter)
+    app.use('/api/facenet', facenetServiceRouter)
 }

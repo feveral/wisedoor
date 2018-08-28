@@ -4,6 +4,10 @@ from flask import abort
 from flask import request
 import sys
 import threading
+import cv2
+from utility.TaskManager import taskManager
+from utility.Classify import Classify
+from utility.OpencvAlign import OpencvAlign
 from utility.facenetAlign import *
 from utility.Train import Train
 from utility.Model import Model
@@ -22,6 +26,8 @@ cutPicture = CutPicture()
 config = Config()
 train = Train()
 model = Model()
+classify = Classify()
+opencvAlign = OpencvAlign()
 
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
@@ -46,6 +52,7 @@ def TrainModel():
 thread = threading.Thread(target=TrainModel)
 thread.setDaemon(True)
 thread.start()
+
 
 @app.route('/align', methods=['POST'])
 def alignPicture():
@@ -94,6 +101,20 @@ def reTrainModel():
     print(faceIdNamePairs)
     print("waste time:" + str(time.time() - start))
     return jsonify({'success': 'retrain ok'})
+
+@app.route('/classify', methods=['POST'])
+def classify_image():
+    modelId = request.form.get('modelId')
+    classifyResultId = request.form.get('classifyResultId')
+    classify.load_model(modelId)
+    image_base_path = './facenetService/image/classify_result/'
+    frame = cv2.imread(image_base_path + 'raw/' + classifyResultId + '.png')
+    if (opencvAlign.cut(frame)):
+        opencvAlign.saveImage(image_base_path + 'cut/' + classifyResultId + '.png')
+        result = classify.classify_image(image_base_path + 'cut/' + classifyResultId + '.png')
+        return jsonify({'success': True,'name': result[0],'rate': result[1]})
+    else:
+        return jsonify({'success': False, 'reason': 'detect no face'})
 
 if __name__ == '__main__':
     app.run(host='localhost', debug=True, port = 3000, use_reloader=False)
