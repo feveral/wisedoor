@@ -166,12 +166,16 @@ export default {
       const equipmentList = this.$refs.equipmentList 
       let isAlert = false
       async function checkIsTrain() {
-        const isTrained = (await TrainService.checkModelIsOk(equipmentName)).data
-        if(isTrained && !isAlert){
-          isAlert = true
-          equipmentList.UpdateEquipmentList()
-          alert("臉孔處理已完成")
-          clearInterval(timerId)
+        try {
+          const isTrained = (await TrainService.checkModelIsOk(equipmentName)).data
+          if(isTrained && !isAlert){
+            isAlert = true
+            equipmentList.UpdateEquipmentList()
+            alert("臉孔處理已完成")
+            clearInterval(timerId)
+          }
+        } catch (error) {
+            clearInterval(timerId)
         }
       }
     },

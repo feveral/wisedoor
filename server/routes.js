@@ -20,7 +20,8 @@ module.exports = (app, passport) => {
     AuthenticationRouter.get('/logout', AuthenticationController.logout)
     AuthenticationRouter.get('/username', AuthenticationController.username)
 
-    imageRouter.post('/upload/face',ImageController.retrieveEquipmentId,
+    imageRouter.post('/upload/face',ImageController.faceNameFilter,
+                                    ImageController.retrieveEquipmentId,
                                     ImageController.retrieveFaceId,
                                     ImageController.checkIsUpload,
                                     ImageController.makeRawDirectIfnotExist,

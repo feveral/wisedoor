@@ -17,12 +17,12 @@ class TaskManager():
         self.thread_Count = -1
 
     def add_task(self,task,interval):
+        self.thread_Count += 1
         self.stopList.append(False)
         after_set_task = self.set_task_interval(task,interval,self.thread_Count)
         thread = threading.Thread(target=after_set_task)
         thread.start()
         self._tasks.append((thread,task,interval,self.thread_Count))
-        self.thread_Count += 1
         return self.thread_Count
 
     def delete_task(self,task,interval):
@@ -32,6 +32,7 @@ class TaskManager():
         def set_function():
             while not self.stopList[index]:
                 task()
+                #print('aaa',index)
                 time.sleep(interval)
         return set_function  
 
