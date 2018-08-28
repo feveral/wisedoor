@@ -7,7 +7,7 @@
           <h5 class="mb-3 text-center big-font-size">您的設備列表</h5>
           <equipment-list ref="equipmentList"></equipment-list>
         </div>
-        <div class="col-12 col-lg-9 row" v-if="isCameraShow">
+        <div class="col-12 col-lg-9 row" v-show="isCameraShow">
           <camera @upgradeProgress="onUpgradeProgress($event)" @notifyTrainStart="CheckModelIsTrain" ref="camera" class="col-12"></camera>
         </div>
         <div class="col-12 col-lg-9 row" v-if="isOpenDoorRecordShow">
@@ -77,7 +77,6 @@ export default {
 
   methods: {
     changeToCameraMode () {
-      this.$refs.camera.changeToAddFaceMode()
       if (!this.isGreaterThan768) {
         this.isCameraShow = true
         this.isTrainMenuShow = false
@@ -90,6 +89,7 @@ export default {
         this.isEquipmentListShow = true
         this.isOpenDoorRecordShow = false
       } 
+      this.$refs.camera.changeToAddFaceMode()
     },
 
     changeToTrainMenuMode () {
