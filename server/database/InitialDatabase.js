@@ -128,6 +128,10 @@ if (!require('fs').existsSync('facenetService/models')) {
   require('fs').mkdirSync('facenetService/models')
 }
 
+if (!require('fs').existsSync('image')) {
+  require('fs').mkdirSync('image')
+}
+
 require('fs').readdir('facenetService/image/raw', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
     require('rimraf')(`facenetService/image/raw/${files[i]}`,()=>{})
