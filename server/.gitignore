@@ -1,6 +1,8 @@
 /facenetService/models/*.pkl
+/facenetService/models/faces/*.pkl
 /facenetService/image/cut/*
 /facenetService/image/raw/*
 /facenetService/image/classify_result/cut/*.png
 /facenetService/image/classify_result/raw/*.png
 !init_model.pkl
+!unknown.pkl
