@@ -1,9 +1,12 @@
 <template>
   <div id="online-classify" class="row">
-    <div class="col-9" id="classify-result">
-      <span class="classify-result-prompt">{{resultprompt}}</span>
-      <span class="classify-result-name">{{resultName}}</span>
-    </div>
+      <div v-show="!resultName"  class="col-9" ></div>
+      <transition>
+        <div v-show="resultShow" class="col-9" id="classify-result">
+          <span class="classify-result-prompt">{{resultprompt}}</span>
+          <span class="classify-result-name">{{resultName}}</span>
+        </div>
+      </transition>
     <div class="dropdown show col-3">
       <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         立即辨識
@@ -26,7 +29,8 @@ export default {
     return {
       equipments: [] ,
       resultprompt: '',
-      resultName: ''
+      resultName: '',
+      resultShow: false
     }
   },
 
@@ -43,7 +47,8 @@ export default {
       this.$emit('clickOnlineClassify',equipmentName)
     },
 
-    finishClassify (name, success) {
+    setResult (name, success) {
+      this.resultShow = true
       if (!success) {
         this.resultName = ''
         this.resultprompt = '沒有辨識到任何臉孔'
@@ -51,6 +56,11 @@ export default {
         this.resultprompt = '鏡頭前的你是'
         this.resultName = name
       }
+    },
+
+    finishClassify (name, success) {
+      this.resultShow = false
+      setTimeout(this.setResult, 300, name, success);
     }
   }
 }
@@ -60,6 +70,30 @@ export default {
 
 #classify-result {
   padding-top: 5px;
+  border-radius: 15px;
+}
+.v-leave {
+  opacity: 1;
+}
+
+.v-leave-active {
+  transition: opacity .5s
+}
+
+.v-leave-to {
+  opacity: 0;
+}
+
+.v-enter {
+  opacity: 0;
+}
+
+.v-enter-active {
+  transition: opacity .5s
+}
+
+.v-enter-to {
+  opacity: 1;
 }
 
 .classify-result-prompt {
