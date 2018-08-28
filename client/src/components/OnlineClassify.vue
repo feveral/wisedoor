@@ -1,20 +1,13 @@
 <template>
   <div id="online-classify" class="row">
-      <div v-show="!resultName"  class="col-9" ></div>
-      <transition>
-        <div v-show="resultShow" class="col-9" id="classify-result">
-          <span class="classify-result-prompt">{{resultprompt}}</span>
-          <span class="classify-result-name">{{resultName}}</span>
-        </div>
-      </transition>
-    <div class="dropdown show col-3">
-      <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        立即辨識
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="#"  @click="onClickChooseEquipment(equipment.Name)" v-for="equipment in equipments">{{equipment.Name}}</a>
+    <div v-show="!resultName"  class="col-12" ></div>
+    <transition>
+      <div v-show="resultShow" class="col-12" id="classify-result">
+        <span class="classify-result-prompt">{{resultprompt}}</span>
+        <span class="classify-result-name">{{resultName}}</span>
       </div>
-    </div>
+    </transition>
+
   </div>
 </template>
 
