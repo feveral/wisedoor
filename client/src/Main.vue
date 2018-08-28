@@ -1,13 +1,13 @@
 <template>
   <div id="main">
-    <headers ref='headers' @logout="onLogout()" @clickAddFace="changeToCameraMode()" @clickOpenDoorRecord="changeToDoorRecordMode()" @clickEquipmentList="changeToEquipmentListMode()"></headers>
+    <headers ref='headers' @logout="onLogout()" @clickAddFace="changeToCameraMode()" @clickOpenDoorRecord="changeToDoorRecordMode()" @clickEquipmentList="changeToEquipmentListMode()" @clickChangeToOnlineClassify="changeToOnlineClassifyMode()"></headers>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-lg-3" v-if="isEquipmentListShow">
           <h5 class="mb-3 text-center big-font-size">您的設備列表</h5>
           <equipment-list ref="equipmentList"></equipment-list>
         </div>
-        <div class="col-12 col-lg-9 row" v-if="isCameraShow">
+        <div class="col-12 col-lg-9 row" v-show="isCameraShow">
           <camera @upgradeProgress="onUpgradeProgress($event)" @notifyTrainStart="CheckModelIsTrain" ref="camera" class="col-12"></camera>
         </div>
         <div class="col-12 col-lg-9 row" v-if="isOpenDoorRecordShow">
@@ -89,6 +89,7 @@ export default {
         this.isEquipmentListShow = true
         this.isOpenDoorRecordShow = false
       } 
+      this.$refs.camera.changeToAddFaceMode()
     },
 
     changeToTrainMenuMode () {
@@ -122,6 +123,10 @@ export default {
         this.isEquipmentListShow = true
         this.isOpenDoorRecordShow = true
       }
+    },
+
+    changeToOnlineClassifyMode(){
+      this.$refs.camera.changeToOnlineClassifyMode()
     },
 
     onLoginSuccess (name) {

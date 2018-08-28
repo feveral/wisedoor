@@ -50,7 +50,7 @@ module.exports = class History {
 
     static async FindDataByEquipmentId(equipmentId) {
         try {
-            const response = await db.query(`select * from HISTORY where EquipmentId='${equipmentId}'`)
+            const response = await db.query(`select * from HISTORY where EquipmentId='${equipmentId}' ORDER BY OpenTime DESC`)
             return response
         } catch (error) {
             throw new Error('Error occured while executing History.FindDataByEquipmentId')

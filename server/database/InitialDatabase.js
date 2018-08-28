@@ -64,7 +64,6 @@ db.query(
        DoorState VARCHAR(255) CHARACTER SET utf8 NOT NULL,
        OpenDoorType VARCHAR(255) CHARACTER SET utf8 NOT NULL,
        PRIMARY KEY(Id),
-       FOREIGN KEY(FaceId) REFERENCES FACE(Id),
        FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
      );`
 )
@@ -90,6 +89,19 @@ db.query(
        FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
      );`
   )
+
+db.query(
+    `CREATE TABLE CLASSIFY_RESULT
+     (
+       Id VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
+       EquipmentId VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
+       FaceName VARCHAR(255) CHARACTER SET utf8,
+       Time DATETIME NOT NULL,
+       PRIMARY KEY(Id) ,
+       FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
+     );`
+)
+
 db.query(`insert into USER VALUES('feveraly@gmail.com','宗翰','5566');`)
 db.query(`insert into USER VALUES('john@gmail.com','忠禮','5566');`)
 db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com',5678,'家裡的門',NULL,false);`)
@@ -101,6 +113,14 @@ if (!require('fs').existsSync('facenetService/image/raw')) {
 }
 
 if (!require('fs').existsSync('facenetService/image/cut')) {
+  require('fs').mkdirSync('facenetService/image/cut')
+}
+
+if (!require('fs').existsSync('facenetService/image/classify_result/raw')) {
+  require('fs').mkdirSync('facenetService/image/raw')
+}
+
+if (!require('fs').existsSync('facenetService/image/classify_result/cut')) {
   require('fs').mkdirSync('facenetService/image/cut')
 }
 
@@ -118,9 +138,19 @@ require('fs').readdir('facenetService/image/cut', (err, files) => {
     require('rimraf')(`facenetService/image/cut/${files[i]}`,()=>{})
 })
 
+require('fs').readdir('facenetService/image/classify_result/raw', (err, files) => {
+  for (let i = 0; i < files.length; i++)
+    require('rimraf')(`facenetService/image/classify_result/raw/${files[i]}`, () => { })
+})
+
+require('fs').readdir('facenetService/image/classify_result/cut', (err, files) => {
+  for (let i = 0; i < files.length; i++)
+    require('rimraf')(`facenetService/image/classify_result/cut/${files[i]}`, () => { })
+})
+
 require('fs').readdir('facenetService/models', (err, files) => {
   for(let i = 0 ; i < files.length ; i++) {
-    if (files[i] != `20170512-110547.pb` && files[i] != `faces`) {
+    if (files[i] != `20170512-110547.pb` && files[i] != `faces` && files[i] != `init_model.pkl`) {
       require('rimraf')(`facenetService/models/${files[i]}`,()=>{})
     }
   }

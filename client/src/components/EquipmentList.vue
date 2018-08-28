@@ -1,5 +1,5 @@
 <template>
-  <div id="equipment-list">
+  <div id="equipment-list" ref="equipmentList">
     <div class="card" v-for="equipment in equipments">
       <div class="card-header">
         <button class="btn btn-outline-dark equipment-button" data-toggle="collapse" :data-target="'#equipment' + equipment.Id" aria-expanded="true" :aria-controls="'#equipment' + equipment.Id">
@@ -9,7 +9,7 @@
       <div :id="'equipment' + equipment.Id" class="collapse" aria-labelledby="headingOne" data-parent="#equipment-list">
         <div class="card-body">
           <p id="no-face-prompt" v-if="equipment.Face.length == 0">尚未新增臉孔</p>
-          <button type="button" class="row face-button btn btn-outline-primary mb-2"  v-for="face in equipment.Face">{{face.Name}}
+          <button type="button" class="face-button btn btn-outline-primary mb-2"  v-for="face in equipment.Face">{{face.Name}}
               <a href="#"  v-on:click="deleteFace(face.Id,equipment.Id)">
                 <img src="@/assets/icon_delete.png" alt="" class="icon">
               </a>

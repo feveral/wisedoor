@@ -3,7 +3,8 @@
     <div class="row justify-content-center">
       <video @click="OpenCamera()" id="video" ref="video"  class="col-12" autoplay playsinline >
       </video>
-      <upload-face-progress ref="progress" class="col-12 col-lg-10"></upload-face-progress>
+      <upload-face-progress  v-if="isAddFaceMode" ref="progress" class="col-12 col-lg-10"></upload-face-progress>
+      <online-classify v-if="!isAddFaceMode" ref="online_classify" class="col-12 col-lg-10" @clickOnlineClassify="classify($event)"></online-classify>
     </div>
   </div>
 </template>
@@ -11,7 +12,10 @@
 <script>
 
 import ImageService from '@/services/ImageService'
+import FacenetService from '@/services/FacenetService'
+import EquipmentService from '@/services/EquipmentService'
 import UploadFaceProgress from '@/components/UploadFaceProgress'
+import OnlineClassify from '@/components/OnlineClassify'
 import Media from 'vue-media'
 
 
@@ -20,13 +24,14 @@ export default {
   
   components: {
     Media,
-    UploadFaceProgress
+    UploadFaceProgress,
+    OnlineClassify
   },
 
   data () {
     return {
       cameraIndex: 0,
-      debug: '',
+      isAddFaceMode: true
     }
   },
 
@@ -35,6 +40,20 @@ export default {
   },
 
   methods: {
+
+    changeToAddFaceMode () {
+      this.isAddFaceMode = true
+    },
+
+    changeToOnlineClassifyMode () {
+      this.isAddFaceMode = false
+    },
+
+    async classify (equipmentName) {
+      const image = this.getVideoImage()
+      const response = await FacenetService.classifyImage(image, equipmentName)
+      this.$refs.online_classify.finishClassify(response.data.name,response.data.success)
+    },
     
     async OpenCamera(){
       

@@ -1,3 +1,5 @@
 /facenetService/models/*.pkl
 /facenetService/image/cut/*
 /facenetService/image/raw/*
+/facenetService/image/classify_result/cut/*.png
+/facenetService/image/classify_result/raw/*.png

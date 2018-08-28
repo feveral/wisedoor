@@ -5,7 +5,6 @@ const FaceBelongEquipment = require('../models/FaceBelongEquipment')
 var fs = require("fs");
 const randomHex = require('randomhex')
 
-
 module.exports = {
     async GetRecord(req, res){
         const userEmail = req.user
@@ -13,7 +12,6 @@ module.exports = {
         const RecordResult= await History.FindDataByEquipmentId(equipmentId)
         Record = JSON.parse(JSON.stringify(RecordResult));
         for (var index = 0; index < Record.length; index++){
-            Record[index]["FaceName"] = await Face.FindNameById(Record[index]["FaceId"])
             var data = fs.readFileSync("./image/" + `${Record[index]["Id"]}.jpg`)
             base64Image = new Buffer(data, 'binary').toString('base64')
             Record[index]["FaceImage"] = base64Image
@@ -31,10 +29,10 @@ module.exports = {
         const openDoorType = req.body.openDoorType
         const openPeopleName = req.body.openPeopleName
         try {
-            console.log("post post")
+            console.log("post")
+            var faceId = ""
             const equipmentId = await Equipment.FindIdByOwnerEmailAndName(userEmail, equipmentName)
-            const faceId = await Face.FindFaceIdByFaceNameAndEquipmentId(openPeopleName, equipmentId)
-            const historyId = await History.Add(equipmentId, faceId, openTime, doorState, openDoorType)
+            const historyId = await History.Add(equipmentId, openPeopleName, openTime, doorState, openDoorType)
             fs.writeFile("./image/" + `${historyId}` + ".jpg", req.body.image, 'base64', err => {
                 if (err){
                     console.log(err)
@@ -52,8 +50,14 @@ module.exports = {
         hour = (parseInt(time.split("T")[1].split(":")[0]) + 8).toString()
         minute = parseInt(time.split("T")[1].split(":")[1])
         second = parseInt(time.split("T")[1].split(":")[2])
-        time = date + " " + hour + ":" + minute + ":" + second
+        time = date + " " +  module.exports.isNumberTwoBit(hour) + ":" + module.exports.isNumberTwoBit(minute) + ":" + module.exports.isNumberTwoBit(second)
         return time
-    }
+    },
 
+    isNumberTwoBit: function(number){
+        if(number < 10){
+            return "0" + number 
+        }
+        return number
+    }
 }

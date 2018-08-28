@@ -1,10 +1,10 @@
 const fs = require("fs")
-const randomHex = require('randomhex');
+const randomHex = require('randomhex')
 const Equipment = require('../models/Equipment')
 const Face = require('../models/Face')
 const FaceBelongEquipment = require('../models/FaceBelongEquipment')
 const FaceBelongModel = require('../models/FaceBelongModel')
-const request = require('request');
+const request = require('request')
 const Model = require('../models/Model')
 
 const uploadBasePath = `${process.cwd()}/facenetService/image/raw`
