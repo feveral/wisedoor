@@ -36,3 +36,27 @@ class TaskManager():
         return set_function  
 
 taskManager = TaskManager()
+
+def t1():
+    print(1)
+
+
+def t2():
+    print(2)
+
+
+def t3():
+    print(3)
+
+
+def t4():
+    print(4)
+
+
+t1num = taskManager.add_task(t1, 1)
+t2num = taskManager.add_task(t2, 1)
+t3num = taskManager.add_task(t3, 1)
+t4num = taskManager.add_task(t4, 1)
+
+time.sleep(3)
+taskManager.stopList[t1num] = True

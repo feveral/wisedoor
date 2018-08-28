@@ -106,7 +106,8 @@ export default {
         response = await ImageService.uploadFace(imageData,faceName,equipmentName)
         if (response.data.error) {
           alert('上傳失敗')
-          break
+          this.$refs.progress.setPercentage(0)
+          return
         }
         this.$refs.progress.setPercentage(response.data.progress)
       } while (response.data.progress < 100)

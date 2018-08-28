@@ -56,7 +56,6 @@ thread.start()
 
 @app.route('/align', methods=['POST'])
 def alignPicture():
-    start = time.time()
     data = request.form
     uploadBasePath = data['uploadBasePath']
     faceId = data['faceId']
@@ -67,10 +66,9 @@ def alignPicture():
     #if not (is_blurr(uploadBasePath+ "/" + faceId + "/" + imageName)):
     #    cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
     #    return jsonify({'success': True})
-    end = time.time()
-    print("other:",end - start)
+    start = time.time()
     cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
-    print("alignnnnnn:",time.time() - end)
+    print("align time:", time.time() - start)
     return jsonify({'success': True})
     #else:
     #    return jsonify({'success': False})
@@ -115,6 +113,10 @@ def classify_image():
         return jsonify({'success': True,'name': result[0],'rate': result[1]})
     else:
         return jsonify({'success': False, 'reason': 'detect no face'})
+
+@app.route('/adapt', methods=['POST'])
+def adapt():
+    pass
 
 if __name__ == '__main__':
     app.run(host='localhost', debug=True, port = 3000, use_reloader=False)

@@ -13,6 +13,14 @@ const modelBasePath = `${process.cwd()}/facenetService/models`
 
 module.exports = { 
 
+    faceNameFilter (req, res, next) {
+        if (req.body.faceName == '') {
+            res.status(500).send({error:'name cannot be space.'})
+            return
+        }
+        next()
+    },
+
     async retrieveEquipmentId (req, res, next) {
         req.equipmentId = await Equipment.FindIdByOwnerEmailAndName(req.user, req.body.equipmentName)
         next()
