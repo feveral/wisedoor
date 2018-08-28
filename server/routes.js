@@ -41,8 +41,8 @@ module.exports = (app, passport) => {
     modelRouter.post('/notify',ModelController.NotifyTrainFinish)
     modelRouter.post('/check', ModelController.CheckModelIsTrain)
     
+    historyRouter.post('/getRecord', HistoryController.GetRecord)
     historyRouter.post('/', HistoryController.AddHistory)
-    historyRouter.post('/test',HistoryController.Test)
 
     facenetServiceRouter.post('/classify',  FacenetServiceController.saveClassifyData ,
                                             FacenetServiceController.classify)

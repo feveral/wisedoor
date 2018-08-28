@@ -61,8 +61,9 @@ db.query(
        EquipmentId VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
        FaceId VARCHAR(255) CHARACTER SET utf8 NOT NULL,
        OpenTime DATETIME NOT NULL,
+       DoorState VARCHAR(255) CHARACTER SET utf8 NOT NULL,
+       OpenDoorType VARCHAR(255) CHARACTER SET utf8 NOT NULL,
        PRIMARY KEY(Id),
-       FOREIGN KEY(FaceId) REFERENCES FACE(Id),
        FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
      );`
 )
@@ -161,6 +162,11 @@ require('fs').readdir('facenetService/models/faces', (err, files) => {
       require('rimraf')(`facenetService/models/faces/${files[i]}`, () => { })
     }
   }
+})
+
+require('fs').readdir('image', (err, files) => {
+  for(let i = 0 ; i < files.length ; i++)
+    require('rimraf')(`image/${files[i]}`,()=>{})
 })
 
 console.log('Finished Initial database and image folder')

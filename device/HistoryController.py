@@ -45,18 +45,27 @@ class HistoryController():
                     self.is_save_file = False
 
                 new_record = self.doorRecordList[0]
+                cv2.imwrite("test.jpg",new_record.image)
+                with open("test.jpg", "rb") as imageFile:
+                    image_base64 = base64.b64encode(imageFile.read())
+                
                 payload = {'email':self.user_email,'password':self.password,'equipmentName':self.equipment_name,
                             'time':str(new_record.time),'doorState':new_record.door_State,'openDoorType':new_record.open_Door_Type,
-                            'openPeopleName':new_record.open_People_Name,'image':(base64.b64encode(new_record.image)).decode('utf-8')}
-                state = requests.post(config.SERVER_URL + "api/history/test", json=payload, verify = False)
+                            'openPeopleName':new_record.open_People_Name,'image':image_base64}
+
+                state = requests.post(config.SERVER_URL + "api/history", data = payload, verify = False)
+                print(state)
                 self.doorRecordList.remove(new_record)
 
-                os.remove("record.pkl")
+                my_file = Path("record.pkl")
+                if my_file.is_file():
+                    os.remove("record.pkl")
                 with open('record.pkl', 'wb') as f:
                     for record in self.doorRecordList:
                         pickle.dump(record, f)
 
             except Exception as e:
+                print(e)
                 print('internet error while uploading record.')
 
                 if(len(self.doorRecordList) > 0 and not self.is_save_file):
@@ -71,10 +80,11 @@ class HistoryController():
     def AddRecord(self,doorState,openDoorType,openPeopleName,image):
         newRecord = DoorRecord(self.GetTime(),doorState,openDoorType,openPeopleName,image)
         self.newRecordList.append(newRecord)
+        print(len(self.newRecordList))
         if(not self.is_Exist_Upload_Thread):
-            self.upload_thread_index = taskManager.add_task(self.uploadRecord,1)
-            self.is_Exist_Upload_Thread = True
+            self.upload_thread_index = taskManager.add_task(self.uploadRecord,0)
             taskManager.stopList[self.upload_thread_index] = False
+            self.is_Exist_Upload_Thread = True
 
     def GetTime(self):
         print(datetime.datetime.now())
