@@ -117,11 +117,11 @@ if (!require('fs').existsSync('facenetService/image/cut')) {
 }
 
 if (!require('fs').existsSync('facenetService/image/classify_result/raw')) {
-  require('fs').mkdirSync('facenetService/image/raw')
+  require('fs').mkdirSync('facenetService/image/classify_result/raw')
 }
 
 if (!require('fs').existsSync('facenetService/image/classify_result/cut')) {
-  require('fs').mkdirSync('facenetService/image/cut')
+  require('fs').mkdirSync('facenetService/image/classify_result/cut')
 }
 
 if (!require('fs').existsSync('facenetService/models')) {

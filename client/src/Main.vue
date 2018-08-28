@@ -126,6 +126,7 @@ export default {
     },
 
     changeToOnlineClassifyMode(){
+      this.changeToCameraMode()
       this.$refs.camera.changeToOnlineClassifyMode()
     },
 
