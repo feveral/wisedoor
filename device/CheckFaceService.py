@@ -19,6 +19,7 @@ class CheckFaceService():
         self._success = True
         self._success_task = None
         self._record_task = None
+        self.start = time.time()
 
     def start_check(self):
         if self._model.is_empty:
@@ -75,8 +76,11 @@ class CheckFaceService():
                 print("failllll")
 
         else:
-            print(str(classify_result[0])+":"+str(classify_result[1]))
-            print('open lock')
-            self.record_task("success","face",classify_result[0],frame)
+            if(time.time() - self.start > 0.2):
+                self.start = time.time()
+                print(str(classify_result[0])+":"+str(classify_result[1]))
+                print('open lock')
+
+                self.record_task("success","face",classify_result[0],frame)
             #self._success = True
             #self._success_task()

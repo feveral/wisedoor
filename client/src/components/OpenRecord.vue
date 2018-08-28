@@ -21,7 +21,7 @@
     <tbody v-for="(record,index) in records">
         <tr >
         <td >{{ record.OpenTime }}</td>
-        <td>{{ record.FaceName }}</td>
+        <td>{{ record.FaceId }}</td>
         <td>{{ record.DoorState }}</td>
         <td>{{ record.OpenDoorType }}</td>
         <img v-bind:src="'data:image/jpeg;base64,'+ record.FaceImage">
@@ -63,6 +63,7 @@ export default {
       const recordList = await RecordService.getRecord(equipment.Id)
       this.choosed_equipment = equipment.Name
       this.records = recordList.data
+      console.log(this.records)
     },
 
   }

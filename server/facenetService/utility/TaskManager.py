@@ -21,6 +21,7 @@ class TaskManager():
         after_set_task = self.set_task_interval(task,interval,self.thread_Count)
         thread = threading.Thread(target=after_set_task)
         thread.start()
+        print("runuuuu")
         self._tasks.append((thread,task,interval,self.thread_Count))
         self.thread_Count += 1
         return self.thread_Count
@@ -33,6 +34,9 @@ class TaskManager():
             while not self.stopList[index]:
                 task()
                 time.sleep(interval)
-        return set_function  
+        return set_function 
+
+
+
 
 taskManager = TaskManager()

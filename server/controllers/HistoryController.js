@@ -29,7 +29,7 @@ module.exports = {
         const openDoorType = req.body.openDoorType
         const openPeopleName = req.body.openPeopleName
         try {
-            console.log("post")
+            console.log(doorState)
             var faceId = ""
             const equipmentId = await Equipment.FindIdByOwnerEmailAndName(userEmail, equipmentName)
             const historyId = await History.Add(equipmentId, openPeopleName, openTime, doorState, openDoorType)
