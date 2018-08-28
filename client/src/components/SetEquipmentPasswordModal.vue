@@ -16,7 +16,7 @@
               </div>
               <p class="prompt-text-size">請輸入要改的密碼</p>
               <div class="form-group">
-                  <input type="text" class="form-control input-face-name-size" v-model="password" placeholder="輸入密碼">
+                  <input type="password" class="form-control input-face-name-size" v-model="password" placeholder="輸入密碼">
               </div>
             </div>
             <div class="modal-footer">

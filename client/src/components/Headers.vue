@@ -2,7 +2,8 @@
   <div id="header">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-        <a class="navbar-brand" href="#">智慧門鎖</a>
+        <img id="logo" class="navbar-brand" src="@/assets/logo.png" alt="">
+        <!-- <a class="navbar-brand" href="#">智慧門鎖</a> -->
         <button id="nav-bar-toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -96,6 +97,17 @@ export default {
 <style>
 #header {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+@media only screen and (max-width: 768px) {
+  #logo {
+    max-width: 30%;
+  }  
+}
+@media only screen and (min-width: 768px) {
+  #logo {
+    max-width: 10%;
+  }  
 }
 
 </style>

@@ -20,9 +20,6 @@
 
 ----- 0826更新
 - history api串接 加上圖片以及成功或失敗(client)(server)(device)
-- 檢查看看face輸入同樣名字有防呆以及名字用中文是否有問題(client)(server)
-- 線上classify功能(client)(server)
 - python server加入task manager(server)
-- 擋掉沒登入的user(--server)
 
 #### bug
