@@ -3,9 +3,25 @@ const Face = require('../models/Face')
 const Equipment = require('../models/Equipment')
 const FaceBelongEquipment = require('../models/FaceBelongEquipment')
 var fs = require("fs");
+const randomHex = require('randomhex')
+
 
 module.exports = {
-    // openTime example : '2018-8-24 01:54:41'
+    async GetRecord(req, res){
+        const userEmail = req.user
+        const equipmentId = req.body.equipmentId
+        const RecordResult= await History.FindDataByEquipmentId(equipmentId)
+        Record = JSON.parse(JSON.stringify(RecordResult));
+        for (var index = 0; index < Record.length; index++){
+            Record[index]["FaceName"] = await Face.FindNameById(Record[index]["FaceId"])
+            var data = fs.readFileSync("./image/" + `${Record[index]["Id"]}.jpg`)
+            base64Image = new Buffer(data, 'binary').toString('base64')
+            Record[index]["FaceImage"] = base64Image
+            Record[index]["OpenTime"] = module.exports.setTimeCorrect(Record[index]["OpenTime"])
+        }
+        res.send(Record)
+    },
+
     async AddHistory(req, res) {
         const userEmail = req.body.email
         const password = req.body.password
@@ -16,29 +32,28 @@ module.exports = {
         const openPeopleName = req.body.openPeopleName
         try {
             console.log("post post")
-            // console.log(req)
             const equipmentId = await Equipment.FindIdByOwnerEmailAndName(userEmail, equipmentName)
             const faceId = await Face.FindFaceIdByFaceNameAndEquipmentId(openPeopleName, equipmentId)
-            const historyId = await History.Add(equipmentId, faceId, openTime, doorState)
-            // var image = module.exports.b64EncodeUnicode(req.body.image)
-            // console.log(image)
-            fs.writeFile("./image/" + `${historyId}` + ".png", new Buffer((req.body.image), "base64"), function(err) {
-                console.log(err)
-            });
+            const historyId = await History.Add(equipmentId, faceId, openTime, doorState, openDoorType)
+            fs.writeFile("./image/" + `${historyId}` + ".jpg", req.body.image, 'base64', err => {
+                if (err){
+                    console.log(err)
+                }
+            })
             res.status(200).send({success: 'Add history successful.'})
         } catch (error) {
+            console.log(error)
             res.status(500).send({error: 'fail to add history.'})
         }
     },
 
-    async Test(req,res){
-        console.log(req.body.time)
-        res.status(200).send({success: 'Add history successful.'})
-    },
-
-    b64EncodeUnicode: function (str) {
-        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-            return String.fromCharCode(parseInt(p1, 16))
-        }))
+    setTimeCorrect:function(time){
+        date = time.split("T")[0]
+        hour = (parseInt(time.split("T")[1].split(":")[0]) + 8).toString()
+        minute = parseInt(time.split("T")[1].split(":")[1])
+        second = parseInt(time.split("T")[1].split(":")[2])
+        time = date + " " + hour + ":" + minute + ":" + second
+        return time
     }
+
 }

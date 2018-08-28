@@ -11,7 +11,7 @@ module.exports = (app, passport) => {
     const imageRouter = express.Router().all('*', AuthenticationController.authenticate)
     const equipmentRouter = express.Router().all('*', AuthenticationController.authenticate)
     const faceRouter = express.Router().all('*', AuthenticationController.authenticate)
-    const historyRouter = express.Router().all('*', AuthenticationController.authenticate)
+    const historyRouter = express.Router()
     const modelRouter = express.Router()
 
     AuthenticationRouter.post('/login', passport.authenticate('local', { session: true }), AuthenticationController.login)
@@ -38,8 +38,8 @@ module.exports = (app, passport) => {
     modelRouter.post('/notify',ModelController.NotifyTrainFinish)
     modelRouter.post('/check', ModelController.CheckModelIsTrain)
     
+    historyRouter.post('/getRecord', HistoryController.GetRecord)
     historyRouter.post('/', HistoryController.AddHistory)
-    historyRouter.post('/test',HistoryController.Test)
 
     app.use('/api/authentication', AuthenticationRouter)
     app.use('/api/equipment', equipmentRouter)

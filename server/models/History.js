@@ -10,13 +10,10 @@ module.exports = class History {
         this.openTime = openTime
     }
 
-    static async Add(equipmentId, faceId, openTime, doorState) {
+    static async Add(equipmentId, faceId, openTime, doorState, openDoorType) {
         const historyId = await this.ProduceUniqueId()
-        // date = new Date()
-        // utc = d.getTime() + (d.getTimezoneOffset() * 60000)
-        // taipeiDateTime = new Date(utc + (3600000 * offset)).toLocaleString()
         try {
-            await db.query(`insert into HISTORY VALUES ('${historyId}','${equipmentId}','${faceId}','${openTime}','${doorState}')`)
+            await db.query(`insert into HISTORY VALUES ('${historyId}','${equipmentId}','${faceId}','${openTime}','${doorState}','${openDoorType}')`)
             return historyId
         } catch (error) {
             console.log(error)
@@ -48,6 +45,15 @@ module.exports = class History {
             return response[0].IsUpload != 0
         } catch (error) {
             throw new Error('Error occured while executing Face.FindIsUploadByFaceId')
+        }
+    }
+
+    static async FindDataByEquipmentId(equipmentId) {
+        try {
+            const response = await db.query(`select * from HISTORY where EquipmentId='${equipmentId}'`)
+            return response
+        } catch (error) {
+            throw new Error('Error occured while executing History.FindDataByEquipmentId')
         }
     }
 }

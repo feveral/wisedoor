@@ -13,7 +13,7 @@ const certificate = fs.readFileSync(__dirname + '/ssl/certificate.crt');
 const credentials = { key: privateKey, cert: certificate }
 
 app.set('port', process.env.PORT || config.httpsPort)
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(cors({
   origin: config.corsOrigin,

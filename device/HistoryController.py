@@ -46,11 +46,16 @@ class HistoryController():
 
                 new_record = self.doorRecordList[0]
                 cv2.imwrite("test.jpg",new_record.image)
+
+                with open("test.jpg", "rb") as imageFile:
+                    image_base64 = base64.b64encode(imageFile.read())
+                print(image_base64)
+                
                 payload = {'email':self.user_email,'password':self.password,'equipmentName':self.equipment_name,
                             'time':str(new_record.time),'doorState':new_record.door_State,'openDoorType':new_record.open_Door_Type,
-                            'openPeopleName':new_record.open_People_Name}
-                files = {'image':open('test.jpg', 'rb')}            
-                state = requests.post(config.SERVER_URL + "api/history",files=files, data=payload, verify = False)
+                            'openPeopleName':new_record.open_People_Name,'image':image_base64}
+
+                state = requests.post(config.SERVER_URL + "api/history", data = payload, verify = False)
                 print(state)
                 self.doorRecordList.remove(new_record)
 
