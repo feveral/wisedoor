@@ -19,12 +19,12 @@
         </tr>
     </thead>
     <tbody v-for="(record,index) in records">
-        <tr >
-        <td >{{ record.OpenTime }}</td>
+        <tr>
+        <td>{{ record.OpenTime }}</td>
         <td>{{ record.FaceId }}</td>
         <td>{{ record.DoorState }}</td>
         <td>{{ record.OpenDoorType }}</td>
-        <img v-bind:src="'data:image/jpeg;base64,'+ record.FaceImage">
+        <img class="history-img" v-bind:src="'data:image/jpeg;base64,'+ record.FaceImage">
         </tr>
     </tbody>
     </table>
@@ -74,7 +74,16 @@ export default {
 </script>
 
 <style>
-img{
-  max-width:90%;
+
+@media only screen and (max-width: 768px) {
+  .history-img {
+    max-width: 150%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .history-img {
+    max-width:45%;
+  }
 }
 </style>
