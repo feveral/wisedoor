@@ -57,3 +57,14 @@ class Classify():
         classify_people_name = class_names[best_class_indices[0]]
         classify_rate = best_class_probabilities[0]
         return (classify_people_name, classify_rate)
+
+    def fetch_embedding_class_names(self, image_path):
+        np.random.seed(seed=666)
+        model = self._model
+        class_names = self._class_names
+        nrof_images = 1
+        emb_array = np.zeros((nrof_images,  self.embedding_size))
+        images = facenet.load_data([image_path], False, False, 160)
+        feed_dict = { self.images_placeholder:images, self.phase_train_placeholder:False }
+        emb_array[0:1,:] = self.sess.run(self.embeddings, feed_dict=feed_dict)
+        return (emb_array, class_names)
