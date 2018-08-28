@@ -10,13 +10,13 @@ module.exports = class History {
         this.openTime = openTime
     }
 
-    static async Add(equipmentId, faceId, openTime) {
+    static async Add(equipmentId, faceId, openTime, doorState) {
         const historyId = await this.ProduceUniqueId()
         // date = new Date()
         // utc = d.getTime() + (d.getTimezoneOffset() * 60000)
         // taipeiDateTime = new Date(utc + (3600000 * offset)).toLocaleString()
         try {
-            await db.query(`insert into HISTORY VALUES ('${historyId}','${equipmentId}','${faceId}','${openTime}')`)
+            await db.query(`insert into HISTORY VALUES ('${historyId}','${equipmentId}','${faceId}','${openTime}','${doorState}')`)
             return historyId
         } catch (error) {
             console.log(error)
