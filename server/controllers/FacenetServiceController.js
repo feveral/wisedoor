@@ -36,7 +36,6 @@ module.exports = {
             "modelId": req.modelId,
             "classifyResultId": req.classifyResultId,
         }
-        console.log("classify")
         request.post({ url: 'http://localhost:3000/classify', formData: formData }
             , (error, response, body) => {
                 if (!error && response.statusCode == 200) {
