@@ -113,7 +113,6 @@ def classify_image():
 
 @app.route('/adapt', methods=['POST'])
 def adapt():
-    print("ttt")
     faceId = request.form.get('faceId')
     imagePath = request.form.get('imagePath')
     modelId = request.form.get('modelId')
