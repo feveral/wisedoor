@@ -1,8 +1,24 @@
 <template>
   <div id="camera" >
+    <div v-if="isAddFaceMode" class="row justify-content-between">
+      <h4 class="col-5 sub-title">新增臉孔</h4>
+    </div>
+    <div id="classify-dropdown" v-if="!isAddFaceMode" class="row justify-content-between">
+      <h4 class="col-5 sub-title">線上辨識</h4>
+      <div class="dropdown show col-5">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          立即辨識
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="#" @click="$refs.online_classify.onClickChooseEquipment(equipment.Name)" v-for="equipment in equipments">{{equipment.Name}}</a>
+        </div>
+      </div>
+    </div>
     <div class="row justify-content-center">
-      <video @click="OpenCamera()" id="video" ref="video"  class="col-12" autoplay playsinline >
-      </video>
+      <div>
+        <video @click="OpenCamera()" id="video" ref="video"  width="670" height="480" class="col-12" autoplay playsinline >
+        </video>
+      </div>
       <upload-face-progress  v-if="isAddFaceMode" ref="progress" class="col-12 col-lg-10"></upload-face-progress>
       <online-classify v-if="!isAddFaceMode" ref="online_classify" class="col-12 col-lg-10" @clickOnlineClassify="classify($event)"></online-classify>
     </div>
@@ -30,13 +46,15 @@ export default {
 
   data () {
     return {
+      equipments: [],
       cameraIndex: 0,
       isAddFaceMode: true
     }
   },
 
-  mounted(){
+  async mounted(){
     this.OpenCamera()
+    this.equipments = (await EquipmentService.GetEquipments()).data
   },
 
   methods: {
@@ -89,8 +107,8 @@ export default {
       const video = document.getElementById('video')
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d');
-      const width = video.clientWidth
-      const height = video.clientHeight
+      const width = 670
+      const height = 480
       canvas.width = width
       canvas.height = height
       context.drawImage(video,0,0,width,height,0,0,width,height)
@@ -120,6 +138,17 @@ export default {
 </script>
 
 <style>
+
+.sub-title {
+  margin-bottom: 10px;
+  margin-top: 3px;
+}
+
+#classify-dropdown {
+  margin-top: 3px;
+  margin-bottom: 10px;
+}
+
 #camera {
   text-align: center;
   padding: 0;
@@ -127,7 +156,10 @@ export default {
 }
 
 #video {
+  max-width: 100%;
+  height: 100%;
   margin-bottom: 8px;
+  height: auto;
 }
 
 #upload {

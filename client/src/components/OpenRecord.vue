@@ -1,19 +1,22 @@
 <template>
-  <div id="login-record" >
-    <div class="dropdown show">
-      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {{choosed_equipment}}
-      </a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="#" v-on:click="UpdateLoginRecord(equipment)" v-for="equipment in equipments">{{equipment.Name}}</a>
+  <div id="login-record">
+    <div class="row justify-content-between">
+      <h4 class="col-8 sub-title">開門紀錄</h4>
+      <div class="dropdown show col-4 align-right">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{choosed_equipment}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="#" v-on:click="UpdateLoginRecord(equipment)" v-for="equipment in equipments">{{equipment.Name}}</a>
+        </div>
       </div>
     </div>
     <table class="table table-hover">
     <thead>
         <tr>
-        <th scope="col">開門時間</th>
+        <th scope="col">時間</th>
         <th scope="col">人名</th>
-        <th scope="col">開啟成功與否</th>
+        <th scope="col">成功與否</th>
         <th scope="col">如何開門</th>
         <th scope="col">開門照片</th>
         </tr>
@@ -63,6 +66,14 @@ export default {
       const recordList = await RecordService.getRecord(equipment.Id)
       this.choosed_equipment = equipment.Name
       this.records = recordList.data
+
+      this.records.forEach(element => {
+        if (element.OpenDoorType == 'face')
+          element.OpenDoorType = '臉部辨識'
+        if (element.DoorState == 'success')
+          element.DoorState = '成功'
+      });
+
       console.log(this.records)
     },
 
@@ -74,6 +85,15 @@ export default {
 </script>
 
 <style>
+
+.sub-title {
+  margin-bottom: 10px;
+  margin-top: 3px;
+}
+
+.align-right {
+  text-align: right
+}
 
 @media only screen and (max-width: 768px) {
   .history-img {

@@ -5,7 +5,6 @@ from flask import request
 import sys
 import threading
 import cv2
-from utility.TaskManager import taskManager
 from utility.Classify import Classify
 from utility.OpencvAlign import OpencvAlign
 from utility.facenetAlign import *
@@ -93,11 +92,9 @@ def reTrainModel():
     faceIdNamePairs = json.loads(request.form.get('faceIdNamePairs'))
     model.set_faceIdNamePair(faceIdNamePairs)
     model.set_modelId(modelId)
-    start = time.time()
     model.produce_model()
     model.save_model()
-    print(faceIdNamePairs)
-    print("waste time:" + str(time.time() - start))
+    print("retrain finish")
     return jsonify({'success': 'retrain ok'})
 
 @app.route('/classify', methods=['POST'])
@@ -116,7 +113,19 @@ def classify_image():
 
 @app.route('/adapt', methods=['POST'])
 def adapt():
-    pass
+    print("ttt")
+    faceId = request.form.get('faceId')
+    imagePath = request.form.get('imagePath')
+    modelId = request.form.get('modelId')
+    faceIdNamePairs = json.loads(request.form.get('faceIdNamePairs'))
+    (emb_array, class_names) = classify.fetch_embedding_class_names(imagePath)
+    model.add_embedding_in_pkl(emb_array,faceId)
+    model.set_faceIdNamePair(faceIdNamePairs)
+    model.set_modelId(modelId)
+    model.produce_model()
+    model.save_model()
+    print("adapt finish")
+    return jsonify({'success': 'retrain ok'})
 
 if __name__ == '__main__':
     app.run(host='localhost', debug=True, port = 3000, use_reloader=False)
