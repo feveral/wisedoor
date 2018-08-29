@@ -77,7 +77,7 @@ class HistoryController():
         self.is_Exist_Upload_Thread = False
         taskManager.stopList[self.upload_thread_index] = True
 
-    def AddRecord(self,doorState,openDoorType,openPeopleName,image):
+    def AddRecord(self,doorState,openDoorType,openPeopleName,image=None):
         newRecord = DoorRecord(self.GetTime(),doorState,openDoorType,openPeopleName,image)
         self.newRecordList.append(newRecord)
         if(not self.is_Exist_Upload_Thread):

@@ -3,10 +3,10 @@ from CheckFaceService import CheckFaceService
 #from ButtonController import ButtonController 
 from TaskManager import taskManager
 from PasswordController import  PasswordController
-# from PCButtonController import PCButtonController 
+from PCButtonController import PCButtonController 
 from HistoryController import HistoryController
 
-#PCButtonController = PCButtonController()
+pcButtonController = PCButtonController()
 historyController = HistoryController("feveraly@gmail.com", 5566, '家裡的門')
 #lock = Lock()
 #buttonController = ButtonController()
