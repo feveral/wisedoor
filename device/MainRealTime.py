@@ -11,7 +11,7 @@ from Classify import *
 from CheckFaceService import *
 from HistoryController import HistoryController
 
-historyController = HistoryController()
+historyController = HistoryController("feveraly@gmail.com", 5566, '家裡的門')
 # camera = Camera(0)
 # classify_result = ('unknown', 0.0)
 # model = Model("feveraly@gmail.com", 5566, '家裡的門')
@@ -19,6 +19,7 @@ historyController = HistoryController()
 # align = OpencvAlign()
 checkFaceService = CheckFaceService()
 checkFaceService.record_task = historyController.AddRecord
+checkFaceService.model.update()
 checkFaceService.start_check()
 
 

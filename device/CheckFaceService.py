@@ -76,7 +76,7 @@ class CheckFaceService():
                 print("failllll")
 
         else:
-            if(time.time() - self.start > 0.2):
+            if(time.time() - self.start > 1):
                 self.start = time.time()
                 print(str(classify_result[0])+":"+str(classify_result[1]))
                 print('open lock')

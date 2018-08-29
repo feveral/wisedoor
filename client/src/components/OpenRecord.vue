@@ -106,4 +106,5 @@ export default {
     max-width:45%;
   }
 }
+
 </style>

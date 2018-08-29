@@ -74,13 +74,12 @@ class HistoryController():
                             pickle.dump(record, f)
                         self.is_save_file = True
 
-        taskManager.stopList[self.upload_thread_index] = True
         self.is_Exist_Upload_Thread = False
+        taskManager.stopList[self.upload_thread_index] = True
 
-    def AddRecord(self,doorState,openDoorType,openPeopleName,image):
+    def AddRecord(self,doorState,openDoorType,openPeopleName,image=None):
         newRecord = DoorRecord(self.GetTime(),doorState,openDoorType,openPeopleName,image)
         self.newRecordList.append(newRecord)
-        print(len(self.newRecordList))
         if(not self.is_Exist_Upload_Thread):
             self.upload_thread_index = taskManager.add_task(self.uploadRecord,0)
             taskManager.stopList[self.upload_thread_index] = False

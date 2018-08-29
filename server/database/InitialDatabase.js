@@ -128,10 +128,10 @@ if (!require('fs').existsSync('facenetService/models')) {
   require('fs').mkdirSync('facenetService/models')
 }
 
-if (!require('fs').existsSync('image')) {
-  require('fs').mkdirSync('image')
+if (!require('fs').existsSync('facenetService/image/history')) {
+  require('fs').mkdirSync('facenetService/image/history')
 }
-
+  
 require('fs').readdir('facenetService/image/raw', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
     require('rimraf')(`facenetService/image/raw/${files[i]}`,()=>{})
@@ -168,7 +168,7 @@ require('fs').readdir('facenetService/models/faces', (err, files) => {
   }
 })
 
-require('fs').readdir('image', (err, files) => {
+require('fs').readdir('facenetService/image/history', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
     require('rimraf')(`image/${files[i]}`,()=>{})
 })
