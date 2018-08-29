@@ -71,7 +71,7 @@ export default {
     async classify (equipmentName) {
       const image = this.getVideoImage()
       const response = await FacenetService.classifyImage(image, equipmentName)
-      this.$refs.online_classify.finishClassify(response.data.name,response.data.success)
+      this.$refs.online_classify.finishClassify(response.data.name,response.data.success,response.data.rate)
     },
     
     async OpenCamera(){

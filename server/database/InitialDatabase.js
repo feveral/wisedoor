@@ -97,6 +97,7 @@ db.query(
        EquipmentId VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
        FaceName VARCHAR(255) CHARACTER SET utf8,
        Time DATETIME NOT NULL,
+       FaceRate VARCHAR(255) CHARACTER SET utf8,
        PRIMARY KEY(Id) ,
        FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
      );`

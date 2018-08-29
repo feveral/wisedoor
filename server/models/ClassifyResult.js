@@ -12,20 +12,21 @@ module.exports = class ClassifyResult {
         const classifyResultId = await this.ProduceUniqueId()
         const time = this.GetNowTime()
         try {
-            await db.query(`insert into CLASSIFY_RESULT VALUES ('${classifyResultId}','${equipmentId}',NULL,'${time}')`)
+            await db.query(`insert into CLASSIFY_RESULT VALUES ('${classifyResultId}','${equipmentId}',NULL,'${time}',NULL)`)
             return classifyResultId
         } catch (error) {
             throw new Error('Error occured while executing ClassifyResult.Add')
         }
     }
 
-    static async UpdateFaceNameById (id,faceName) {
+    static async UpdateFaceNameById (id, faceName, faceRate) {
         try {
-            const result = await db.query(`update CLASSIFY_RESULT set FaceName='${faceName}' where Id='${id}'`)
+            const result = await db.query(`update CLASSIFY_RESULT set FaceName='${faceName}' , FaceRate='${faceRate}' where Id='${id}'`)
             if (result.affectedRows == 0) {
                 throw new Error('Error occured while executing ClassifyResult.UpdateFaceNameById : cannot find this equipmentId')
             }
         } catch (error) {
+            console.log(error)
             throw new Error('Error occured while executing ClassifyResult.UpdateFaceNameById')
         }
     }

@@ -5,6 +5,7 @@
       <div v-show="resultShow" class="col-12" id="classify-result">
         <span class="classify-result-prompt">{{resultprompt}}</span>
         <span class="classify-result-name">{{resultName}}</span>
+        <span class="classify-result-rate">{{resultRate}}</span>
       </div>
     </transition>
 
@@ -23,6 +24,7 @@ export default {
       equipments: [] ,
       resultprompt: '',
       resultName: '',
+      resultRate:'',
       resultShow: false
     }
   },
@@ -40,7 +42,7 @@ export default {
       this.$emit('clickOnlineClassify',equipmentName)
     },
 
-    setResult (name, success) {
+    setResult (name, success, rate) {
       this.resultShow = true
       if (!success) {
         this.resultName = ''
@@ -48,12 +50,14 @@ export default {
       } else {
         this.resultprompt = '鏡頭前的你是'
         this.resultName = name
+        this.resultRate = rate
       }
     },
 
-    finishClassify (name, success) {
+    finishClassify (name, success, rate) {
       this.resultShow = false
-      setTimeout(this.setResult, 300, name, success);
+      console.log(rate)
+      setTimeout(this.setResult, 300, name, success, rate);
     }
   }
 }
@@ -98,5 +102,11 @@ export default {
   font-size: 20px;
   display: inline-block;
   color: red;  
+}
+
+.classify-result-rate {
+  font-size: 20px;
+  display: inline-block;
+  color: blue;  
 }
 </style>

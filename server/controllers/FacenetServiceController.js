@@ -36,13 +36,14 @@ module.exports = {
             "modelId": req.modelId,
             "classifyResultId": req.classifyResultId,
         }
+        console.log("classify")
         request.post({ url: 'http://localhost:3000/classify', formData: formData }
             , (error, response, body) => {
                 if (!error && response.statusCode == 200) {
                     const data = JSON.parse(response.body)
                     if (data.success) {
-                        ClassifyResult.UpdateFaceNameById(req.classifyResultId, data.name)
-                        res.status(200).send({ success: true, name:data.name})
+                        ClassifyResult.UpdateFaceNameById(req.classifyResultId, data.name, data.rate)
+                        res.status(200).send({ success: true, name:data.name, rate:data.rate})
                     }
                     else {
                         res.status(200).send({ success: false, reason: 'detect no face' })
