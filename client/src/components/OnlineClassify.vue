@@ -47,6 +47,7 @@ export default {
       if (!success) {
         this.resultName = ''
         this.resultprompt = '沒有辨識到任何臉孔'
+        this.resultRate = ''
       } else {
         this.resultprompt = '鏡頭前的你是'
         this.resultName = name

@@ -10,8 +10,8 @@
         <div class="card-body">
           <p id="no-face-prompt" v-if="equipment.Face.length == 0">尚未新增臉孔</p>
           <button type="button" class="face-button btn btn-outline-primary mb-2"  v-for="face in equipment.Face">{{face.Name}}
-              <a href="#"  v-on:click="deleteFace(face.Id,equipment.Id)">
-                <img src="@/assets/icon_delete.png" alt="" class="icon">
+              <a href="#" data-toggle="modal" data-target="#confirm-delete-face-modal" v-on:click="setDeleteFace(face.Id,face.Name,equipment.Id)">
+                <img src="@/assets/icon_delete.png" alt="" class="icon" >
               </a>
           </button>
         </div>
@@ -31,7 +31,9 @@ export default {
   data () {
     return {
       equipments: [],
-      password: ""
+      password: "",
+      deleteEquipmentId:"",
+      deleteFaceId:""
     }
   },
 
@@ -64,11 +66,15 @@ export default {
       }
     },
 
-    async deleteFace (faceId,equipmentId){
-      console.log(faceId)
+    async setDeleteFace(faceId,faceName,equipmentId){
+      this.$emit("askIfcheckDelete",{faceId,faceName,equipmentId})
+    },
+
+    async deleteFace(faceId,equipmentId){
+      console.log(equipmentId)
       let response =  await FaceService.UploadDeleteFace(faceId,equipmentId)
       this.UpdateEquipmentList()
-    },
+    }
   }
 }
 </script>
