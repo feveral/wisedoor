@@ -45,19 +45,22 @@ export default {
     setResult (name, success, rate) {
       this.resultShow = true
       if (!success) {
-        this.resultName = ''
         this.resultprompt = '沒有辨識到任何臉孔'
         this.resultRate = ''
+        this.resultName = ''
+      } else if (name == 'unknown'){
+        this.resultprompt = '鏡頭前的你'
+        this.resultName = '我不認識'
+        this.resultRate = '(' + (Math.round(rate*100)) + '%)'
       } else {
         this.resultprompt = '鏡頭前的你是'
         this.resultName = name
-        this.resultRate = rate
+        this.resultRate = '(' + (Math.round(rate*100)) + '%)'
       }
     },
 
     finishClassify (name, success, rate) {
       this.resultShow = false
-      console.log(rate)
       setTimeout(this.setResult, 300, name, success, rate);
     }
   }

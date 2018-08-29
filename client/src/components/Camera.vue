@@ -115,7 +115,6 @@ export default {
       const height = video.height
       canvas.width = width
       canvas.height = height
-      console.log(video)
       context.drawImage(video,0,0,width,height,0,0,width,height)
       return canvas.toDataURL("image/png").substr(22);
     },
