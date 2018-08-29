@@ -21,3 +21,6 @@
 - python server加入task manager(server)
 
 #### bug
+
+- 需要偵測是手機或電腦連到web，給予不一樣的camera size
+- 若沒訓練好，face就出現，此時操作會有bug

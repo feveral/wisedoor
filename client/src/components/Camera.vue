@@ -16,7 +16,7 @@
     </div>
     <div class="row justify-content-center">
       <div>
-        <video @click="OpenCamera()" id="video" ref="video"  width="670" height="480" class="col-12" autoplay playsinline >
+        <video @click="OpenCamera()" id="video" ref="video" width="640" height="480" class="col-12" autoplay playsinline >
         </video>
       </div>
       <upload-face-progress  v-if="isAddFaceMode" ref="progress" class="col-12 col-lg-10"></upload-face-progress>
@@ -48,7 +48,8 @@ export default {
     return {
       equipments: [],
       cameraIndex: 0,
-      isAddFaceMode: true
+      isAddFaceMode: true,
+      temp:''
     }
   },
 
@@ -98,6 +99,7 @@ export default {
           }
           navigator.mediaDevices.getUserMedia({ video: { deviceId: {'exact':devices[this.cameraIndex].deviceId}, facingMode: "user"  }}).then( (stream) => {
             video.src = window.URL.createObjectURL(stream);
+            this.temp = window.URL.createObjectURL(stream).substring(5);
             video.play();
           })
       })
@@ -107,10 +109,13 @@ export default {
       const video = document.getElementById('video')
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d');
-      const width = 670
-      const height = 480
+      video.width = 640 
+      video.height = 480
+      const width = video.width
+      const height = video.height
       canvas.width = width
       canvas.height = height
+      console.log(video)
       context.drawImage(video,0,0,width,height,0,0,width,height)
       return canvas.toDataURL("image/png").substr(22);
     },
