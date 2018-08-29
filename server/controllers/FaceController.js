@@ -19,8 +19,13 @@ module.exports = {
   async DeleteFace(req, res, next) {
     const equipmentId = req.body.equipmentId 
     const faceId = req.body.faceId 
-    const deleteFaceInEquipmentresult = await FaceBelongEquipment.DeleteFaceByEquipmentId(faceId,equipmentId)
     req.modelId = await Equipment.FindModelIdByEquipmentId(equipmentId)
+    const isTrain = await Model.IsModelTrain(req.modelId)
+    if(isTrain == false){
+        res.send({ success: false })
+        return 
+    }
+    const deleteFaceInEquipmentresult = await FaceBelongEquipment.DeleteFaceByEquipmentId(faceId,equipmentId)
     const deleteFaceInModelresult = await FaceBelongModel.Delete(faceId,req.modelId)
 
     await Face.Delete(req.body.faceId)

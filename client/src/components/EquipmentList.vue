@@ -71,9 +71,14 @@ export default {
     },
 
     async deleteFace(faceId,equipmentId){
-      console.log(equipmentId)
       let response =  await FaceService.UploadDeleteFace(faceId,equipmentId)
-      this.UpdateEquipmentList()
+      console.log(response.data.success)
+      if(response.data.success == false){
+        alert("sorry 正在訓練中不能刪臉")
+      }      
+      else{
+        this.UpdateEquipmentList()
+      }
     }
   }
 }
