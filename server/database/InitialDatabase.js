@@ -170,7 +170,7 @@ require('fs').readdir('facenetService/models/faces', (err, files) => {
 
 require('fs').readdir('facenetService/image/history', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
-    require('rimraf')(`image/${files[i]}`,()=>{})
+    require('rimraf')(`facenetService/image/history/${files[i]}`,()=>{})
 })
 
 console.log('Finished Initial database and image folder')
