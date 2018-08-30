@@ -6,13 +6,13 @@
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{choosed_equipment}}
         </a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">          
           <a class="dropdown-item" href="#" v-on:click="UpdateLoginRecord(equipment)" v-for="equipment in equipments">{{equipment.Name}}</a>
         </div>
       </div>
     </div>
     <table class="table table-hover">
-    <thead>
+      <thead>
         <tr>
         <th scope="col">時間</th>
         <th scope="col">人名</th>
@@ -20,8 +20,8 @@
         <th scope="col">如何開門</th>
         <th scope="col">開門照片</th>
         </tr>
-    </thead>
-    <tbody v-for="(record,index) in records">
+      </thead>
+      <tbody v-for="(record,index) in records">
         <tr>
         <td>{{ record.OpenTime }}</td>
         <td>{{ record.FaceId }}</td>
@@ -29,8 +29,9 @@
         <td>{{ record.OpenDoorType }}</td>
         <img class="history-img" v-bind:src="'data:image/jpeg;base64,'+ record.FaceImage">
         </tr>
-    </tbody>
+      </tbody>
     </table>
+    <p id="no-record-prompt" v-if="records.length == 0">尚未有任何開門紀錄</p>
   </div>
 </template>
 
@@ -85,6 +86,11 @@ export default {
 </script>
 
 <style>
+
+#no-record-prompt {
+  color: gray;
+  text-align: center;
+}
 
 .sub-title {
   margin-bottom: 10px;
