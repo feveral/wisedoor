@@ -19,9 +19,9 @@ module.exports = class Model {
     try{
       const response = await db.query(`update MODEL SET IsTrain = ${isTrainValue} WHERE Id='${modelId}'`)
       if(response.affectedRows == 0)
-        throw new Error('Error occured while executing Model.UpdateIsrainValue : cannot find modelId')
+        console.log('Error occured while executing Model.UpdateIsrainValue : cannot find modelId')
     } catch (error) {
-      throw new Error('Error occured while executing Model.UpdateIsrainValue')
+        console.log('Error occured while executing Model.UpdateIsrainValue')
     }
   }
 
@@ -29,9 +29,9 @@ module.exports = class Model {
     try{
       const response = await db.query(`delete from  MODEL WHERE Id='${modelId}'`)
       if(response.affectedRows == 0)
-        throw new Error('Error occured while executing Model.DeleteModelByModelId : cannot find modelId')
+        console.log('Error occured while executing Model.DeleteModelByModelId : cannot find modelId')
     } catch (error) {
-      throw new Error('Error occured while executing Model.DeleteModelByModelId')
+        console.log('Error occured while executing Model.DeleteModelByModelId')
     }
   }
 

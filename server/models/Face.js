@@ -33,7 +33,7 @@ module.exports = class Face {
       await db.query(`delete from FACE where id = '${faceId}'`)
       return faceId
     } catch (error) {
-      throw new Error('Error occured while executing Face.Delete')
+        console.log('Error occured while executing Face.Delete')
     }
   }
 

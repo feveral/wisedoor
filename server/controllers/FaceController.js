@@ -19,14 +19,22 @@ module.exports = {
   async DeleteFace(req, res, next) {
     const equipmentId = req.body.equipmentId 
     const faceId = req.body.faceId 
-    const deleteFaceInEquipmentresult = await FaceBelongEquipment.DeleteFaceByEquipmentId(faceId,equipmentId)
     req.modelId = await Equipment.FindModelIdByEquipmentId(equipmentId)
+    const isTrain = await Model.IsModelTrain(req.modelId)
+    if(isTrain == false){
+        res.send({ success: false })
+        return 
+    }
+    const deleteFaceInEquipmentresult = await FaceBelongEquipment.DeleteFaceByEquipmentId(faceId,equipmentId)
     const deleteFaceInModelresult = await FaceBelongModel.Delete(faceId,req.modelId)
 
     await Face.Delete(req.body.faceId)
-    fs.unlink(`${process.cwd()}/facenetService/models/faces/${req.body.faceId }.pkl`, (err) => {
-        if (err) throw err;
-    });
+    const facePklPath = `${process.cwd()}/facenetService/models/faces/${req.body.faceId }.pkl`
+    if (fs.existsSync(facePklPath)) {
+        fs.unlink(facePklPath, (err) => {
+            if (err) throw err;
+        });
+    }
     rimraf(`${process.cwd()}/facenetService/image/cut/${req.body.faceId }`, (err) => {
         if (err) throw err;
     });
@@ -63,10 +71,13 @@ module.exports = {
     else{
         await Equipment.UpdateModelIdByEquipmentId(req.body.equipmentId,"null")
         Model.DeleteModelByModelId(req.modelId)
-        fs.unlink(`${process.cwd()}/facenetService/models/${req.modelId}.pkl`, (err) => {
-            if (err) throw err;
-            console.log('successfully delete ' +  `${req.modelId}` + '.pkl');
-        });
+        const modelPath = `${process.cwd()}/facenetService/models/${req.modelId}.pkl`
+        if (fs.existsSync(modelPath)) {
+            fs.unlink(modelPath, (err) => {
+                if (err) throw err;
+                console.log('successfully delete ' +  `${req.modelId}` + '.pkl');
+            });
+        }
     }
     res.send({ success: true })
   }

@@ -5,7 +5,7 @@
       <div class="row justify-content-center">
         <div class="col-12 col-lg-3" v-if="isEquipmentListShow">
           <h5 class="mb-3 text-center big-font-size">您的設備列表</h5>
-          <equipment-list ref="equipmentList"></equipment-list>
+          <equipment-list ref="equipmentList" @askIfcheckDelete="onAskIfcheckDelete($event)"></equipment-list>
         </div>
         <div class="col-12 col-lg-9 row" v-show="isCameraShow">
           <camera @upgradeProgress="onUpgradeProgress($event)" @notifyTrainStart="CheckModelIsTrain" ref="camera" class="col-12"></camera>
@@ -16,6 +16,7 @@
         <!-- <train-menu @clickAddFace="changeToCameraMode()" @addFace="onAddFace()" @clickOpenDoorRecord="changeToDoorRecordMode()" v-if="isTrainMenuShow" class="col-12 col-lg-2"></train-menu> -->
       </div>
     </div>
+    <confirm-delete-face-modal ref="confirmDeleteFaceModal" @deleteface="onDeleteFace($event)"></confirm-delete-face-modal>
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
     <register-equipment-modal @registerEquipmentSuccess="onRegisterEquipmentSuccess()"></register-equipment-modal>
     <add-face-modal @addFace="onAddFace($event)"></add-face-modal>
@@ -38,6 +39,7 @@ import AddFaceModal from '@/components/AddFaceModal'
 import RegisterEquipmentModal from '@/components/RegisterEquipmentModal'
 import SetEquipmentPasswordModal from '@/components/SetEquipmentPasswordModal'
 import OpenRecord from '@/components/OpenRecord'
+import ConfirmDeleteFaceModal from '@/components/ConfirmDeleteFaceModal'
 
 import Media from 'vue-media'
 
@@ -65,7 +67,8 @@ export default {
     RegisterEquipmentModal,
     SetEquipmentPasswordModal,
     Media,
-    OpenRecord
+    OpenRecord,
+    ConfirmDeleteFaceModal
   },
 
   mounted () {
@@ -148,6 +151,14 @@ export default {
 
     onUpgradeProgress (percentage) {
       //this.$refs.progress.setPercentage(percentage)
+    },
+
+    onAskIfcheckDelete(faceArgs){
+      this.$refs.confirmDeleteFaceModal.setDeleteFaceInformation(faceArgs.faceName,faceArgs.faceId,faceArgs.equipmentId)
+    },
+
+    onDeleteFace(faceArgs){
+      this.$refs.equipmentList.deleteFace(faceArgs.faceId,faceArgs.equipmentId)
     },
 
     async SetUserName () {
