@@ -51,11 +51,11 @@ export default {
       } else if (name == 'unknown'){
         this.resultprompt = '鏡頭前的你'
         this.resultName = '我不認識'
-        this.resultRate = '(' + (Math.round(rate*100)) + '%)'
+        this.resultRate = '(' + (Math.round(rate*1000)/10) + '%)'
       } else {
         this.resultprompt = '鏡頭前的你是'
         this.resultName = name
-        this.resultRate = '(' + (Math.round(rate*100)) + '%)'
+        this.resultRate = '(' + (Math.round(rate*1000)/10) + '%)'
       }
     },
 
