@@ -142,7 +142,7 @@ export default {
     },
 
     onAddFace (faceArgs) {
-      setTimeout(this.$refs.camera.uploadFace, 500, faceArgs.faceName ,faceArgs.equipmentName);
+      //setTimeout(this.$refs.camera.uploadFace, 500, faceArgs.faceName ,faceArgs.equipmentName);
       this.$refs.camera.uploadFace(faceArgs.faceName,faceArgs.equipmentName)
     },
 
