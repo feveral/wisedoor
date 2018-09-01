@@ -104,13 +104,12 @@ def classify_image():
     classify.load_model(modelId)
     image_base_path = './facenetService/image/classify_result/'
     frame = cv2.imread(image_base_path + 'raw/' + classifyResultId + '.png')
-    if (opencvAlign.cut(frame)):
-        opencvAlign.saveImage(image_base_path + 'cut/' + classifyResultId + '.png')
-        result = classify.classify_image(image_base_path + 'cut/' + classifyResultId + '.png')
-        return jsonify({'success': True,'name': result[0],'rate': result[1]})
-    else:
+    cutPicture.align(image_base_path + 'raw/' + classifyResultId + '.png', image_base_path ,'cut')
+    if not os.path.exists(image_base_path + 'cut/' + classifyResultId + '.png'):
         return jsonify({'success': False, 'reason': 'detect no face'})
-
+    else:
+        result = classify.classify_image(image_base_path + 'cut/' + classifyResultId + '.png')
+        return jsonify({'success': True, 'name': result[0], 'rate': result[1]})
 @app.route('/adapt', methods=['POST'])
 def adapt():
     faceId = request.form.get('faceId')
