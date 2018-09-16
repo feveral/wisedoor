@@ -17,8 +17,4 @@ class TaskManager():
                 task()
                 time.sleep(interval)
         return set_function  
-#taskManager = TaskManager()
-#taskManager.add_task(test,1)
-#taskManager.add_task(test2,3)
-
 
