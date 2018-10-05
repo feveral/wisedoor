@@ -1,1 +1,0 @@
-./utility/align/unknownAlign/align/tjh.png 30 24 69 80

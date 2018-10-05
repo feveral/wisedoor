@@ -58,6 +58,7 @@ class CutPicture:
                     if not os.path.exists(output_filename):
                         try:
                             img = misc.imread(image_path)
+                            print(image_path)
                         except (IOError, ValueError, IndexError) as e:
                             errorMessage = '{}: {}'.format(image_path, e)
                             print(errorMessage)
@@ -101,6 +102,7 @@ class CutPicture:
                                     misc.imsave(output_filename_n, scaled)
                                     print("save in %s",output_filename_n)
                                     text_file.write('%s %d %d %d %d\n' % (output_filename_n, bb[0], bb[1], bb[2], bb[3]))
+                                    print(output_filename_n)
                             else:
                                 print('Unable to align "%s"' % image_path)
                                 text_file.write('%s\n' % (output_filename))

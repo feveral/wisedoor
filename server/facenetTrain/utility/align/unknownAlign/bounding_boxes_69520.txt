@@ -1,1 +1,0 @@
-./utility/align/unknownAlign/align/wkchen.png 15 29 76 113

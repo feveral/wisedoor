@@ -9,7 +9,7 @@
       <div :id="'equipment' + equipment.Id" class="collapse" aria-labelledby="headingOne" data-parent="#equipment-list">
         <div class="card-body">
           <p id="no-face-prompt" v-if="equipment.Face.length == 0">尚未新增臉孔</p>
-          <button type="button" class="face-button btn btn-outline-primary mb-2"  v-for="face in equipment.Face">{{face.Name}}
+          <button type="button" class="face-button btn btn-outline-primary mb-2" v-for="face in equipment.Face">{{face.Name}}
               <a href="#" data-toggle="modal" data-target="#confirm-delete-face-modal" v-on:click="setDeleteFace(face.Id,face.Name,equipment.Id)">
                 <img src="@/assets/icon_delete.png" alt="" class="icon" >
               </a>
@@ -79,6 +79,12 @@ export default {
       else{
         this.UpdateEquipmentList()
       }
+    },
+    onOpen() {
+        this.$refs.popover.$emit('open')
+    },
+    onClose() {
+        this.$refs.popover.$emit('close')
     }
   }
 }

@@ -1,1 +1,0 @@
-./utility/align/unknownAlign/align/12.png 83 59 170 172

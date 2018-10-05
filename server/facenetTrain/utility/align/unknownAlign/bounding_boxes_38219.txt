@@ -1,1 +1,0 @@
-./utility/align/unknownAlign/align/htwu.png 22 23 72 92

@@ -1,1 +1,0 @@
-./utility/align/unknownAlign/align/hsieh.png 18 18 79 105
