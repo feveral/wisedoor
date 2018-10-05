@@ -33,8 +33,6 @@ class Model():
         self.emb_array = emb_array
         self.labels = [0] * len(emb_array[:])
         self.class_names = class_names
-        print(self.emb_array)
-        print(labels)
         for faceId,faceName in self.faceIdNamePair.items():
             emb_array, labels, class_names = self.load_one_face(faceId)
             labels = [self.labels[-1] + 1] * len(emb_array[:])
