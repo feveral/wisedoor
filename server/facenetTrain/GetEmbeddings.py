@@ -29,13 +29,13 @@ class Train:
                 np.random.seed(seed=666)
                 print(input_dir)
                 dataset = facenet.get_dataset(input_dir)
-
+                
                 # Check that there are at least one training image per class
                 for cls in dataset:
                     assert(len(cls.image_paths)>0, 'There must be at least one image for each class in the dataset')            
 
                 paths, labels = facenet.get_image_paths_and_labels(dataset)
-
+                print(paths)
                 facenet.load_model(model_path)
                 
                 # Get input and output tensors
@@ -48,6 +48,7 @@ class Train:
                 nrof_batches_per_epoch = int(math.ceil(1.0*nrof_images / batch_size))
                 emb_array = np.zeros((nrof_images, embedding_size))
                 for i in range(nrof_batches_per_epoch):
+                    print(emb_array[i])
                     start_index = i*batch_size
                     end_index = min((i+1)*batch_size, nrof_images)
                     paths_batch = paths[start_index:end_index]
@@ -65,19 +66,20 @@ class Train:
                     pickle.dump((emb_array, labels, class_names), outfile)
                 print('-------------------------------------------Saved classifier model to file "%s"' % classifier_filename_exp)
                 
-            
 def split_dataset(dataset, min_nrof_images_per_class, nrof_train_images_per_class):
     train_set = []
     test_set = []
     for cls in dataset:
         paths = cls.image_paths
-        print(cls)
+        print(paths)
         # Remove classes with less than min_nrof_images_per_class
         if len(paths)>=min_nrof_images_per_class:
             np.random.shuffle(paths)
             train_set.append(facenet.ImageClass(cls.name, paths[:nrof_train_images_per_class]))
             test_set.append(facenet.ImageClass(cls.name, paths[nrof_train_images_per_class:]))
     return train_set, test_set
+
+
 
 
 train = Train("./utility/new","./unknown.pkl")
