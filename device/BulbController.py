@@ -14,7 +14,7 @@ def Singleton(class_):
     return getinstance
 
 @Singleton
-class BulbControl():
+class BulbController():
     def __init__(self):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(LED_PIN_YELLOW,GPIO.OUT)
@@ -41,4 +41,4 @@ class BulbControl():
     def __exit__(self,exc_type,exc_value,traceback):
         GPIO.cleanup()
 
-bulbControl = BulbControl()
+bulbController = BulbController()
