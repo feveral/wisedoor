@@ -39,7 +39,7 @@ from sklearn.svm import SVC
 batch_size = 1000
 nrof_images = 1
 image_size = 160
-model_path = "./models/20170512-110547.pb"
+model_path = "./20170512-110547.pb"
 
 class Train:
     def __init__(self,input_dir,output_dir):
@@ -112,3 +112,5 @@ def split_dataset(dataset, min_nrof_images_per_class, nrof_train_images_per_clas
             train_set.append(facenet.ImageClass(cls.name, paths[:nrof_train_images_per_class]))
             test_set.append(facenet.ImageClass(cls.name, paths[nrof_train_images_per_class:]))
     return train_set, test_set
+
+

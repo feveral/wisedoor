@@ -1,1 +1,0 @@
-./utility/align/unknownAlign/align/jhwang.png 22 32 73 98

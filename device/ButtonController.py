@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import config 
 import time
 from PasswordController import PasswordController 
+from BulbController import bulbController
 
 class ButtonController():
     def __init__(self):
@@ -12,7 +13,9 @@ class ButtonController():
         self._star_task = None
         self._password_correct_task = None
         self._password = [5,6,7,8]
-        self._password_controller = PasswordController("feveraly@gmail.com", 5566, '家裡的門')
+        self._password_controller = PasswordController()
+        self._add_record_task = None
+        self._camera = None
 
     def _setup(self):
         GPIO.setmode(GPIO.BOARD)
@@ -32,6 +35,8 @@ class ButtonController():
         GPIO.output(config.BUTTON_COL_PIN[1],1)
         GPIO.output(config.BUTTON_COL_PIN[2],1)
         print('button is enable')
+        bulbController.setGreenBulbOpen()
+        bulbController.setYellowBulbClose()        
         while self._is_enable:
             for indexC,c in enumerate(config.BUTTON_COL_PIN):
                 GPIO.output(c,0)
@@ -48,6 +53,22 @@ class ButtonController():
 
     def disable(self):
         self._is_enable = False
+
+    @property
+    def camera(self):
+        return self._camera
+    
+    @camera.setter
+    def camera(self,value):
+        self._camera = value
+
+    @property
+    def add_record_task(self):
+        return self._add_record_task
+
+    @add_record_task.setter
+    def add_record_task(self,task):
+        self._add_record_task = task
 
     @property
     def password_controller(self):
@@ -70,10 +91,10 @@ class ButtonController():
         self._password_correct_task = task
 
     def _check_password(self):
-        if (len(self._buffer) != len(self._password_controller.password)):
+        if ((len(self._buffer)-1) != len(str(self._password_controller.password))):
             return False
-        for i in range(len(self._password_controller.password)):
-            if (int(self._buffer[i]) != int(self._password_controller.password[i])):
+        for i in range(len(str(self._password_controller.password))):
+            if (int(self._buffer[i]) != int(str(self._password_controller.password)[i])):
                 return False
         return True
                     
@@ -81,10 +102,17 @@ class ButtonController():
         print('buffer :',self._buffer)
         if(self._buffer[-1] == "*"):
             self._buffer = []
+            bulbController.setGreenBulbClose()
+            bulbController.setYellowBulbOpen()            
             self.disable()
             self._star_task()
             self.enable()
         elif(self._buffer[-1] == "#"):
             if(self._check_password()):
+                image = self._camera.CatchImage()
                 self._password_correct_task()
+                if(self._add_record_task != None):
+                    self._add_record_task("success","密碼開啟","",image)                
+            else:
+                print("password false")
             self._buffer = []

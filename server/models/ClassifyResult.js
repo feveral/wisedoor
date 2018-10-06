@@ -19,6 +19,24 @@ module.exports = class ClassifyResult {
         }
     }
 
+    static async FindByEquipmentIdAndOffset (equipmentId, page) {
+        try {
+            const result = await db.query(`select * from CLASSIFY_RESULT where equipmentId='${equipmentId}' order by TIME DESC limit 15 offset ${page*15}`)
+            return result
+        } catch (error) {
+            throw new Error('Error occured while executing ClassifyResult.FindByEquipmentIdAndOffset')
+        }
+    }
+
+    static async FindPageAmountByEquipmentId (equipmentId) {
+        try {
+            const result = await db.query(`select COUNT(*) from CLASSIFY_RESULT where equipmentId='${equipmentId}'`)
+            return Math.floor(result[0]['COUNT(*)'] / 15) + 1
+        } catch (error) {
+            throw new Error('Error occured while executing ClassifyResult.FindByEquipmentIdAndOffset')
+        }
+    }
+
     static async UpdateFaceNameById (id, faceName, faceRate) {
         try {
             const result = await db.query(`update CLASSIFY_RESULT set FaceName='${faceName}' , FaceRate='${faceRate}' where Id='${id}'`)

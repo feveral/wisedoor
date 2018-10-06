@@ -1,1 +1,0 @@
-./utility/align/unknownAlign/align/you.png 23 32 75 100

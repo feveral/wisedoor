@@ -1,1 +1,0 @@
-./utility/align/unknownAlign/align/ichen.png 15 19 72 96

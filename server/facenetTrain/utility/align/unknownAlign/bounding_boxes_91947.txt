@@ -1,1 +1,0 @@
-./utility/align/unknownAlign/align/cwchang.png 19 19 74 97

@@ -25,8 +25,8 @@ class TaskManager():
         self._tasks.append((thread,task,interval,self.thread_Count))
         return self.thread_Count
 
-    def delete_task(self,task,interval):
-        pass
+    def delete_task(self,index):
+        self.stopList[index] = True
 
     def set_task_interval(self,task,interval,index):
         def set_function():
@@ -36,20 +36,3 @@ class TaskManager():
         return set_function  
 
 taskManager = TaskManager()
-
-def t1():
-    print(1)
-
-def t2():
-    print(2)
-
-def t3():
-    print(3)
-
-
-t1_index = taskManager.add_task(t1,1)
-t2_index = taskManager.add_task(t2,1)
-t3_index = taskManager.add_task(t3,1)
-
-input('............')
-taskManager.stopList[t1_index] = True

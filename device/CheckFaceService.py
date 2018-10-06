@@ -7,6 +7,7 @@ from requests.auth import HTTPBasicAuth
 from Model import Model
 from blurr import is_blurr
 from Classify import Classify
+from BulbController import bulbController
 
 class CheckFaceService():
     def __init__(self):
@@ -36,15 +37,14 @@ class CheckFaceService():
             #    return
             if (self._align.cut(frame)):
                 classify_result = self._classify.classify_image(self._align.image)
-                print(time.time() - start)
                 self._classify_result_handler(classify_result,frame)
                 self._timer.start_timing()
                 self._align.clear()
-
+            print(time.time() - start)
     @property
     def model(self):
         return self._model
-
+    
     @property
     def camera(self):
         return self._camera
@@ -71,16 +71,16 @@ class CheckFaceService():
             print(str(classify_result[0])+":"+str(classify_result[1]))
             print('open lock fail')
             self._fail_count += 1
-            if(self._fail_count >= 3):
+            if(self._fail_count >= 3 and self.record_task != None):
                 self.record_task("fail","face",classify_result[0],frame)
-                print("failllll")
 
         else:
-            if(time.time() - self.start > 1):
-                self.start = time.time()
-                print(str(classify_result[0])+":"+str(classify_result[1]))
-                print('open lock')
-
+            self.start = time.time()
+            print(str(classify_result[0])+":"+str(classify_result[1]))
+            print('open lock')
+            bulbController.setGreenBulbOpen()
+            bulbController.setYellowBulbOpen() 
+            if(self.record_task != None):
                 self.record_task("success","face",classify_result[0],frame)
-            #self._success = True
-            #self._success_task()
+            self._success = True
+            self._success_task()

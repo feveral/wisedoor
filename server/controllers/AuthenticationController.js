@@ -14,6 +14,7 @@ module.exports = {
         res.status(401).send({ error: 'authentication error.' })
         return
       }
+      req.user = userEmail
     } catch (error) {
       res.status(401).send({ error: 'authentication error.' })
       return

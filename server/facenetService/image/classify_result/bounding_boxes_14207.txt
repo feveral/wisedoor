@@ -1,0 +1,1 @@
+./facenetService/image/classify_result/cut/aed527482ee7a346519f3ddec5cf7c94.png 295 121 425 311
