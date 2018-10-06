@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import config 
 import time
 from PasswordController import PasswordController 
-from BulbControl import bulbController
+from BulbController import bulbController
 
 class ButtonController():
     def __init__(self):
