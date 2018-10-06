@@ -4,6 +4,16 @@ import time
 LED_PIN_YELLOW = 26
 LED_PIN_GREEN = 32
 LED_PIN_RED = 31
+
+def Singleton(class_):
+    instances = {}
+    def getinstance(*args, **kwargs):
+        if class_ not in instances:
+            instances[class_] = class_(*args, **kwargs)
+        return instances[class_]
+    return getinstance
+
+@Singleton
 class BulbControl():
     def __init__(self):
         GPIO.setmode(GPIO.BOARD)
@@ -31,7 +41,4 @@ class BulbControl():
     def __exit__(self,exc_type,exc_value,traceback):
         GPIO.cleanup()
 
-
-bulb = BulbControl()
-bulb.setGreenBulbOpen()
-bulb.setYellowBulbOpen()
+bulbControl = BulbControl()

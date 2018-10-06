@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import config 
 import time
 from PasswordController import PasswordController 
+from BulbController import bulbController
 
 class ButtonController():
     def __init__(self):
@@ -99,9 +100,11 @@ class ButtonController():
         print('buffer :',self._buffer)
         if(self._buffer[-1] == "*"):
             self._buffer = []
+            bulbController.setGreenBulbClose()
             self.disable()
             self._star_task()
             self.enable()
+            bulbController.setGreenBulbOpen()
         elif(self._buffer[-1] == "#"):
             if(self._check_password()):
                 image = self._camera.CatchImage()

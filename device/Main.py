@@ -5,6 +5,7 @@ from TaskManager import taskManager
 from PasswordController import  PasswordController
 #from PCButtonController import PCButtonController 
 from HistoryController import HistoryController
+from BulbController import bulbController
 import config
 
 historyController = HistoryController(config.USER_EMAIL, config.USER_PASSWORD, config.EQUIPMENT_NAME)
