@@ -32,8 +32,24 @@ class TaskManager():
         def set_function():
             while not self.stopList[index]:
                 task()
-                #print('aaa',index)
                 time.sleep(interval)
         return set_function  
 
 taskManager = TaskManager()
+
+def t1():
+    print(1)
+
+def t2():
+    print(2)
+
+def t3():
+    print(3)
+
+
+t1_index = taskManager.add_task(t1,1)
+t2_index = taskManager.add_task(t2,1)
+t3_index = taskManager.add_task(t3,1)
+
+input('............')
+taskManager.stopList[t1_index] = True

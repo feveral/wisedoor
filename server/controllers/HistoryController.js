@@ -3,8 +3,8 @@ const Face = require('../models/Face')
 const Equipment = require('../models/Equipment')
 const Model = require('../models/Model')
 const FaceBelongEquipment = require('../models/FaceBelongEquipment')
-var fs = require("fs");
-const request = require('request');
+const fs = require("fs")
+const request = require('request')
 
 module.exports = {
     async GetRecord(req, res){
