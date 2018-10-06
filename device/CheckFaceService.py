@@ -7,6 +7,7 @@ from requests.auth import HTTPBasicAuth
 from Model import Model
 from blurr import is_blurr
 from Classify import Classify
+from BulbController import bulbController
 
 class CheckFaceService():
     def __init__(self):
@@ -77,6 +78,8 @@ class CheckFaceService():
             self.start = time.time()
             print(str(classify_result[0])+":"+str(classify_result[1]))
             print('open lock')
+            bulbController.setGreenBulbOpen()
+            bulbController.setYellowBulbOpen() 
             if(self.record_task != None):
                 self.record_task("success","face",classify_result[0],frame)
             self._success = True

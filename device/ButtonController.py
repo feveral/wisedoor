@@ -35,6 +35,8 @@ class ButtonController():
         GPIO.output(config.BUTTON_COL_PIN[1],1)
         GPIO.output(config.BUTTON_COL_PIN[2],1)
         print('button is enable')
+        bulbController.setGreenBulbOpen()
+        bulbController.setYellowBulbClose()        
         while self._is_enable:
             for indexC,c in enumerate(config.BUTTON_COL_PIN):
                 GPIO.output(c,0)
@@ -101,10 +103,10 @@ class ButtonController():
         if(self._buffer[-1] == "*"):
             self._buffer = []
             bulbController.setGreenBulbClose()
+            bulbController.setYellowBulbOpen()            
             self.disable()
             self._star_task()
             self.enable()
-            bulbController.setGreenBulbOpen()
         elif(self._buffer[-1] == "#"):
             if(self._check_password()):
                 image = self._camera.CatchImage()
