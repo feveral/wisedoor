@@ -12,7 +12,13 @@ module.exports = {
         result = JSON.parse(JSON.stringify(result))
         
         for (let index = 0; index < result.length; index++) {
-            const data = fs.readFileSync("./facenetService/image/classify_result/cut/" + `${result[index]["Id"]}.png`)
+            let data
+            try{
+                data = fs.readFileSync("./facenetService/image/classify_result/cut/" + `${result[index]["Id"]}.png`)
+            }
+            catch(error){
+                data = fs.readFileSync(`./facenetService/image/no_pic.jpeg`)
+            }
             base64Image = new Buffer(data, 'binary').toString('base64')
             result[index]['FaceImage'] = base64Image
             result[index]['Time'] = module.exports.setTimeCorrect(result[index]['Time'])
