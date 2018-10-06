@@ -8,5 +8,9 @@ export default {
 
   async register(equipmentName) {
     return Api().post('equipment', { equipmentName: equipmentName })
+  },
+
+  async SetPassword(equipmentName, password) {
+    return Api().post('equipment/setPassword', { equipmentName: equipmentName , password: password})
   }
 }

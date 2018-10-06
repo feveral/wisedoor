@@ -25,7 +25,8 @@ db.query(
     `CREATE TABLE EQUIPMENT
      (
        Id VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
-       OwnerEmail VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
+       OwnerEmail VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
+       Password VARCHAR(255) CHARACTER SET utf8 NOT NULL ,  
        Name VARCHAR(255) CHARACTER SET utf8 NOT NULL , 
        ModelId VARCHAR(255) CHARACTER SET utf8 , 
        IsTrain BOOLEAN NOT NULL , 
@@ -52,6 +53,20 @@ db.query(
        PRIMARY KEY(Id) 
      );`
   )
+
+db.query(
+  `CREATE TABLE HISTORY
+     (
+       Id VARCHAR(255) CHARACTER SET utf8 NOT NULL,
+       EquipmentId VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
+       FaceId VARCHAR(255) CHARACTER SET utf8 NOT NULL,
+       OpenTime DATETIME NOT NULL,
+       DoorState VARCHAR(255) CHARACTER SET utf8 NOT NULL,
+       OpenDoorType VARCHAR(255) CHARACTER SET utf8 NOT NULL,
+       PRIMARY KEY(Id),
+       FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
+     );`
+)
   
 db.query(
     `CREATE TABLE FACE_BELONG_MODEL
@@ -74,9 +89,24 @@ db.query(
        FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
      );`
   )
+
+db.query(
+    `CREATE TABLE CLASSIFY_RESULT
+     (
+       Id VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
+       EquipmentId VARCHAR(255) CHARACTER SET utf8 NOT NULL ,
+       FaceName VARCHAR(255) CHARACTER SET utf8,
+       Time DATETIME NOT NULL,
+       FaceRate VARCHAR(255) CHARACTER SET utf8,
+       PRIMARY KEY(Id) ,
+       FOREIGN KEY(EquipmentId) REFERENCES EQUIPMENT(Id)
+     );`
+)
+
 db.query(`insert into USER VALUES('feveraly@gmail.com','宗翰','5566');`)
 db.query(`insert into USER VALUES('john@gmail.com','忠禮','5566');`)
-db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com','家裡的門',NULL,false);`)
+db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda3561b68','feveraly@gmail.com',5678,'家裡的門',NULL,false);`)
+db.query(`insert into EQUIPMENT VALUES('259c7ae134d7ffe7f58fb5fda35bbbb8','feveraly@gmail.com',8888,'公司的門',NULL,false);`)
 db.end()
 
 if (!require('fs').existsSync('facenetService/image/raw')) {
@@ -87,10 +117,22 @@ if (!require('fs').existsSync('facenetService/image/cut')) {
   require('fs').mkdirSync('facenetService/image/cut')
 }
 
+if (!require('fs').existsSync('facenetService/image/classify_result/raw')) {
+  require('fs').mkdirSync('facenetService/image/classify_result/raw')
+}
+
+if (!require('fs').existsSync('facenetService/image/classify_result/cut')) {
+  require('fs').mkdirSync('facenetService/image/classify_result/cut')
+}
+
 if (!require('fs').existsSync('facenetService/models')) {
   require('fs').mkdirSync('facenetService/models')
 }
 
+if (!require('fs').existsSync('facenetService/image/history')) {
+  require('fs').mkdirSync('facenetService/image/history')
+}
+  
 require('fs').readdir('facenetService/image/raw', (err, files) => {
   for(let i = 0 ; i < files.length ; i++)
     require('rimraf')(`facenetService/image/raw/${files[i]}`,()=>{})
@@ -101,9 +143,19 @@ require('fs').readdir('facenetService/image/cut', (err, files) => {
     require('rimraf')(`facenetService/image/cut/${files[i]}`,()=>{})
 })
 
+require('fs').readdir('facenetService/image/classify_result/raw', (err, files) => {
+  for (let i = 0; i < files.length; i++)
+    require('rimraf')(`facenetService/image/classify_result/raw/${files[i]}`, () => { })
+})
+
+require('fs').readdir('facenetService/image/classify_result/cut', (err, files) => {
+  for (let i = 0; i < files.length; i++)
+    require('rimraf')(`facenetService/image/classify_result/cut/${files[i]}`, () => { })
+})
+
 require('fs').readdir('facenetService/models', (err, files) => {
   for(let i = 0 ; i < files.length ; i++) {
-    if (files[i] != `20170512-110547.pb` && files[i] != `faces`) {
+    if (files[i] != `20170512-110547.pb` && files[i] != `faces` && files[i] != `init_model.pkl`) {
       require('rimraf')(`facenetService/models/${files[i]}`,()=>{})
     }
   }
@@ -115,6 +167,11 @@ require('fs').readdir('facenetService/models/faces', (err, files) => {
       require('rimraf')(`facenetService/models/faces/${files[i]}`, () => { })
     }
   }
+})
+
+require('fs').readdir('facenetService/image/history', (err, files) => {
+  for(let i = 0 ; i < files.length ; i++)
+    require('rimraf')(`facenetService/image/history/${files[i]}`,()=>{})
 })
 
 console.log('Finished Initial database and image folder')

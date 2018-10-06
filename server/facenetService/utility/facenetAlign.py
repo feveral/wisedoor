@@ -106,11 +106,9 @@ class CutPicture:
         #print('Number of successfully aligned images: *%d*' % nrof_successfully_aligned)
 
     def get_dataset(self,path,outputDirName, has_class_directories=True):
-        timer1 = time.time()
         dataset = []
         imageList = []
         imageList.append(path)
         class_name = outputDirName
-        print("imageClass waste:",time.time() - timer1)
         dataset.append(facenet.ImageClass(class_name,imageList))
         return dataset

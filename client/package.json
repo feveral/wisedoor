@@ -19,6 +19,7 @@
     "popper.js": "^1.14.3",
     "shelljs": "^0.8.2",
     "vue": "^2.5.2",
+    "vue-media": "^1.1.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

@@ -28,6 +28,15 @@ module.exports = class Face {
     }
   }
 
+  static async Delete (faceId) {
+    try {
+      await db.query(`delete from FACE where id = '${faceId}'`)
+      return faceId
+    } catch (error) {
+        console.log('Error occured while executing Face.Delete')
+    }
+  }
+
   static async FindIsUploadByFaceId (faceId) {
     try {
       const response = await db.query(`select IsUpload from FACE where Id='${faceId}'`)

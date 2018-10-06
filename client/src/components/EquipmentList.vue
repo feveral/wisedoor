@@ -1,14 +1,19 @@
 <template>
-  <div id="equipment-list">
+  <div id="equipment-list" ref="equipmentList">
     <div class="card" v-for="equipment in equipments">
       <div class="card-header">
         <button class="btn btn-outline-dark equipment-button" data-toggle="collapse" :data-target="'#equipment' + equipment.Id" aria-expanded="true" :aria-controls="'#equipment' + equipment.Id">
-          {{equipment.Name}}
-         </button>
+          {{equipment.Name + ' (' + equipment.Face.length + '人)'}}
+        </button>
       </div>
       <div :id="'equipment' + equipment.Id" class="collapse" aria-labelledby="headingOne" data-parent="#equipment-list">
         <div class="card-body">
-          <button type="button" class="face-button btn btn-outline-primary col-12 mb-2"  v-for="face in equipment.Face">{{face.Name}}</button>
+          <p id="no-face-prompt" v-if="equipment.Face.length == 0">尚未新增臉孔</p>
+          <button type="button" class="face-button btn btn-outline-primary mb-2"  v-for="face in equipment.Face">{{face.Name}}
+              <a href="#" data-toggle="modal" data-target="#confirm-delete-face-modal" v-on:click="setDeleteFace(face.Id,face.Name,equipment.Id)">
+                <img src="@/assets/icon_delete.png" alt="" class="icon" >
+              </a>
+          </button>
         </div>
       </div>
     </div>
@@ -25,7 +30,10 @@ export default {
 
   data () {
     return {
-      equipments: []
+      equipments: [],
+      password: "",
+      deleteEquipmentId:"",
+      deleteFaceId:""
     }
   },
 
@@ -42,12 +50,58 @@ export default {
       Promise.all(jobs).then((results) => {
         this.equipments = response.data
       });
+    },
+
+    async setPassword (equipmentName) {
+      console.log(equipmentName)
+      if(this.password.length < 4 ){
+        alert("密碼太短 至少要4位元")
+      }
+      else if(isNaN(this.password)){
+        alert("密碼只能是數字喔")
+      }
+      else{
+        let response =  await EquipmentService.SetPassword(equipmentName,this.password)
+        $('#set-password-modal').modal('hide')
+      }
+    },
+
+    async setDeleteFace(faceId,faceName,equipmentId){
+      this.$emit("askIfcheckDelete",{faceId,faceName,equipmentId})
+    },
+
+    async deleteFace(faceId,equipmentId){
+      let response =  await FaceService.UploadDeleteFace(faceId,equipmentId)
+      console.log(response.data.success)
+      if(response.data.success == false){
+        alert("sorry 正在訓練中不能刪臉")
+      }      
+      else{
+        this.UpdateEquipmentList()
+      }
     }
   }
 }
 </script>
 
 <style>
+@media only screen and (max-width: 768px) {
+  .icon {
+    max-width: 9%;
+    width: 100%;
+    float: right;
+    vertical-align:middle;
+  }  
+}
+
+@media only screen and (min-width: 768px) {
+  .icon {
+    max-width: 15%;
+    width: 100%;
+    float: right;
+    vertical-align:middle;
+  }  
+}
 
 .equipment-button {
   font-size: 20px;
@@ -56,6 +110,14 @@ export default {
 .face-button {
   font-size: 22px;
   font-weight: bold;
+  position:relative; 
 }
 
+.scroll {
+  overflow: scroll;
+}
+
+#no-face-prompt {
+  color: gray;
+}
 </style>

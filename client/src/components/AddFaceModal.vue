@@ -76,6 +76,7 @@ export default {
       const equipmentName = this.equipmentName
       $('#add-face-modal').modal('hide')
       this.$emit('addFace',{faceName,equipmentName})
+      this.faceName = ''
     }
   }
 }

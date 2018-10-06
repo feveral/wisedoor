@@ -1,10 +1,10 @@
 const fs = require("fs")
-const randomHex = require('randomhex');
+const randomHex = require('randomhex')
 const Equipment = require('../models/Equipment')
 const Face = require('../models/Face')
 const FaceBelongEquipment = require('../models/FaceBelongEquipment')
 const FaceBelongModel = require('../models/FaceBelongModel')
-const request = require('request');
+const request = require('request')
 const Model = require('../models/Model')
 
 const uploadBasePath = `${process.cwd()}/facenetService/image/raw`
@@ -12,6 +12,14 @@ const cutBasePath = `${process.cwd()}/facenetService/image/cut`
 const modelBasePath = `${process.cwd()}/facenetService/models`
 
 module.exports = { 
+
+    faceNameFilter (req, res, next) {
+        if (req.body.faceName == '') {
+            res.status(500).send({error:'name cannot be space.'})
+            return
+        }
+        next()
+    },
 
     async retrieveEquipmentId (req, res, next) {
         req.equipmentId = await Equipment.FindIdByOwnerEmailAndName(req.user, req.body.equipmentName)
@@ -93,14 +101,15 @@ module.exports = {
 
     trainFace (req, res, next) {
         const formData =
-            {
-                "cutBasePath": cutBasePath,
-                "faceIdNamePairs": JSON.stringify(req.faceIdNamePairs),
-                "outputBasePath": modelBasePath,
-                "modelId": req.modelId,
-                "newFaceId": req.faceId,
-                "newFaceName": req.body.faceName 
-            }
+        {
+            "cutBasePath": cutBasePath,
+            "faceIdNamePairs": JSON.stringify(req.faceIdNamePairs),
+            "outputBasePath": modelBasePath,
+            "modelId": req.modelId,
+            "newFaceId": req.faceId,
+            "newFaceName": req.body.faceName 
+        }
+
         request.post({ url: 'http://localhost:3000/train', formData: formData }
             , async (error, response, body) => {
                 if (!error && response.statusCode == 200) {

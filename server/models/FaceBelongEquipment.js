@@ -31,7 +31,7 @@ module.exports = class FaceBelongEquipment {
     try {
       const result = await db.query(`select FACE.Id,FACE.Name from FACE_BELONG_EQUIPMENT,FACE 
                                         where EquipmentId='${equipmentId}' AND
-                                        FACE.Id = FaceId`)
+                                        FACE.Id = FaceId AND IsUpload=1`)
       let pairs = {}
       result.forEach(element => {
         pairs[element.Id] = element.Name
@@ -56,7 +56,14 @@ module.exports = class FaceBelongEquipment {
     const result = await db.query(`select FACE.Id,FACE.Name 
                                    from FACE,FACE_BELONG_EQUIPMENT 
                                    where EquipmentId='${equipmentId}' AND
-                                   Id=FaceId`)
+                                   Id=FaceId AND IsUpload=1`)
+    return result
+  }
+
+  static async DeleteFaceByEquipmentId(faceId,equipmentId){
+    const result = await db.query(`delete from FACE_BELONG_EQUIPMENT 
+                                   where EquipmentId='${equipmentId}' AND
+                                   FaceId='${faceId}'`)
     return result
   }
 }

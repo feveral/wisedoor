@@ -4,6 +4,9 @@ from flask import abort
 from flask import request
 import sys
 import threading
+import cv2
+from utility.Classify import Classify
+from utility.OpencvAlign import OpencvAlign
 from utility.facenetAlign import *
 from utility.Train import Train
 from utility.Model import Model
@@ -22,6 +25,8 @@ cutPicture = CutPicture()
 config = Config()
 train = Train()
 model = Model()
+classify = Classify()
+opencvAlign = OpencvAlign()
 
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
@@ -47,9 +52,9 @@ thread = threading.Thread(target=TrainModel)
 thread.setDaemon(True)
 thread.start()
 
+
 @app.route('/align', methods=['POST'])
 def alignPicture():
-    start = time.time()
     data = request.form
     uploadBasePath = data['uploadBasePath']
     faceId = data['faceId']
@@ -60,10 +65,9 @@ def alignPicture():
     #if not (is_blurr(uploadBasePath+ "/" + faceId + "/" + imageName)):
     #    cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
     #    return jsonify({'success': True})
-    end = time.time()
-    print("other:",end - start)
+    start = time.time()
     cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
-    print("alignnnnnn:",time.time() - end)
+    print("align time:", time.time() - start)
     return jsonify({'success': True})
     #else:
     #    return jsonify({'success': False})
@@ -80,6 +84,46 @@ def trainPicture():
     model.set_modelId(modelId)
     train.AddTrainData(cutBasePath,outputBasePath,newFaceId,newFaceName,faceIdNamePairs)
     return jsonify({'success': 'start training'})
+
+@app.route('/retrain', methods=['POST'])
+def reTrainModel():
+    outputBasePath = request.form.get('outputBasePath')
+    modelId = request.form.get('modelId')
+    faceIdNamePairs = json.loads(request.form.get('faceIdNamePairs'))
+    model.set_faceIdNamePair(faceIdNamePairs)
+    model.set_modelId(modelId)
+    model.produce_model()
+    model.save_model()
+    print("retrain finish")
+    return jsonify({'success': 'retrain ok'})
+
+@app.route('/classify', methods=['POST'])
+def classify_image():
+    modelId = request.form.get('modelId')
+    classifyResultId = request.form.get('classifyResultId')
+    classify.load_model(modelId)
+    image_base_path = './facenetService/image/classify_result/'
+    frame = cv2.imread(image_base_path + 'raw/' + classifyResultId + '.png')
+    cutPicture.align(image_base_path + 'raw/' + classifyResultId + '.png', image_base_path ,'cut')
+    if not os.path.exists(image_base_path + 'cut/' + classifyResultId + '.png'):
+        return jsonify({'success': False, 'reason': 'detect no face'})
+    else:
+        result = classify.classify_image(image_base_path + 'cut/' + classifyResultId + '.png')
+        return jsonify({'success': True, 'name': result[0], 'rate': result[1]})
+@app.route('/adapt', methods=['POST'])
+def adapt():
+    faceId = request.form.get('faceId')
+    imagePath = request.form.get('imagePath')
+    modelId = request.form.get('modelId')
+    faceIdNamePairs = json.loads(request.form.get('faceIdNamePairs'))
+    (emb_array, class_names) = classify.fetch_embedding_class_names(imagePath)
+    model.add_embedding_in_pkl(emb_array,faceId)
+    model.set_faceIdNamePair(faceIdNamePairs)
+    model.set_modelId(modelId)
+    model.produce_model()
+    model.save_model()
+    print("adapt finish")
+    return jsonify({'success': 'retrain ok'})
 
 if __name__ == '__main__':
     app.run(host='localhost', debug=True, port = 3000, use_reloader=False)

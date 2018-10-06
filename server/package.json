@@ -6,9 +6,9 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha $(find test -name '*.js')",
     "init": "sudo node database/InitialDatabase.js",
-    "facenet": "python3 ./facenetService/app.py",
+    "facenet": "sudo python3 ./facenetService/app.py",
     "start": "sudo NODE_ENV=production node app.js",
-    "dev": "./node_modules/nodemon/bin/nodemon.js app.js --exec 'sudo node' "
+    "dev": "sudo node app.js"
   },
   "author": "",
   "license": "ISC",

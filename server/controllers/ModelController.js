@@ -9,19 +9,20 @@ module.exports = {
   async GetModel(req, res) {
     const equipmentName = req.body.equipmentName
     const userEmail = req.body.email
-    const userPassword = req.body.password
-    try {
-      if (!User.IsSignInCorrect(userEmail, userPassword)) {
-        res.send({ error: 'wrong email or password' })
-      }
-    } catch (error) {
-      res.send({ error: 'wrong email or password' })
-    }
     const equipmentId = await Equipment.FindIdByOwnerEmailAndName(userEmail,equipmentName)
     const modelId = await Equipment.FindModelIdByEquipmentId(equipmentId)
-    fs.readFile(`./facenetService/models/${modelId}.pkl`, (err, data) => {
-      res.send(data)
-    })
+    
+    if (modelId == null) {
+      res.send('empty')
+    }
+    else if ((await Model.IsModelTrain(modelId)) == false) {
+      res.send('training')
+    }
+    else{
+      fs.readFile(`./facenetService/models/${modelId}.pkl`, (err, data) => {
+        res.send(data)
+      })
+    }
   },
 
   async NotifyTrainFinish(req, res){

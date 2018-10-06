@@ -20,5 +20,4 @@ db.getConnection((err, connection) => {
 
 /* 讓 db.query() 可以使用 async/await */
 db.query = util.promisify(db.query)
-
 module.exports = db

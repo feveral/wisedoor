@@ -15,13 +15,23 @@ module.exports = class Model {
     return modelId
   }
 
-  static async UpdateIsTrainValue(modelId,isTrainValue) {
+  static async UpdateIsTrainValue(modelId, isTrainValue) {
     try{
       const response = await db.query(`update MODEL SET IsTrain = ${isTrainValue} WHERE Id='${modelId}'`)
       if(response.affectedRows == 0)
-        throw new Error('Error occured while executing Model.UpdateIsrainValue : cannot find modelId')
+        console.log('Error occured while executing Model.UpdateIsrainValue : cannot find modelId')
     } catch (error) {
-      throw new Error('Error occured while executing Model.UpdateIsrainValue')
+        console.log('Error occured while executing Model.UpdateIsrainValue')
+    }
+  }
+
+  static async DeleteModelByModelId(modelId) {
+    try{
+      const response = await db.query(`delete from  MODEL WHERE Id='${modelId}'`)
+      if(response.affectedRows == 0)
+        console.log('Error occured while executing Model.DeleteModelByModelId : cannot find modelId')
+    } catch (error) {
+        console.log('Error occured while executing Model.DeleteModelByModelId')
     }
   }
 
@@ -37,7 +47,7 @@ module.exports = class Model {
     const result = await db.query(`select Id from MODEL where Id='${id}'`)
     return result.length == 1
   }
-
+  
   static async IsModelTrain(id){
     try{
       const result = await db.query(`select IsTrain from MODEL where Id='${id}'`)

@@ -33,7 +33,7 @@ export default {
 <style>
 
 #text-progress {
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .text-right {

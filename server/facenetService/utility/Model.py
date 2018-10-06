@@ -3,6 +3,7 @@ import os
 import numpy as np
 import pickle
 from sklearn.svm import SVC
+import numpy
 
 class Model():
     def __init__(self):
@@ -27,6 +28,7 @@ class Model():
         self.faceIdNamePair = faceIdNamePair
 
     def produce_model(self):
+        self.model = None
         emb_array, labels, class_names = self.load_one_face("unknown")
         self.emb_array = emb_array
         self.labels = [0] * len(emb_array[:])
@@ -44,3 +46,11 @@ class Model():
         with open(self.config.outputModelBasePath + "/" + str(self.modelId) + ".pkl", 'wb') as outfile:
             pickle.dump((self.model, self.class_names), outfile)
         print('-----------------Saved classifier model to file "%s"' % self.modelId + ".pkl")
+
+    def add_embedding_in_pkl(self,embedding,faceId):
+        (emb_array, labels, class_names) = self.load_one_face(faceId)
+        emb_array = np.concatenate((emb_array, embedding))
+        labels = np.insert(labels,1,labels[-1])
+        classifier_filename_exp = os.path.expanduser(self.config.outputFaceBasePath +  "/" + str(faceId) + ".pkl")
+        with open(classifier_filename_exp, 'wb') as outfile:
+            pickle.dump((emb_array, labels, class_names), outfile)

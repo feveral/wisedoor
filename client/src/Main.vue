@@ -1,22 +1,26 @@
 <template>
   <div id="main">
-    <headers ref='headers' @logout="onLogout()"></headers>
+    <headers ref='headers' @logout="onLogout()" @clickAddFace="changeToCameraMode()" @clickOpenDoorRecord="changeToDoorRecordMode()" @clickEquipmentList="changeToEquipmentListMode()" @clickChangeToOnlineClassify="changeToOnlineClassifyMode()"></headers>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-12 col-lg-2">
+        <div class="col-12 col-lg-3" v-if="isEquipmentListShow">
           <h5 class="mb-3 text-center big-font-size">您的設備列表</h5>
-          <equipment-list ref="equipmentList"></equipment-list>
+          <equipment-list ref="equipmentList" @askIfcheckDelete="onAskIfcheckDelete($event)"></equipment-list>
         </div>
-        <div class="col-12 col-lg-8 row">
+        <div class="col-12 col-lg-9 row" v-show="isCameraShow">
           <camera @upgradeProgress="onUpgradeProgress($event)" @notifyTrainStart="CheckModelIsTrain" ref="camera" class="col-12"></camera>
         </div>
-        <train-menu @addFace="onAddFace()" class="col-12 col-lg-2"></train-menu>
-        <upload-face-progress ref="progress" class="col-12 col-lg-8"></upload-face-progress>
+        <div class="col-12 col-lg-9 row" v-if="isOpenDoorRecordShow">
+          <open-record class="col-12"></open-record>
+        </div>
+        <!-- <train-menu @clickAddFace="changeToCameraMode()" @addFace="onAddFace()" @clickOpenDoorRecord="changeToDoorRecordMode()" v-if="isTrainMenuShow" class="col-12 col-lg-2"></train-menu> -->
       </div>
     </div>
+    <confirm-delete-face-modal ref="confirmDeleteFaceModal" @deleteface="onDeleteFace($event)"></confirm-delete-face-modal>
     <login-modal @loginSuccess="onLoginSuccess($event)"></login-modal>
     <register-equipment-modal @registerEquipmentSuccess="onRegisterEquipmentSuccess()"></register-equipment-modal>
     <add-face-modal @addFace="onAddFace($event)"></add-face-modal>
+    <set-equipment-password-modal></set-equipment-password-modal>
     <router-view/>
   </div>
 </template>
@@ -33,9 +37,25 @@ import EquipmentList from '@/components/EquipmentList'
 import UploadFaceProgress from '@/components/UploadFaceProgress'
 import AddFaceModal from '@/components/AddFaceModal'
 import RegisterEquipmentModal from '@/components/RegisterEquipmentModal'
+import SetEquipmentPasswordModal from '@/components/SetEquipmentPasswordModal'
+import OpenRecord from '@/components/OpenRecord'
+import ConfirmDeleteFaceModal from '@/components/ConfirmDeleteFaceModal'
+
+import Media from 'vue-media'
 
 export default {
   name: 'Main',
+
+  data () {
+    return {
+      isGreaterThan768: window.innerWidth > 768,
+      isCameraShow: true,
+      isTrainMenuShow: true,
+      isEquipmentListShow: true,
+      isOpenDoorRecordShow: false,
+    }
+  },
+
   components: {
     Camera,
     Headers,
@@ -44,15 +64,74 @@ export default {
     EquipmentList,
     UploadFaceProgress,
     AddFaceModal,
-    RegisterEquipmentModal
+    RegisterEquipmentModal,
+    SetEquipmentPasswordModal,
+    Media,
+    OpenRecord,
+    ConfirmDeleteFaceModal
   },
 
   mounted () {
     this.GoToLoginIfNotLogin()
     this.SetUserName()
+    this.isTrainMenuShow = this.isGreaterThan768
+    this.isEquipmentListShow = this.isGreaterThan768
   },
 
   methods: {
+    changeToCameraMode () {
+      if (!this.isGreaterThan768) {
+        this.isCameraShow = true
+        this.isTrainMenuShow = false
+        this.isEquipmentListShow = false
+        this.isOpenDoorRecordShow = false
+      }
+      else{
+        this.isCameraShow = true
+        this.isTrainMenuShow = true
+        this.isEquipmentListShow = true
+        this.isOpenDoorRecordShow = false
+      } 
+      this.$refs.camera.changeToAddFaceMode()
+    },
+
+    changeToTrainMenuMode () {
+      if (!this.isGreaterThan768) {
+        this.isCameraShow = false
+        this.isTrainMenuShow = true
+        this.isEquipmentListShow = false
+        this.isOpenDoorRecordShow = false
+      } 
+    },
+
+    changeToEquipmentListMode () {
+      if (!this.isGreaterThan768) {
+        this.isCameraShow = false
+        this.isTrainMenuShow = false
+        this.isEquipmentListShow = true
+        this.isOpenDoorRecordShow = false
+      } 
+    },
+
+    changeToDoorRecordMode(){
+      if (!this.isGreaterThan768) {
+        this.isCameraShow = false
+        this.isTrainMenuShow = false
+        this.isEquipmentListShow = false
+        this.isOpenDoorRecordShow = true
+      }
+      else{
+        this.isCameraShow = false
+        this.isTrainMenuShow = true
+        this.isEquipmentListShow = true
+        this.isOpenDoorRecordShow = true
+      }
+    },
+
+    changeToOnlineClassifyMode(){
+      this.changeToCameraMode()
+      this.$refs.camera.changeToOnlineClassifyMode()
+    },
 
     onLoginSuccess (name) {
       this.$refs.headers.setUserName(name)
@@ -63,6 +142,7 @@ export default {
     },
 
     onAddFace (faceArgs) {
+      //setTimeout(this.$refs.camera.uploadFace, 500, faceArgs.faceName ,faceArgs.equipmentName);
       this.$refs.camera.uploadFace(faceArgs.faceName,faceArgs.equipmentName)
     },
 
@@ -71,7 +151,15 @@ export default {
     },
 
     onUpgradeProgress (percentage) {
-      this.$refs.progress.setPercentage(percentage)
+      //this.$refs.progress.setPercentage(percentage)
+    },
+
+    onAskIfcheckDelete(faceArgs){
+      this.$refs.confirmDeleteFaceModal.setDeleteFaceInformation(faceArgs.faceName,faceArgs.faceId,faceArgs.equipmentId)
+    },
+
+    onDeleteFace(faceArgs){
+      this.$refs.equipmentList.deleteFace(faceArgs.faceId,faceArgs.equipmentId)
     },
 
     async SetUserName () {
@@ -90,12 +178,16 @@ export default {
       const equipmentList = this.$refs.equipmentList 
       let isAlert = false
       async function checkIsTrain() {
-        const isTrained = (await TrainService.checkModelIsOk(equipmentName)).data
-        if(isTrained && !isAlert){
-          isAlert = true
-          equipmentList.UpdateEquipmentList()
-          alert("臉孔處理已完成")
-          clearInterval(timerId)
+        try {
+          const isTrained = (await TrainService.checkModelIsOk(equipmentName)).data
+          if(isTrained && !isAlert){
+            isAlert = true
+            equipmentList.UpdateEquipmentList()
+            alert("臉孔處理已完成")
+            clearInterval(timerId)
+          }
+        } catch (error) {
+            clearInterval(timerId)
         }
       }
     },

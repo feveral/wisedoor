@@ -1,5 +1,4 @@
 <template>
-
 <div id="register-equipment-modal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -26,6 +25,7 @@
 <script>
 
 import EquipmentService from '@/services/EquipmentService'
+import FaceService from '@/services/FaceService'
 
 export default {
   name: 'RegisterEquipmentModal',

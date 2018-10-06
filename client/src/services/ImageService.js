@@ -8,5 +8,12 @@ export default {
             faceName: faceName,
             equipmentName: equipmentName
         })
+    },
+
+    uploadClassifyImage(imageData, equipmentName) {
+        return Api().post('facenet/classify', {
+            image: imageData,
+            equipmentName: equipmentName
+        })
     }
 }
