@@ -18,6 +18,7 @@
           <th scope="col">人名</th>
           <th scope="col">準確率</th>
           <th scope="col">照片</th>
+          <th scope="col">辨識Id</th>
         </tr>
       </thead>
       <tbody>
