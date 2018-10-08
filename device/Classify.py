@@ -65,7 +65,7 @@ class Classify():
             if(self.second_filter(best_class_probabilities,0)):
                 if(self.third_filter(best_class_probabilities,0) or self.forth_filter(class_names,second_class_indices,third_class_probabilities)):
                     mistake_number = mistake_number + 1
-                    print('%s: %.3f' % (class_names[best_class_indices[i]], best_class_probabilities[i]))
+                    print('%s: %.3f' % (class_names[best_class_indices[0]], best_class_probabilities))
                     print('%s: %.3f' % (class_names[second_class_indices], second_class_probabilities))
                     print('%s: %.3f' % (class_names[third_class_indices], third_class_probabilities))            
                     ChangeToStranger = True
