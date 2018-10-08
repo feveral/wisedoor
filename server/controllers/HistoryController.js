@@ -3,15 +3,15 @@ const Face = require('../models/Face')
 const Equipment = require('../models/Equipment')
 const Model = require('../models/Model')
 const FaceBelongEquipment = require('../models/FaceBelongEquipment')
-var fs = require("fs");
-const request = require('request');
+const fs = require("fs")
+const request = require('request')
 
 module.exports = {
     async GetRecord(req, res){
         const userEmail = req.user
         const equipmentId = req.body.equipmentId
         const RecordResult= await History.FindDataByEquipmentId(equipmentId)
-        Record = JSON.parse(JSON.stringify(RecordResult));
+        Record = JSON.parse(JSON.stringify(RecordResult))
         for (var index = 0; index < Record.length; index++){
             var data = fs.readFileSync("./facenetService/image/history/" + `${Record[index]["Id"]}.jpg`)
             base64Image = new Buffer(data, 'binary').toString('base64')

@@ -20,6 +20,14 @@
 - history api串接 加上圖片以及成功或失敗(client)(server)(device)
 - python server加入task manager(server)
 
+
+----- 0902更新
+- 前端上傳臉孔要開多條
+- server要防 同時 >=25 問題
+- align要開blurr
+- 防止重複名稱
+- 鏡頭在電腦SIZE會不OK的問題
+
 #### bug
 
 - 需要偵測是手機或電腦連到web，給予不一樣的camera size

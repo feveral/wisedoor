@@ -8,12 +8,14 @@ module.exports = (app, passport) => {
     const ModelController = require('./controllers/ModelController') 
     const HistoryController = require('./controllers/HistoryController')
     const FacenetServiceController = require('./controllers/FacenetServiceController')
+    const classifyResultController = require('./controllers/ClassifyResultController')
     const AuthenticationRouter = express.Router()
     const imageRouter = express.Router().all('*', AuthenticationController.authenticate)
     const equipmentRouter = express.Router().all('*', AuthenticationController.authenticate)
     const faceRouter = express.Router().all('*', AuthenticationController.authenticate)
     const historyRouter = express.Router().all('*', AuthenticationController.authenticate)
     const facenetServiceRouter = express.Router().all('*', AuthenticationController.authenticate)
+    const classifyResultRouter = express.Router().all('*', AuthenticationController.authenticate)
     const modelRouter = express.Router()
 
     AuthenticationRouter.post('/login', passport.authenticate('local', { session: true }), AuthenticationController.login)
@@ -47,6 +49,9 @@ module.exports = (app, passport) => {
     facenetServiceRouter.post('/classify',  FacenetServiceController.saveClassifyData ,
                                             FacenetServiceController.classify)
 
+    classifyResultRouter.get('/amount/:equipmentName/', classifyResultController.getPageAmount)
+    classifyResultRouter.get('/:equipmentName/:page', classifyResultController.getClassifyResult)
+    
     app.use('/api/authentication', AuthenticationRouter)
     app.use('/api/equipment', equipmentRouter)
     app.use('/api/face', faceRouter)
@@ -54,4 +59,5 @@ module.exports = (app, passport) => {
     app.use('/api/model', modelRouter)
     app.use('/api/history', historyRouter)
     app.use('/api/facenet', facenetServiceRouter)
+    app.use('/api/classifyresult', classifyResultRouter)
 }
