@@ -49,7 +49,46 @@ class Classify():
         predictions = model.predict_proba(emb_array)
         best_class_indices = np.argmax(predictions, axis=1)
         best_class_probabilities = predictions[np.arange(len(best_class_indices)), best_class_indices]
-                    
+        
+        mistake_number = 0
+        ChangeToStranger = False
+        second_class_indices = predictions[0].argsort()[-3:][::-1][1]
+        second_class_probabilities = predictions[0][second_class_indices]
+        if(predictions.shape[1] > 2):
+            third_class_indices = predictions[0].argsort()[-3:][::-1][2]
+            third_class_probabilities = predictions[0][third_class_indices]
+        else:
+            third_class_indices = 0
+            third_class_probabilities = 0
+            
+        if(self.first_filter(class_names,best_class_indices,0)):
+            if(self.second_filter(best_class_probabilities,0)):
+                if(self.third_filter(best_class_probabilities,0) or self.forth_filter(class_names,second_class_indices,third_class_probabilities)):
+                    mistake_number = mistake_number + 1
+                    print(predictions[i])
+                    print('%s  %s: %.3f' % (nameList[i], class_names[best_class_indices[i]], best_class_probabilities[i]))
+                    print('%s  %s: %.3f' % (nameList[i], class_names[second_class_indices], second_class_probabilities))
+                    print('%s  %s: %.3f' % (nameList[i], class_names[third_class_indices], third_class_probabilities))            
+                    ChangeToStranger = True
+            
         classify_people_name = class_names[best_class_indices[0]]
         classify_rate = best_class_probabilities[0]
+        if(classify_people_name == "unknown"):
+            classify_rate = 1.0
+        if(ChangeToStranger):
+            classify_rate = 1.0
+            classify_people_name = "unknown"
         return (classify_people_name, classify_rate)
+    
+    def first_filter(self,class_names,best_class_indices,index):
+        return (class_names[best_class_indices[index]] != "unknownNew")
+
+    def second_filter(self,best_class_probabilities,index):
+        return (best_class_probabilities[index] < 0.5)
+    
+    def third_filter(self,best_class_probabilities,index):
+        return (best_class_probabilities[index] < 0.3) 
+
+    def forth_filter(self,class_names,second_class_indices,third_class_probabilities):
+        return (class_names[second_class_indices] != "unknownNew" or third_class_probabilities > 0.1) 
+
