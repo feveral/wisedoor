@@ -26,6 +26,7 @@
           <td>{{result.FaceName}}</td>
           <td>{{Math.round(result.FaceRate*1000)/10}}</td>
           <td><img v-bind:src="'data:image/jpeg;base64,'+ result.FaceImage"></td>
+          <td>{{result.Id}}</td>
         </tr>
       </tbody>
     </table>
