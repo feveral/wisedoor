@@ -62,13 +62,15 @@ def alignPicture():
     cutBasePath = data['cutBasePath']
     if not os.path.exists(cutBasePath + "/" + faceId):
         os.makedirs(cutBasePath+ "/" + faceId)
-    #if not (is_blurr(uploadBasePath+ "/" + faceId + "/" + imageName)):
-    #    cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
-    #    return jsonify({'success': True})
-    start = time.time()
-    cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
-    print("align time:", time.time() - start)
-    return jsonify({'success': True})
+    if not (is_blurr(uploadBasePath+ "/" + faceId + "/" + imageName)):
+        cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False})
+    #start = time.time()
+    #cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
+    #print("align time:", time.time() - start)
+    #return jsonify({'success': True})
     #else:
     #    return jsonify({'success': False})
 

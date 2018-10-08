@@ -36,7 +36,7 @@ import math
 import pickle
 from sklearn.svm import SVC
 import time
-model_path  = "./models/20170512-110547.pb"
+model_path  = "./20170512-110547.pb"
 
 class Classify:
     def __init__(self):
@@ -54,7 +54,7 @@ class Classify:
     def classify_image(self,input_file_path,classifier_path):
         with tf.Session(graph=self.tensorflow_graph) as sess:
             np.random.seed(seed=666)
-            dataset = self.get_dataset(input_file_path)
+            dataset,nameList = self.get_dataset(input_file_path)
 
             # Check that there are at least one training image per class
             for cls in dataset:
@@ -63,10 +63,7 @@ class Classify:
                 
             paths, labels = facenet.get_image_paths_and_labels(dataset)
             
-            print('Number of classes: %d' % len(dataset))
-            print('Number of images: %d' % len(paths))
                         # Run forward pass to calculate embeddings
-            print('Calculating features for images')
             nrof_images = len(paths)
             nrof_batches_per_epoch = int(math.ceil(1.0*nrof_images / 90))
             emb_array = np.zeros((nrof_images, self.embedding_size))
@@ -84,27 +81,59 @@ class Classify:
                 (model, class_names) = pickle.load(infile)
             print('Loaded classifier model from file "%s"' % classifier_filename_exp)
             predictions = model.predict_proba(emb_array)
+            print(predictions.shape)
             best_class_indices = np.argmax(predictions, axis=1)
             best_class_probabilities = predictions[np.arange(len(best_class_indices)), best_class_indices]
-                        
+            mistake_number = 0
             for i in range(len(best_class_indices)):
-                print('%4d  %s: %.3f' % (i, class_names[best_class_indices[i]], best_class_probabilities[i]))
-                
+                    second_class_indices = predictions[i].argsort()[-3:][::-1][1]
+                    second_class_probabilities = predictions[i][second_class_indices]
+                    third_class_indices = predictions[i].argsort()[-3:][::-1][2]
+                    third_class_probabilities = predictions[i][third_class_indices]
+
+                    if(self.first_filter(class_names,best_class_indices,i)):
+                        if(self.second_filter(best_class_probabilities,i)):
+                            if(self.third_filter(best_class_probabilities,i) or self.forth_filter(class_names,second_class_indices,third_class_probabilities)):
+                                mistake_number = mistake_number + 1
+                                print(predictions[i])
+                                print('%s  %s: %.3f' % (nameList[i], class_names[best_class_indices[i]], best_class_probabilities[i]))
+                                print('%s  %s: %.3f' % (nameList[i], class_names[second_class_indices], second_class_probabilities))
+                                print('%s  %s: %.3f' % (nameList[i], class_names[third_class_indices], third_class_probabilities))
             accuracy = np.mean(np.equal(best_class_indices, labels))
             print('Accuracy: %.3f' % accuracy)
+            print(mistake_number/len(best_class_indices))
+
+    def first_filter(self,class_names,best_class_indices,index):
+        return (class_names[best_class_indices[index]] != "unknownNew")
+
+    def second_filter(self,best_class_probabilities,index):
+        return (best_class_probabilities[index] < 0.5)
+    
+    def third_filter(self,best_class_probabilities,index):
+        return (best_class_probabilities[index] < 0.3) 
+
+    def forth_filter(self,class_names,second_class_indices,third_class_probabilities):
+        return (class_names[second_class_indices] != "unknownNew" or third_class_probabilities > 0.1) 
 
     def get_dataset(self, path, has_class_directories=True):
         dataset = []
         imageList = []
-        imageList.append(path)
-        class_name = "unknown"
+        nameList = []
+        if(os.path.isdir(path)):
+            for file in os.listdir(path):
+                if file.endswith(".jpg") or file.endswith(".png"):
+                    class_name = file
+                    imageList.append(os.path.join(path, file))
+                    nameList.append(file)
         dataset.append(facenet.ImageClass(class_name,imageList))
-        return dataset
+        return dataset,nameList
 
 
 classify = Classify()
 
-input_image_path = "./image/3c82fe029115a3efb15980f6d9f2b04c.png"
-classifier_path = "./models/tom_strength_classifier.pkl"
+# input_image_path = "./image/classify_image"
+input_image_path = "./image/mistake"
+
+classifier_path = "./main.pkl"
 test_classifier_path = "./models/test333.pkl"
 classify.classify_image(input_image_path,classifier_path)
