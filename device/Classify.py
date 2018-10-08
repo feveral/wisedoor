@@ -80,7 +80,7 @@ class Classify():
         return (classify_people_name, classify_rate)
     
     def first_filter(self,class_names,best_class_indices,index):
-        return (class_names[best_class_indices[index]] != "unknownNew")
+        return (class_names[best_class_indices[index]] != "unknow")
 
     def second_filter(self,best_class_probabilities,index):
         return (best_class_probabilities[index] < 0.5)
@@ -89,5 +89,5 @@ class Classify():
         return (best_class_probabilities[index] < 0.3) 
 
     def forth_filter(self,class_names,second_class_indices,third_class_probabilities):
-        return (class_names[second_class_indices] != "unknownNew" or third_class_probabilities > 0.1) 
+        return (class_names[second_class_indices] != "unknown" or third_class_probabilities > 0.1) 
 

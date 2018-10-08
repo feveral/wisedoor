@@ -68,10 +68,9 @@ class Classify():
             if(self.second_filter(best_class_probabilities,0)):
                 if(self.third_filter(best_class_probabilities,0) or self.forth_filter(class_names,second_class_indices,third_class_probabilities)):
                     mistake_number = mistake_number + 1
-                    print(predictions[i])
-                    print('%s  %s: %.3f' % (nameList[i], class_names[best_class_indices[i]], best_class_probabilities[i]))
-                    print('%s  %s: %.3f' % (nameList[i], class_names[second_class_indices], second_class_probabilities))
-                    print('%s  %s: %.3f' % (nameList[i], class_names[third_class_indices], third_class_probabilities))            
+                    print('%s: %.3f' % ( class_names[best_class_indices[0]], best_class_probabilities))
+                    print('%s: %.3f' % ( class_names[second_class_indices], second_class_probabilities))
+                    print('%s: %.3f' % ( class_names[third_class_indices], third_class_probabilities))            
                     ChangeToStranger = True
 
         classify_people_name = class_names[best_class_indices[0]]
@@ -84,7 +83,7 @@ class Classify():
         return (classify_people_name, classify_rate)
 
     def first_filter(self,class_names,best_class_indices,index):
-        return (class_names[best_class_indices[index]] != "unknownNew")
+        return (class_names[best_class_indices[index]] != "unknown")
 
     def second_filter(self,best_class_probabilities,index):
         return (best_class_probabilities[index] < 0.5)
@@ -93,7 +92,7 @@ class Classify():
         return (best_class_probabilities[index] < 0.3) 
 
     def forth_filter(self,class_names,second_class_indices,third_class_probabilities):
-        return (class_names[second_class_indices] != "unknownNew" or third_class_probabilities > 0.1) 
+        return (class_names[second_class_indices] != "unknown" or third_class_probabilities > 0.1) 
 
     def fetch_embedding_class_names(self, image_path):
         np.random.seed(seed=666)
