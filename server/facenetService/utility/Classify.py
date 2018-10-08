@@ -76,10 +76,13 @@ class Classify():
 
         classify_people_name = class_names[best_class_indices[0]]
         classify_rate = best_class_probabilities[0]
-        if(classify_people_name == "unknown" or ChangeToStranger):
+        if(classify_people_name == "unknown"):
             classify_rate = 1.0
+        if(ChangeToStranger):
+            classify_rate = 1.0
+            classify_people_name = "unknown"
         return (classify_people_name, classify_rate)
-        
+
     def first_filter(self,class_names,best_class_indices,index):
         return (class_names[best_class_indices[index]] != "unknownNew")
 

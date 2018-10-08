@@ -52,7 +52,6 @@ thread = threading.Thread(target=TrainModel)
 thread.setDaemon(True)
 thread.start()
 
-
 @app.route('/align', methods=['POST'])
 def alignPicture():
     data = request.form
@@ -67,12 +66,6 @@ def alignPicture():
         return jsonify({'success': True})
     else:
         return jsonify({'success': False})
-    #start = time.time()
-    #cutPicture.align(uploadBasePath+ "/" + faceId + "/" + imageName, cutBasePath, faceId)
-    #print("align time:", time.time() - start)
-    #return jsonify({'success': True})
-    #else:
-    #    return jsonify({'success': False})
 
 @app.route('/train', methods=['POST'])
 def trainPicture():
