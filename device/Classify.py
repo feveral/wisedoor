@@ -60,15 +60,14 @@ class Classify():
         else:
             third_class_indices = 0
             third_class_probabilities = 0
-            
+
         if(self.first_filter(class_names,best_class_indices,0)):
             if(self.second_filter(best_class_probabilities,0)):
                 if(self.third_filter(best_class_probabilities,0) or self.forth_filter(class_names,second_class_indices,third_class_probabilities)):
                     mistake_number = mistake_number + 1
-                    print(predictions[i])
-                    print('%s  %s: %.3f' % (nameList[i], class_names[best_class_indices[i]], best_class_probabilities[i]))
-                    print('%s  %s: %.3f' % (nameList[i], class_names[second_class_indices], second_class_probabilities))
-                    print('%s  %s: %.3f' % (nameList[i], class_names[third_class_indices], third_class_probabilities))            
+                    print('%s: %.3f' % (class_names[best_class_indices[i]], best_class_probabilities[i]))
+                    print('%s: %.3f' % (class_names[second_class_indices], second_class_probabilities))
+                    print('%s: %.3f' % (class_names[third_class_indices], third_class_probabilities))            
                     ChangeToStranger = True
             
         classify_people_name = class_names[best_class_indices[0]]
