@@ -15,7 +15,7 @@ module.exports = {
         for (var index = 0; index < Record.length; index++){
             let data
             try{
-                var data = fs.readFileSync("./facenetService/image/history/" + `${Record[index]["Id"]}.jpg`)
+                data = fs.readFileSync("./facenetService/image/history/" + `${Record[index]["Id"]}.jpg`)
             }
             catch(error){
                 data = fs.readFileSync(`./facenetService/image/no_pic.jpeg`)
