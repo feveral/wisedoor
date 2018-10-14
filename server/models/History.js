@@ -16,7 +16,6 @@ module.exports = class History {
             await db.query(`insert into HISTORY VALUES ('${historyId}','${equipmentId}','${faceId}','${openTime}','${doorState}','${openDoorType}')`)
             return historyId
         } catch (error) {
-            console.log(error)
             throw new Error('Error occured while executing History.Add')
         }
     }
