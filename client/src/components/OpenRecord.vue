@@ -88,13 +88,16 @@ export default {
           element.OpenDoorType = '臉部辨識'
         if (element.DoorState == 'success')
           element.DoorState = '成功'
+        if (element.DoorState == 'fail')
+          element.DoorState = '失敗'
       });
     },
 
     async choosePage (page) {
       if(page <= this.maximumPage && page > 0) {
         this.pageIndex = page
-        this.records = (await RecordService.getRecord(this.choosed_equipment.Id, this.pageIndex-1)).data
+        this.UpdateLoginRecord(this.choosed_equipment.Id)
+        //this.records = (await RecordService.getRecord(this.choosed_equipment.Id, this.pageIndex-1)).data
       }
     }
   }
