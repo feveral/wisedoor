@@ -96,7 +96,7 @@ export default {
     async choosePage (page) {
       if(page <= this.maximumPage && page > 0) {
         this.pageIndex = page
-        this.UpdateLoginRecord(this.choosed_equipment.Id)
+        this.UpdateLoginRecord(this.choosed_equipment)
         //this.records = (await RecordService.getRecord(this.choosed_equipment.Id, this.pageIndex-1)).data
       }
     }
