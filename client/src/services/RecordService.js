@@ -2,7 +2,11 @@ import Api from '@/services/Api'
 
 export default {
     
-    getRecord (equipmentId) {
-        return Api().post('history/getRecord', { equipmentId: equipmentId})
+    getPageAmount (equipmentId) {
+        return Api().get(`history/amount/${equipmentId}`)
+    },
+
+    getRecord (equipmentId, page) {
+        return Api().get(`history/${equipmentId}/${page}`)
     },
 }

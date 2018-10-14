@@ -65,7 +65,6 @@ class HistoryController():
                         pickle.dump(record, f)
 
             except Exception as e:
-                print(e)
                 print('internet error while uploading record.')
 
                 if(len(self.doorRecordList) > 0 and not self.is_save_file):

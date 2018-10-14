@@ -4,7 +4,7 @@
       <h4 class="col-8 sub-title">開門紀錄</h4>
       <div class="dropdown show col-4 align-right">
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{choosed_equipment}}
+          {{choosed_equipment.Name}}
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">          
           <a class="dropdown-item" href="#" v-on:click="UpdateLoginRecord(equipment)" v-for="equipment in equipments">{{equipment.Name}}</a>
@@ -32,6 +32,18 @@
       </tbody>
     </table>
     <p id="no-record-prompt" v-if="records.length == 0">尚未有任何開門紀錄</p>
+    
+    <nav id="open-record-page" v-if="records.length == 0" aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" @click="choosePage(pageIndex-1)" href="#">上一頁</a></li>
+        <li class="page-item"><a class="page-link" href="#">{{pageIndex}}</a></li>
+        <li class="page-item"><a class="page-link" v-if="pageIndex+1 <= maximumPage" @click="choosePage(pageIndex+1)" href="#">{{pageIndex+1}}</a></li>
+        <li class="page-item"><a class="page-link" v-if="pageIndex+2 <= maximumPage" @click="choosePage(pageIndex+2)" href="#">{{pageIndex+2}}</a></li>
+        <li class="page-item"><a class="page-link" href="#">...</a></li>
+        <li class="page-item"><a class="page-link" href="#">{{maximumPage}}</a></li>
+        <li class="page-item"><a class="page-link" @click="choosePage(pageIndex+1)" href="#">下一頁</a></li>
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -46,12 +58,14 @@ export default {
   data () {
     return{
       equipments: [],
-      choosed_equipment: "",
       records:[],
+      choosed_equipment: {},
+      pageIndex: 1,
+      maximumPage: 1
     }
   },
 
-  mounted(){
+  async mounted(){
     this.GetEquipment()
   },
 
@@ -59,13 +73,13 @@ export default {
     async GetEquipment(){
       let response =  await EquipmentService.GetEquipments()
       this.equipments = response.data
-      this.choosed_equipment = this.equipments[0].Name
+      this.choosed_equipment = this.equipments[0]
       this.UpdateLoginRecord(this.equipments[0])
     },
 
     async UpdateLoginRecord(equipment){
-      const recordList = await RecordService.getRecord(equipment.Id)
-      this.choosed_equipment = equipment.Name
+      const recordList = await RecordService.getRecord(equipment.Id, this.pageIndex-1)
+      this.choosed_equipment = equipment
       this.records = recordList.data
 
       this.records.forEach(element => {
@@ -74,10 +88,14 @@ export default {
         if (element.DoorState == 'success')
           element.DoorState = '成功'
       });
-
-      console.log(this.records)
     },
 
+    async choosePage (page) {
+      if(page <= this.maximumPage && page > 0) {
+        this.pageIndex = page
+        this.resultList = (await RecordService.getRecord(this.choosedEquipment.Id, this.pageIndex-1)).data
+      }
+    }
   }
 }
 

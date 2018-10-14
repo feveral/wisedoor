@@ -43,7 +43,8 @@ module.exports = (app, passport) => {
     modelRouter.post('/notify',ModelController.NotifyTrainFinish)
     modelRouter.post('/check', ModelController.CheckModelIsTrain)
     
-    historyRouter.post('/getRecord', HistoryController.GetRecord)
+    historyRouter.get('/amount/:equipmentId', HistoryController.getPageAmount)
+    historyRouter.get('/:equipmentId/:page', HistoryController.getRecord)
     historyRouter.post('/', HistoryController.AddHistory)
 
     facenetServiceRouter.post('/classify',  FacenetServiceController.saveClassifyData ,

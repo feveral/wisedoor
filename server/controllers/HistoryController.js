@@ -7,10 +7,11 @@ const fs = require("fs")
 const request = require('request')
 
 module.exports = {
-    async GetRecord(req, res){
-        const userEmail = req.user
-        const equipmentId = req.body.equipmentId
-        const RecordResult= await History.FindDataByEquipmentId(equipmentId)
+    
+    async getRecord(req, res){
+        const page = req.params.page 
+        const equipmentId = req.params.equipmentId //req.body.equipmentId
+        const RecordResult= await History.FindByEquipmentIdAndPage(equipmentId, page)
         Record = JSON.parse(JSON.stringify(RecordResult))
         for (var index = 0; index < Record.length; index++){
             let data
@@ -24,7 +25,12 @@ module.exports = {
             Record[index]["FaceImage"] = base64Image
             Record[index]["OpenTime"] = module.exports.setTimeCorrect(Record[index]["OpenTime"])
         }
-        res.send(Record)
+        res.status(200).send(Record)
+    },
+
+    async getPageAmount(req, res) {
+        const amount = (await History.FindPageAmountByEquipmentId(req.params.equipmentId))
+        res.status(200).send({amount:amount})
     },
 
     async AddHistory(req, res) {

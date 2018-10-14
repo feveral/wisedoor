@@ -55,4 +55,22 @@ module.exports = class History {
             throw new Error('Error occured while executing History.FindDataByEquipmentId')
         }
     }
+
+    static async FindByEquipmentIdAndPage(equipmentId, page) {
+        try {
+            const response = await db.query(`select * from HISTORY where EquipmentId='${equipmentId}' ORDER BY OpenTime DESC limit 6 offset ${page*6}`)
+            return response
+        } catch (error) {
+            throw new Error('Error occured while executing History.FindByEquipmentIdAndPage')
+        }
+    }
+
+    static async FindPageAmountByEquipmentId (equipmentId) {
+        try {
+            const result = await db.query(`select COUNT(*) from HISTORY where equipmentId='${equipmentId}'`)
+            return Math.floor(result[0]['COUNT(*)'] / 6) + 1
+        } catch (error) {
+            throw new Error('Error occured while executing History.FindPageAmountByEquipmentId')
+        }
+    }
 }
