@@ -75,7 +75,7 @@ export default {
       this.equipments = response.data
       this.choosed_equipment = this.equipments[0]
       this.UpdateLoginRecord(this.equipments[0])
-      this.maximumPage = (await getPageAmount.getPageAmount(this.choosed_equipment.Id)).data.amount
+      this.maximumPage = (await RecordService.getPageAmount(this.choosed_equipment.Id)).data.amount
     },
 
     async UpdateLoginRecord(equipment){
