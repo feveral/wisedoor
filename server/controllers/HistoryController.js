@@ -13,7 +13,13 @@ module.exports = {
         const RecordResult= await History.FindDataByEquipmentId(equipmentId)
         Record = JSON.parse(JSON.stringify(RecordResult))
         for (var index = 0; index < Record.length; index++){
-            var data = fs.readFileSync("./facenetService/image/history/" + `${Record[index]["Id"]}.jpg`)
+            let data
+            try{
+                data = fs.readFileSync("./facenetService/image/history/" + `${Record[index]["Id"]}.jpg`)
+            }
+            catch(error){
+                data = fs.readFileSync(`./facenetService/image/no_pic.jpeg`)
+            }
             base64Image = new Buffer(data, 'binary').toString('base64')
             Record[index]["FaceImage"] = base64Image
             Record[index]["OpenTime"] = module.exports.setTimeCorrect(Record[index]["OpenTime"])

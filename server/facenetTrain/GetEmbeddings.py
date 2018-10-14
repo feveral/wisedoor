@@ -59,8 +59,7 @@ class Train:
                 classifier_filename_exp = os.path.expanduser(output_dir)
 
                 # Create a list of class names
-                class_names = [ cls.name.replace('_', ' ') for cls in dataset]
-
+                class_names = ["unknown"]
                 # Saving classifier model
                 with open(classifier_filename_exp, 'wb') as outfile:
                     pickle.dump((emb_array, labels, class_names), outfile)

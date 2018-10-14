@@ -25,10 +25,10 @@ module.exports = {
         res.send({ success: false })
         return 
     }
-    const deleteFaceInEquipmentresult = await FaceBelongEquipment.DeleteFaceByEquipmentId(faceId,equipmentId)
-    const deleteFaceInModelresult = await FaceBelongModel.Delete(faceId,req.modelId)
-
+    await FaceBelongEquipment.DeleteFaceByEquipmentId(faceId,equipmentId)
+    await FaceBelongModel.Delete(faceId,req.modelId)
     await Face.Delete(req.body.faceId)
+
     const facePklPath = `${process.cwd()}/facenetService/models/faces/${req.body.faceId }.pkl`
     if (fs.existsSync(facePklPath)) {
         fs.unlink(facePklPath, (err) => {

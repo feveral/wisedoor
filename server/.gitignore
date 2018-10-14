@@ -5,5 +5,7 @@
 /facenetService/image/history/*
 /facenetService/image/classify_result/cut/*.png
 /facenetService/image/classify_result/raw/*.png
+/facenetTrain/image/classify_image/*.png
+/facenetTrain/image/mistake/*.png
 !init_model.pkl
 !unknown.pkl
