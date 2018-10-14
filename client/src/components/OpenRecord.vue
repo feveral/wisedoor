@@ -94,7 +94,7 @@ export default {
     async choosePage (page) {
       if(page <= this.maximumPage && page > 0) {
         this.pageIndex = page
-        this.resultList = (await RecordService.getRecord(this.choosed_equipment.Id, this.pageIndex-1)).data
+        this.records = (await RecordService.getRecord(this.choosed_equipment.Id, this.pageIndex-1)).data
       }
     }
   }
