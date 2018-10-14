@@ -33,7 +33,7 @@
     </table>
     <p id="no-record-prompt" v-if="records.length == 0">尚未有任何開門紀錄</p>
     
-    <nav id="open-record-page" v-if="records.length == 0" aria-label="Page navigation">
+    <nav id="open-record-page" v-if="!records.length == 0" aria-label="Page navigation">
       <ul class="pagination justify-content-center">
         <li class="page-item"><a class="page-link" @click="choosePage(pageIndex-1)" href="#">上一頁</a></li>
         <li class="page-item"><a class="page-link" href="#">{{pageIndex}}</a></li>
