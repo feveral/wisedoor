@@ -1,34 +1,60 @@
-# WiseDoor
+﻿# 基於人臉辨識的門禁系統
 
-## WARN
+## How to install
 
-## Production
-- 要改`server/controllers/ImageController.js`的 post url , 改成主機網址
-- ‵server/config/config.js` 的 mysql 密碼要變更
-- `server/facenetService/app.py` 的 localhost 要改成主機網址
+### Server
+```shell
+# 先修改 server/config/config.js  的 db_name,db_config 成自己想要的
+cd server
+npm install
+npm run init
+sudo apt-get install mysql-server
+sudo apt-get install python3-pip
+sudo apt-get install python-dev
+sudo apt-get install libopencv-dev
+sudo pip3 install tensorflow
+sudo pip3 install opencv-python
+sudo pip3 install sklearn
+sudo pip3 install flask
+sudo pip3 install scipy
+sudo pip3 install Pillow
+```
 
-## TODO
-- face可刪除(server)(client)，要注意
-- 登入紀錄(client)(server)(device)
-- 設定密碼(client)(server)(device) , 用漢堡的icon放在左邊，按下會有選單
-- 手機版的可更換相機鏡頭(client)
-- 新增設備(client)
-- 前端記憶體問題(client)
-- RFID
+### Client
+```shell=
+# 先修改 client/src/services/Api.js 的 baseURL 成自己想要的domain
+cd client
+npm run install
+npm run build
+```
 
------ 0826更新
-- history api串接 加上圖片以及成功或失敗(client)(server)(device)
-- python server加入task manager(server)
+### Device
+```shell=
+# 先修改 device/config.py  的 SERVER_URL 成自己想要的domain
+sudo apt-get install python3-pip
+sudo apt-get install python-dev
+sudo apt-get install libopencv-dev
+sudo pip3 install tensorflow
+sudo pip3 install opencv-python
+sudo pip3 install sklearn
+sudo pip3 install flask
+sudo pip3 install scipy
+sudo pip3 install Pillow
+```
 
+## Use
 
------ 0902更新
-- 前端上傳臉孔要開多條
-- server要防 同時 >=25 問題
-- align要開blurr
-- 防止重複名稱
-- 鏡頭在電腦SIZE會不OK的問題
+### Server run 在主機上 , Device run 在門鎖樹莓派上
 
-#### bug
+### Server
+```shell=
+# 以下兩個指令分別在兩個terminal執行
+npm run dev 
+npm run facenet 
+```
 
-- 需要偵測是手機或電腦連到web，給予不一樣的camera size
-- 若沒訓練好，face就出現，此時操作會有bug
+### Device
+```shell=
+python3 Main.py
+```
+
